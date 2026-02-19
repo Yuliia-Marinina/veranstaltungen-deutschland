@@ -1,0 +1,64 @@
+// =====================
+// Google Fonts
+// =====================
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+// =====================
+// Base Typography
+// =====================
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  color: $color-text;
+  line-height: 1.6;
+  background-color: $color-bg;
+}
+
+// =====================
+// Headings
+// =====================
+h1 {
+  font-size: $font-size-xxl;
+  font-weight: 700;
+  line-height: 1.2;
+  color: $color-text;
+}
+
+h2 {
+  font-size: $font-size-xl;
+  font-weight: 600;
+  line-height: 1.3;
+  color: $color-text;
+}
+
+h3 {
+  font-size: $font-size-lg;
+  font-weight: 600;
+  line-height: 1.4;
+  color: $color-text;
+}
+
+// =====================
+// Text
+// =====================
+p {
+  color: $color-text-light;
+  line-height: 1.6;
+}
+
+strong {
+  font-weight: 600;
+  color: $color-text;
+}
+
+// =====================
+// Links
+// =====================
+a {
+  color: $color-primary;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $color-primary-dark;
+  }
+}

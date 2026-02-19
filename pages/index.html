@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Entdecken Sie die besten Veranstaltungen in Deutschland"
+    />
+    <title>Veranstaltungen in Deutschland</title>
+    <link rel="stylesheet" href="../src/scss/main.scss" />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <a href="index.html" class="header-logo">
+          <span class="header-logo-icon">📍</span>
+          Events in Germany
+        </a>
+
+        <nav class="header-nav">
+          <ul class="header-list">
+            <li class="header-item">
+              <a href="#events" class="header-link">Events</a>
+            </li>
+            <li class="header-item">
+              <a href="#map" class="header-link">Germany Map</a>
+            </li>
+            <li class="header-item">
+              <a href="#weather" class="header-link">Wetter & Wasser</a>
+            </li>
+          </ul>
+        </nav>
+
+        <button class="header-btn">Anmelden</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero">
+        <div class="container">
+          <p class="hero-subtitle">Entdecken Sie Deutschland</p>
+          <h1 class="hero-title">
+            Discover Upcoming <span class="hero-accent">Events</span>
+            Across the Country
+          </h1>
+          <p class="hero-text">
+            Von lebhaften Stadtfesten bis zu historischen Festivals Bayerns.
+            Finden Sie Ihre nächste unvergessliche Veranstaltung.
+          </p>
+        </div>
+      </section>
+
+      <!-- Events -->
+      <section class="events" id="events">
+        <div class="container">
+          <div class="events-header">
+            <div class="events-header-left">
+              <h2 class="events-title">Bevorstehende Veranstaltungen</h2>
+              <p class="events-subtitle">
+                Entdecken Sie die kulturelle Vielfalt Deutschlands
+              </p>
+            </div>
+            <div class="events-header-right">
+              <a href="#" class="events-link">Alle anzeigen →</a>
+            </div>
+          </div>
+
+          <div class="events-grid">
+            <!-- Card 1 -->
+            <article class="card">
+              <div class="card-image">
+                <img src="../src/images/event-1.jpg" alt="Berliner Lichterfest" />
+                <span class="card-badge">Berlin</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">Berliner Lichterfest</h3>
+                <p class="card-date">
+                  <span class="card-date-icon">📅</span>
+                  15. – 17. Februar 2026
+                </p>
+                <p class="card-text">
+                  Das größte Lichterfest Berlins verwandelt die Stadt in ein
+                  strahlendes Meer aus Farben und Licht.
+                </p>
+                <a href="event-detail.html" class="card-btn">Mehr erleben</a>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="card">
+              <div class="card-image">
+                <img src="../src/images/event-2.jpg" alt="Münchner Opernfestspiele" />
+                <span class="card-badge">München</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">Münchner Opernfestspiele</h3>
+                <p class="card-date">
+                  <span class="card-date-icon">📅</span>
+                  25. Juni – 31. Juli 2026
+                </p>
+                <p class="card-text">
+                  Weltklasse-Aufführungen im Bayerischen Nationaltheater.
+                  Ein Highlight für Kulturliebhaber.
+                </p>
+                <a href="event-detail.html" class="card-btn">Mehr erleben</a>
+              </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="card">
+              <div class="card-image">
+                <img src="../src/images/event-3.jpg" alt="Hamburger Dom" />
+                <span class="card-badge">Hamburg</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">Hamburger Dom</h3>
+                <p class="card-date">
+                  <span class="card-date-icon">📅</span>
+                  27. März – 26. April 2026
+                </p>
+                <p class="card-text">
+                  Norddeutschlands größtes Volksfest mit über 200 Attraktionen
+                  auf dem Hamburger Heiligengeistfeld.
+                </p>
+                <a href="event-detail.html" class="card-btn">Mehr erleben</a>
+              </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="card">
+              <div class="card-image">
+                <img src="../src/images/event-4.jpg" alt="Dresdner Striezelmarkt" />
+                <span class="card-badge">Dresden</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">Dresdner Striezelmarkt</h3>
+                <p class="card-date">
+                  <span class="card-date-icon">📅</span>
+                  25. November – 24. Dezember 2026
+                </p>
+                <p class="card-text">
+                  Der älteste Weihnachtsmarkt Deutschlands lädt ein zu
+                  Glühwein, Stollen und festlicher Atmosphäre.
+                </p>
+                <a href="event-detail.html" class="card-btn">Mehr erleben</a>
+              </div>
+            </article>
+
+            <!-- Card 5 -->
+            <article class="card">
+              <div class="card-image">
+                <img src="../src/images/event-5.jpg" alt="Rheinkarneval Düsseldorf" />
+                <span class="card-badge">Düsseldorf</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">Rheinkarneval Düsseldorf</h3>
+                <p class="card-date">
+                  <span class="card-date-icon">📅</span>
+                  19. – 25. Februar 2026
+                </p>
+                <p class="card-text">
+                  Einer der größten Karnevalsumzüge Deutschlands mit bunten
+                  Kostümen und ausgelassener Stimmung.
+                </p>
+                <a href="event-detail.html" class="card-btn">Mehr erleben</a>
+              </div>
+            </article>
+
+            <!-- Card 6 -->
+            <article class="card">
+              <div class="card-image">
+                <img src="../src/images/event-6.jpg" alt="Kieler Woche" />
+                <span class="card-badge">Kiel</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">Kieler Woche</h3>
+                <p class="card-date">
+                  <span class="card-date-icon">📅</span>
+                  20. – 29. Juni 2026
+                </p>
+                <p class="card-text">
+                  Das weltgrößte Segelsportevent verbindet maritime Tradition
+                  mit Kultur und Unterhaltung an der Förde.
+                </p>
+                <a href="event-detail.html" class="card-btn">Mehr erleben</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Map -->
+      <section class="map-section" id="map">
+        <div class="container">
+          <div class="map-header">
+            <h2 class="map-title">Veranstaltungen auf der Karte</h2>
+            <p class="map-subtitle">
+              Finden Sie Events direkt in Ihrer Nähe
+            </p>
+          </div>
+          <div class="map-wrap" id="germany-map"></div>
+        </div>
+      </section>
+
+      <!-- Weather & Water -->
+      <section class="weather-section" id="weather">
+        <div class="container">
+          <div class="weather-top">
+            <div class="weather-location">
+              <span class="weather-location-icon">📍</span>
+              <span class="weather-location-name">Berlin, Germany</span>
+            </div>
+            <div class="weather-toggle">
+              <button class="weather-toggle-btn active" data-tab="weather">
+                Wetter
+              </button>
+              <button class="weather-toggle-btn" data-tab="water">
+                Wasserstand
+              </button>
+            </div>
+          </div>
+
+          <!-- Weather View -->
+          <div class="weather-view" id="weather-view">
+            <div class="weather-current">
+              <div class="weather-icon" id="weather-icon"></div>
+              <div class="weather-info">
+                <p class="weather-temp" id="weather-temp">--°C</p>
+                <p class="weather-desc" id="weather-desc">Laden...</p>
+                <p class="weather-city" id="weather-city">Berlin</p>
+              </div>
+            </div>
+            <div class="weather-forecast" id="weather-forecast">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+
+          <!-- Water View -->
+          <div class="weather-view hidden" id="water-view">
+            <div class="water-info">
+              <p class="water-river" id="water-river">Spree – Berlin</p>
+              <p class="water-level" id="water-level">-- cm</p>
+              <span class="water-badge" id="water-badge">Laden...</span>
+              <p class="water-desc" id="water-desc"></p>
+            </div>
+            <div class="water-chart">
+              <p class="water-chart-title">Wasserstand letzte 7 Tage</p>
+              <canvas id="water-chart-canvas"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-copy">
+          © 2026 Veranstaltungen in Deutschland. Alle Rechte vorbehalten.
+        </p>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Impressum</a>
+          <a href="#" class="footer-link">Datenschutz</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../src/js/main.js"></script>
+  </body>
+</html>
