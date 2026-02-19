@@ -1,0 +1,24 @@
+{
+  "name": "veranstaltungen-deutschland",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass src/scss/main.scss src/css/main.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yuliia-Marinina/veranstaltungen-deutschland.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Yuliia-Marinina/veranstaltungen-deutschland/issues"
+  },
+  "homepage": "https://github.com/Yuliia-Marinina/veranstaltungen-deutschland#readme",
+  "devDependencies": {
+    "sass": "^1.97.3"
+  }
+}
