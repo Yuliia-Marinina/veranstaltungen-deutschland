@@ -1,0 +1,54 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+.hero {
+  padding: $spacing-xl 0;
+  background-color: $color-bg;
+
+  &-subtitle {
+    font-size: $font-size-sm;
+    color: $color-primary;
+    font-weight: 500;
+    margin-bottom: $spacing-sm;
+  }
+
+  &-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $color-text;
+    margin-bottom: $spacing-md;
+  }
+
+  &-accent {
+    color: $color-primary;
+  }
+
+  &-text {
+    color: $color-text-light;
+    max-width: 600px;
+  }
+}
+
+.events {
+  padding: $spacing-xl 0;
+
+  &-header {
+    @include flex-between;
+    margin-bottom: $spacing-lg;
+  }
+
+  &-title {
+    font-size: $font-size-xl;
+    font-weight: 700;
+  }
+
+  &-subtitle {
+    color: $color-text-light;
+    font-size: $font-size-sm;
+  }
+
+  &-link {
+    color: $color-primary;
+    font-weight: 500;
+  }
+}

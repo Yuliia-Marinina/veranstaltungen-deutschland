@@ -1,0 +1,153 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+.weather-section {
+  background: linear-gradient(135deg, $color-primary, $color-secondary);
+  padding: $spacing-xl 0;
+  color: $color-white;
+}
+
+.weather {
+  &-top {
+    @include flex-between;
+    margin-bottom: $spacing-lg;
+  }
+
+  &-location {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-weight: 500;
+  }
+
+  &-toggle {
+    display: flex;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 4px;
+
+    &-btn {
+      padding: $spacing-xs $spacing-md;
+      border-radius: 20px;
+      color: $color-white;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+
+      &.active {
+        background: $color-white;
+        color: $color-primary;
+      }
+    }
+  }
+
+  &-current {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xl;
+    margin-bottom: $spacing-lg;
+  }
+
+  &-temp {
+    font-size: 3rem;
+    font-weight: 700;
+  }
+
+  &-desc {
+    font-size: $font-size-lg;
+    opacity: 0.9;
+  }
+
+  &-city {
+    opacity: 0.8;
+  }
+
+  &-forecast {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: $spacing-sm;
+
+    @include tablet {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @include mobile {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+.water {
+  &-info {
+    @include flex-column;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-lg;
+  }
+
+  &-river {
+    font-size: $font-size-lg;
+    opacity: 0.9;
+  }
+
+  &-level {
+    font-size: 4rem;
+    font-weight: 700;
+  }
+
+  &-badge {
+    padding: $spacing-xs $spacing-md;
+    border-radius: 20px;
+    background: $color-white;
+    color: $color-primary;
+    font-weight: 600;
+  }
+
+  &-desc {
+    opacity: 0.8;
+    text-align: center;
+  }
+
+  &-chart {
+    &-title {
+      font-weight: 500;
+      margin-bottom: $spacing-sm;
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.map-section {
+  padding: $spacing-xl 0;
+
+  &-header {
+    text-align: center;
+    margin-bottom: $spacing-lg;
+  }
+}
+
+.map {
+  &-header {
+    text-align: center;
+    margin-bottom: $spacing-lg;
+  }
+
+  &-title {
+    font-size: $font-size-xl;
+    font-weight: 700;
+  }
+
+  &-subtitle {
+    color: $color-text-light;
+  }
+
+  &-wrap {
+    height: 500px;
+    border-radius: $radius-lg;
+    border: 1px solid $color-border;
+    background: $color-primary-light;
+  }
+}

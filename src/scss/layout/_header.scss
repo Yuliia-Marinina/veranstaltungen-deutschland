@@ -8,11 +8,9 @@
   background-color: $color-white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
-  &-container {
+  &-inner {
     @include flex-between;
-    padding: $spacing-md $spacing-lg;
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: $spacing-md 0;
   }
 
   &-logo {
