@@ -1,0 +1,63 @@
+@use '../base/variables' as *;
+
+.map {
+    &-marker-inner {
+        width: 16px;
+        height: 16px;
+        background-color: $color-primary;
+        border: 3px solid $color-white;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
+    }
+
+    &-section {
+        padding: $spacing-xl 0;
+        overflow: visible;
+    }
+
+    &-wrap {
+        height: 600px !important;
+        background: transparent;
+        border: none !important;
+        border-radius: 0 !important;
+    }
+
+    &-label {
+        span {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: $color-text;
+            white-space: nowrap;
+        }
+    }
+
+    &-popup {
+        padding: $spacing-xs;
+
+        &-region {
+            font-size: $font-size-sm;
+            color: $color-primary;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        &-title {
+            font-size: $font-size-base;
+            font-weight: 600;
+            color: $color-text;
+            margin-bottom: 4px;
+        }
+
+        &-date {
+            font-size: $font-size-sm;
+            color: $color-text-light;
+        }
+    }
+}
+
+.leaflet-container {
+  background: transparent !important;
+  // Allow popup to overflow map container without clipping
+  overflow: initial !important;
+}
