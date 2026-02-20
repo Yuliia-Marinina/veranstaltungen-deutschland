@@ -1,18 +1,9 @@
 @use '../base/variables' as *;
 
 .map {
-    &-marker-inner {
-        width: 16px;
-        height: 16px;
-        background-color: $color-primary;
-        border: 3px solid $color-white;
-        border-radius: 50%;
-        box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
-    }
-
     &-section {
         padding: $spacing-xl 0;
-        overflow: visible;
+        overflow: hidden;
     }
 
     &-wrap {
@@ -39,7 +30,7 @@
             font-size: $font-size-sm;
             color: $color-primary;
             font-weight: 500;
-            margin-bottom: 2px;
+            margin: 2px 0 !important;
         }
 
         &-title {
@@ -52,6 +43,46 @@
         &-date {
             font-size: $font-size-sm;
             color: $color-text-light;
+            margin: 0.3em 0 !important;
+        }
+
+        &-link {
+            display: inline-block;
+            margin-top: $spacing-sm;
+            color: $color-primary;
+            font-weight: 500;
+            font-size: $font-size-sm;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: $color-primary-dark;
+            }
+        }
+    }
+
+    &-marker {
+        pointer-events: none !important;
+
+        &-inner {
+            pointer-events: all;
+            width: 16px;
+            height: 16px;
+            background-color: $color-primary;
+            border: 3px solid $color-white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
+        }
+    }
+
+    &-label {
+        pointer-events: none !important;
+
+        span {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: $color-text;
+            white-space: nowrap;
         }
     }
 }
