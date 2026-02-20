@@ -1,3 +1,4 @@
 node_modules/
-src/css/main.css.map
-src/css/main.css
+src/css/
+src/scss/main.css
+src/scss/main.css.map

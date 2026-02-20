@@ -1,13 +1,18 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-.weather-section {
-  background: linear-gradient(135deg, $color-primary, $color-secondary);
-  padding: $spacing-xl 0;
-  color: $color-white;
-}
-
 .weather {
+  &-section {
+    background: linear-gradient(135deg, $color-primary, $color-secondary);
+    color: $color-white;
+    padding: $spacing-xl 0;
+
+    .container {
+      padding-top: $spacing-lg;
+      padding-bottom: $spacing-lg;
+    }
+  }
+
   &-top {
     @include flex-between;
     margin-bottom: $spacing-lg;
@@ -45,21 +50,27 @@
     display: flex;
     align-items: center;
     gap: $spacing-xl;
-    margin-bottom: $spacing-lg;
+    margin-bottom: $spacing-xl;
+    padding: $spacing-lg 0;
   }
 
   &-temp {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 700;
+    color: $color-white;
+    line-height: 1;
   }
 
   &-desc {
     font-size: $font-size-lg;
-    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: $spacing-xs;
   }
 
   &-city {
-    opacity: 0.8;
+    font-size: $font-size-base;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: $spacing-xs;
   }
 
   &-forecast {
@@ -75,6 +86,11 @@
       grid-template-columns: repeat(2, 1fr);
     }
   }
+
+  &-icon {
+    font-size: 4rem;
+    line-height: 1;
+  }
 }
 
 .water {
@@ -87,12 +103,17 @@
 
   &-river {
     font-size: $font-size-lg;
-    opacity: 0.9;
+    font-weight: 600;
+    color: $color-white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: $spacing-md;
   }
 
   &-level {
     font-size: 4rem;
     font-weight: 700;
+    color: $color-white;
   }
 
   &-badge {
@@ -106,12 +127,17 @@
   &-desc {
     opacity: 0.8;
     text-align: center;
+    color: $color-white;
   }
 
   &-chart {
+    margin-top: $spacing-lg;
+    padding-bottom: $spacing-lg;
+
     &-title {
       font-weight: 500;
       margin-bottom: $spacing-sm;
+      color: $color-white;
     }
   }
 }
@@ -149,5 +175,49 @@
     border-radius: $radius-lg;
     border: 1px solid $color-border;
     background: $color-primary-light;
+  }
+}
+
+.forecast {
+  &-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: $spacing-sm;
+    border-radius: $radius-md;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background 0.2s ease;
+
+    &-today {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: $color-white;
+    }
+  }
+
+  &-day {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $color-white;
+  }
+
+  &-date {
+    font-size: $font-size-sm;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  &-icon {
+    font-size: 1.5rem;
+  }
+
+  &-temp-max {
+    font-size: $font-size-base;
+    font-weight: 700;
+    color: $color-white;
+  }
+
+  &-temp-min {
+    font-size: $font-size-sm;
+    color: rgba(255, 255, 255, 0.7);
   }
 }

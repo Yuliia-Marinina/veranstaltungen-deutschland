@@ -416,10 +416,13 @@ a:hover {
 
 .weather-section {
   background: linear-gradient(135deg, #1a73e8, #0d47a1);
-  padding: 32px 0;
   color: #ffffff;
+  padding: 32px 0;
 }
-
+.weather-section .container {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
 .weather-top {
   display: flex;
   align-items: center;
@@ -454,18 +457,24 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 32px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
+  padding: 24px 0;
 }
 .weather-temp {
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
 }
 .weather-desc {
   font-size: 1.125rem;
-  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 4px;
 }
 .weather-city {
-  opacity: 0.8;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 4px;
 }
 .weather-forecast {
   display: grid;
@@ -482,6 +491,10 @@ a:hover {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+.weather-icon {
+  font-size: 4rem;
+  line-height: 1;
+}
 
 .water-info {
   display: flex;
@@ -492,11 +505,16 @@ a:hover {
 }
 .water-river {
   font-size: 1.125rem;
-  opacity: 0.9;
+  font-weight: 600;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
 }
 .water-level {
   font-size: 4rem;
   font-weight: 700;
+  color: #ffffff;
 }
 .water-badge {
   padding: 4px 16px;
@@ -508,10 +526,16 @@ a:hover {
 .water-desc {
   opacity: 0.8;
   text-align: center;
+  color: #ffffff;
+}
+.water-chart {
+  margin-top: 24px;
+  padding-bottom: 24px;
 }
 .water-chart-title {
   font-weight: 500;
   margin-bottom: 8px;
+  color: #ffffff;
 }
 
 .hidden {
@@ -542,6 +566,42 @@ a:hover {
   border-radius: 16px;
   border: 1px solid #dadce0;
   background: #e8f0fe;
+}
+
+.forecast-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background 0.2s ease;
+}
+.forecast-card-today {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #ffffff;
+}
+.forecast-day {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+.forecast-date {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+.forecast-icon {
+  font-size: 1.5rem;
+}
+.forecast-temp-max {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+.forecast-temp-min {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .hero {
