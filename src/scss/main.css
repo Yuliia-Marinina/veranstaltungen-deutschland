@@ -431,6 +431,8 @@ a:hover {
 }
 
 .leaflet-container {
+  width: 100% !important;
+  max-width: 100% !important;
   background: transparent !important;
   overflow: initial !important;
 }
@@ -646,4 +648,258 @@ a:hover {
 .events-link {
   color: #1a73e8;
   font-weight: 500;
+}
+
+.detail-hero {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+.detail-hero-image {
+  position: absolute;
+  inset: 0;
+}
+.detail-hero-image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.detail-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
+}
+.detail-hero .container {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 32px;
+}
+.detail-hero-content {
+  color: #ffffff;
+}
+
+.detail-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.detail-tag {
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: #ffffff;
+  backdrop-filter: blur(4px);
+}
+
+.detail-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+@media (max-width: 768px) {
+  .detail-title {
+    font-size: 1.5rem;
+  }
+}
+
+.detail-meta {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.detail-meta-item {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.detail-content {
+  padding: 32px 0;
+  background: #f8f9fa;
+}
+
+.detail-info {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 32px;
+}
+@media (max-width: 768px) {
+  .detail-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-block {
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+.detail-block-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #202124;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #dadce0;
+}
+
+.detail-description {
+  font-size: 1rem;
+  color: #5f6368;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.detail-address {
+  font-size: 1rem;
+  color: #5f6368;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.detail-map {
+  height: 300px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #dadce0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.detail-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+.detail-card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #202124;
+  margin-bottom: 24px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #dadce0;
+}
+.detail-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid #dadce0;
+}
+.detail-card-row:last-of-type {
+  border-bottom: none;
+}
+.detail-card-label {
+  font-size: 0.75rem;
+  color: #5f6368;
+  white-space: nowrap;
+}
+.detail-card-value {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #202124;
+  text-align: right;
+}
+.detail-card-btn {
+  width: 100%;
+  margin-top: 24px;
+  justify-content: center;
+}
+
+.detail-weather-current {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.detail-weather-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+.detail-weather-temp {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #202124;
+}
+.detail-weather-desc {
+  font-size: 0.75rem;
+  color: #5f6368;
+  margin-top: 4px;
+}
+.detail-weather-forecast {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.detail-forecast-item {
+  text-align: center;
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: #5f6368;
+  margin-bottom: 4px;
+}
+.detail-forecast-item-day {
+  font-size: 0.75rem;
+  color: #5f6368;
+  margin-bottom: 4px;
+}
+.detail-forecast-item-icon {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+.detail-forecast-item-temp {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #202124;
+}
+
+.detail-water {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #dadce0;
+}
+.detail-water-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.detail-water-icon {
+  font-size: 1.5rem;
+}
+.detail-water-level {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #202124;
+}
+.detail-water-badge {
+  padding: 2px 8px;
+  background: #f8f9fa;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid #dadce0;
+}
+.detail-water-station {
+  font-size: 0.75rem;
+  color: #5f6368;
 }/*# sourceMappingURL=main.css.map */

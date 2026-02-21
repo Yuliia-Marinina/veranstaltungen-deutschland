@@ -23,7 +23,8 @@ export const fetchWeather = async (lat, lng) => {
 // Get list of water measurement stations on river Elbe
 export const fetchWaterStations = async () => {
   try {
-    const url = `${WATER_BASE_URL}/stations.json?waters=ELBE`;
+    // Removed ?waters=ELBE to get all stations
+    const url = `${WATER_BASE_URL}/stations.json`;
     const response = await fetch(url);
 
     if (!response.ok) {

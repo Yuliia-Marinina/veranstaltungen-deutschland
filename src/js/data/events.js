@@ -17,7 +17,7 @@ export const events = [
     tags: ['Licht', 'Kunst', 'Familie', 'Kostenlos'],
     time: '18:00 – 23:00 Uhr',
     address: 'Unter den Linden, 10117 Berlin',
-    waterStation: 'BERLIN',
+    waterStation: 'SOPHIENWERDER',
   },
   {
     id: 2,

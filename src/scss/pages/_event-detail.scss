@@ -1,0 +1,285 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+// Hero
+.detail-hero {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+
+  &-image {
+    position: absolute;
+    inset: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: $spacing-xl;
+  }
+
+  &-content {
+    color: $color-white;
+  }
+}
+
+.detail-tags {
+  display: flex;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+  margin-bottom: $spacing-md;
+}
+
+.detail-tag {
+  padding: 4px $spacing-sm;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  font-size: $font-size-sm;
+  color: $color-white;
+  backdrop-filter: blur(4px);
+}
+
+.detail-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $color-white;
+  margin-bottom: $spacing-md;
+  line-height: 1.2;
+
+  @include tablet {
+    font-size: $font-size-xxl;
+  }
+}
+
+.detail-meta {
+  display: flex;
+  gap: $spacing-lg;
+  flex-wrap: wrap;
+
+  &-item {
+    font-size: $font-size-base;
+    color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+}
+
+// Main content
+.detail-content {
+  padding: $spacing-xl 0;
+  background: $color-bg;
+}
+
+.detail-info {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: $spacing-xl;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-block {
+  margin-bottom: $spacing-xl;
+  overflow: hidden;
+
+  &-title {
+    font-size: $font-size-xxl;
+    font-weight: 700;
+    color: $color-text;
+    margin-bottom: $spacing-md;
+    padding-bottom: $spacing-sm;
+    border-bottom: 2px solid $color-border;
+  }
+}
+
+.detail-description {
+  font-size: $font-size-base;
+  color: $color-text-light;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.detail-address {
+  font-size: $font-size-base;
+  color: $color-text-light;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.detail-map {
+  height: 300px;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  border: 1px solid $color-border;
+  width: 100%;
+  max-width: 100%;
+}
+
+// Info card
+.detail-card {
+  background: $color-white;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-lg;
+
+  &-title {
+    font-size: $font-size-lg;
+    font-weight: 700;
+    color: $color-text;
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-sm;
+    border-bottom: 2px solid $color-border;
+  }
+
+  &-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $spacing-md;
+    padding: $spacing-sm 0;
+    border-bottom: 1px solid $color-border;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+
+  &-label {
+    font-size: $font-size-sm;
+    color: $color-text-light;
+    white-space: nowrap;
+  }
+
+  &-value {
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: $color-text;
+    text-align: right;
+  }
+
+  &-btn {
+    width: 100%;
+    margin-top: $spacing-lg;
+    justify-content: center;
+  }
+}
+
+// Weather card
+.detail-weather {
+  &-current {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+  }
+
+  &-icon {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  &-temp {
+    font-size: $font-size-xxl;
+    font-weight: 700;
+    color: $color-text;
+  }
+
+  &-desc {
+    font-size: $font-size-sm;
+    color: $color-text-light;
+    margin-top: $spacing-xs;
+  }
+
+  &-forecast {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-sm;
+  }
+}
+
+.detail-forecast-item {
+  text-align: center;
+  padding: $spacing-sm;
+  background: $color-bg;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  color: $color-text-light;
+  margin-bottom: $spacing-xs;
+
+  &-day {
+    font-size: $font-size-sm;
+    color: $color-text-light;
+    margin-bottom: $spacing-xs;
+  }
+
+  &-icon {
+    font-size: 1.5rem;
+    margin-bottom: $spacing-xs;
+  }
+
+  &-temp {
+    font-size: $font-size-base;
+    font-weight: 600;
+    color: $color-text;
+  }
+}
+
+// Water info
+.detail-water {
+  margin-top: $spacing-lg;
+  padding-top: $spacing-md;
+  border-top: 1px solid $color-border;
+
+  &-info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-xs;
+  }
+
+  &-icon {
+    font-size: 1.5rem;
+  }
+
+  &-level {
+    font-size: $font-size-lg;
+    font-weight: 700;
+    color: $color-text;
+  }
+
+  &-badge {
+    padding: 2px $spacing-sm;
+    background: $color-bg;
+    border-radius: 20px;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    border: 1px solid $color-border;
+  }
+
+  &-station {
+    font-size: $font-size-sm;
+    color: $color-text-light;
+  }
+}

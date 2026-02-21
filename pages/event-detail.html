@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Veranstaltung — Events in Germany</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="../src/scss/main.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="index.html" class="header-logo"> 📍 <span>Events in Germany</span> </a>
+          <nav class="header-nav">
+            <a href="index.html#events" class="header-link">Events</a>
+            <a href="index.html#map" class="header-link">Germany Map</a>
+            <a href="index.html#weather" class="header-link">Wetter & Wasser</a>
+          </nav>
+          <button class="btn btn-primary header-btn">Anmelden</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="detail-hero">
+      <div class="detail-hero-image">
+        <img id="detail-image" src="https://picsum.photos/1200/400?random=1" alt="Event" />
+        <div class="detail-hero-overlay"></div>
+      </div>
+      <div class="container">
+        <div class="detail-hero-content">
+          <div class="detail-tags" id="detail-tags">
+            <!-- Filled by JS -->
+          </div>
+          <h1 class="detail-title" id="detail-title">Veranstaltung wird geladen...</h1>
+          <div class="detail-meta">
+            <span class="detail-meta-item"> 📅 <span id="detail-date">--</span> </span>
+            <span class="detail-meta-item"> 📍 <span id="detail-region">--</span> </span>
+            <span class="detail-meta-item"> 🕐 <span id="detail-time">--</span> </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="detail-content">
+      <div class="container">
+        <div class="detail-info">
+          <!-- Left: Description + Map -->
+          <div class="detail-info-left">
+            <div class="detail-block">
+              <h2 class="detail-block-title">Über die Veranstaltung</h2>
+              <p class="detail-description" id="detail-description">--</p>
+            </div>
+
+            <div class="detail-block">
+              <h2 class="detail-block-title">Veranstaltungsort</h2>
+              <p class="detail-address">📍 <span id="detail-address">--</span></p>
+              <div class="detail-map" id="detail-map"></div>
+            </div>
+          </div>
+
+          <!-- Right: Info Card -->
+          <div class="detail-info-right">
+            <div class="detail-card">
+              <h3 class="detail-card-title">Veranstaltungsinfo</h3>
+
+              <div class="detail-card-row">
+                <span class="detail-card-label">📅 Datum</span>
+                <span class="detail-card-value" id="detail-card-date">--</span>
+              </div>
+
+              <div class="detail-card-row">
+                <span class="detail-card-label">🕐 Uhrzeit</span>
+                <span class="detail-card-value" id="detail-card-time">--</span>
+              </div>
+
+              <div class="detail-card-row">
+                <span class="detail-card-label">📍 Ort</span>
+                <span class="detail-card-value" id="detail-card-region">--</span>
+              </div>
+
+              <div class="detail-card-row">
+                <span class="detail-card-label">🗺️ Adresse</span>
+                <span class="detail-card-value" id="detail-card-address">--</span>
+              </div>
+
+              <button class="btn btn-primary detail-card-btn">Tickets kaufen</button>
+            </div>
+
+            <!-- Weather for event region -->
+            <div class="detail-card detail-card-weather">
+              <h3 class="detail-card-title">Wetter & Wasser</h3>
+              <div class="detail-weather-current">
+                <span class="detail-weather-icon" id="detail-weather-icon">--</span>
+                <div>
+                  <p class="detail-weather-temp" id="detail-weather-temp">--°C</p>
+                  <p class="detail-weather-desc" id="detail-weather-desc">--</p>
+                </div>
+              </div>
+              <div id="detail-weather-forecast" class="detail-weather-forecast">
+                <!-- Filled by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-copy">© 2026 Veranstaltungen in Deutschland. Alle Rechte vorbehalten.</p>
+          <div class="footer-links">
+            <a href="#" class="footer-link">Impressum</a>
+            <a href="#" class="footer-link">Datenschutz</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="../src/js/main-detail.js"></script>
+  </body>
+</html>

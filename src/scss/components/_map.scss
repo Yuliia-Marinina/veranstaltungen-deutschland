@@ -109,6 +109,8 @@
 }
 
 .leaflet-container {
+  width: 100% !important;
+  max-width: 100% !important;
   background: transparent !important;
   // Allow popup to overflow map container without clipping
   overflow: initial !important;
