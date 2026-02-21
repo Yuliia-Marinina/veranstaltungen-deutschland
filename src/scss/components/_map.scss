@@ -1,111 +1,111 @@
 @use '../base/variables' as *;
 
 .map {
-    &-section {
-        padding: $spacing-xl 0;
-        overflow: hidden;
-    }
+  &-section {
+    padding: $spacing-xl 0;
+    overflow: hidden;
+  }
 
-    &-wrap {
-        height: 600px !important;
-        background: transparent;
-        border: none !important;
-        border-radius: 0 !important;
-    }
+  &-wrap {
+    height: 600px !important;
+    background: transparent;
+    border: none !important;
+    border-radius: 0 !important;
+  }
 
-    &-label {
-        span {
-            font-family: 'Inter', sans-serif;
-            font-size: 12px;
-            font-weight: 600;
-            color: $color-text;
-            white-space: nowrap;
-        }
+  &-label {
+    span {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: $color-text;
+      white-space: nowrap;
     }
+  }
 
-    &-header {
-        text-align: center;
-        margin-bottom: $spacing-lg;
+  &-header {
+    text-align: center;
+    margin-bottom: $spacing-lg;
+  }
+
+  &-title {
+    font-size: $font-size-xl;
+    font-weight: 700;
+  }
+
+  &-subtitle {
+    color: $color-text-light;
+  }
+
+  &-wrap {
+    height: 500px;
+    border-radius: $radius-lg;
+    border: 1px solid $color-border;
+    background: $color-primary-light;
+  }
+
+  &-popup {
+    padding: $spacing-xs;
+
+    &-region {
+      font-size: $font-size-sm;
+      color: $color-primary;
+      font-weight: 500;
+      margin: 2px 0 !important;
     }
 
     &-title {
-        font-size: $font-size-xl;
-        font-weight: 700;
+      font-size: $font-size-base;
+      font-weight: 600;
+      color: $color-text;
+      margin-bottom: 4px;
     }
 
-    &-subtitle {
-        color: $color-text-light;
+    &-date {
+      font-size: $font-size-sm;
+      color: $color-text-light;
+      margin: 0.3em 0 !important;
     }
 
-    &-wrap {
-        height: 500px;
-        border-radius: $radius-lg;
-        border: 1px solid $color-border;
-        background: $color-primary-light;
+    &-link {
+      display: inline-block;
+      margin-top: $spacing-sm;
+      color: $color-primary;
+      font-weight: 500;
+      font-size: $font-size-sm;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $color-primary-dark;
+      }
     }
+  }
 
-    &-popup {
-        padding: $spacing-xs;
+  &-marker {
+    pointer-events: none !important;
 
-        &-region {
-            font-size: $font-size-sm;
-            color: $color-primary;
-            font-weight: 500;
-            margin: 2px 0 !important;
-        }
-
-        &-title {
-            font-size: $font-size-base;
-            font-weight: 600;
-            color: $color-text;
-            margin-bottom: 4px;
-        }
-
-        &-date {
-            font-size: $font-size-sm;
-            color: $color-text-light;
-            margin: 0.3em 0 !important;
-        }
-
-        &-link {
-            display: inline-block;
-            margin-top: $spacing-sm;
-            color: $color-primary;
-            font-weight: 500;
-            font-size: $font-size-sm;
-            transition: color 0.2s ease;
-
-            &:hover {
-                color: $color-primary-dark;
-            }
-        }
+    &-inner {
+      pointer-events: all;
+      width: 16px;
+      height: 16px;
+      background-color: $color-primary;
+      border: 3px solid $color-white;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
     }
+  }
 
-    &-marker {
-        pointer-events: none !important;
+  &-label {
+    pointer-events: none !important;
 
-        &-inner {
-            pointer-events: all;
-            width: 16px;
-            height: 16px;
-            background-color: $color-primary;
-            border: 3px solid $color-white;
-            border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
-        }
+    span {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: $color-text;
+      white-space: nowrap;
     }
-
-    &-label {
-        pointer-events: none !important;
-
-        span {
-            font-family: 'Inter', sans-serif;
-            font-size: 12px;
-            font-weight: 600;
-            color: $color-text;
-            white-space: nowrap;
-        }
-    }
+  }
 }
 
 .leaflet-container {

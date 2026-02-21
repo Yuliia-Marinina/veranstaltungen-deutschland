@@ -2,3 +2,9 @@ node_modules/
 src/css/
 src/scss/main.css
 src/scss/main.css.map
+
+# Prettier cache
+.prettier_cache
+
+# Editor config
+.vscode/settings.json

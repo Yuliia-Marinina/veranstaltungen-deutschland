@@ -39,7 +39,7 @@ veranstaltungen-deutschland/
 
 ## 🚀 Installation
 ```bash
-git clone https://github.com/YOUR_USERNAME/veranstaltungen-deutschland.git
+git clone https://github.com/Yuliia-Marinina/veranstaltungen-deutschland.git
 cd veranstaltungen-deutschland
 ```
 
