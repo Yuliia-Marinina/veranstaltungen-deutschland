@@ -217,43 +217,15 @@
               <span class="weather-location-icon">📍</span>
               <span class="weather-location-name">Berlin, Germany</span>
             </div>
-            <div class="weather-toggle">
-              <button class="weather-toggle-btn active" data-tab="weather">
-                Wetter
-              </button>
-              <button class="weather-toggle-btn" data-tab="water">
-                Wasserstand
-              </button>
-            </div>
           </div>
 
-          <!-- Weather View -->
-          <div class="weather-view" id="weather-view">
-            <div class="weather-current">
-              <div class="weather-icon" id="weather-icon"></div>
-              <div class="weather-info">
-                <p class="weather-temp" id="weather-temp">--°C</p>
-                <p class="weather-desc" id="weather-desc">Laden...</p>
-                <p class="weather-city" id="weather-city">Berlin</p>
-              </div>
-            </div>
-            <div class="weather-forecast" id="weather-forecast">
-              <!-- Filled by JS -->
-            </div>
+          <div class="weather-cards" id="weather-cards">
+            <!-- Filled by JS -->
           </div>
 
-          <!-- Water View -->
-          <div class="weather-view hidden" id="water-view">
-            <div class="water-info">
-              <p class="water-river" id="water-river">Spree – Berlin</p>
-              <p class="water-level" id="water-level">-- cm</p>
-              <span class="water-badge" id="water-badge">Laden...</span>
-              <p class="water-desc" id="water-desc"></p>
-            </div>
-            <div class="water-chart">
-              <p class="water-chart-title">Wasserstand letzte 7 Tage</p>
-              <canvas id="water-chart-canvas"></canvas>
-            </div>
+          <div class="water-chart">
+            <p class="water-chart-title">Wasserstand letzte 7 Tage</p>
+            <canvas id="water-chart-canvas"></canvas>
           </div>
 
         </div>

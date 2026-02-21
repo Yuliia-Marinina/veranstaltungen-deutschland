@@ -4,17 +4,13 @@
 .weather {
   &-section {
     background: linear-gradient(135deg, $color-primary, $color-secondary);
+    padding: $spacing-lg 0;
+    display: flex;
+    align-items: center;
     color: $color-white;
-    padding: $spacing-xl 0;
-
-    .container {
-      padding-top: $spacing-lg;
-      padding-bottom: $spacing-lg;
-    }
   }
 
   &-top {
-    @include flex-between;
     margin-bottom: $spacing-lg;
   }
 
@@ -22,61 +18,16 @@
     display: flex;
     align-items: center;
     gap: $spacing-sm;
-    font-weight: 500;
-  }
-
-  &-toggle {
-    display: flex;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    padding: 4px;
-
-    &-btn {
-      padding: $spacing-xs $spacing-md;
-      border-radius: 20px;
-      color: $color-white;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.2s ease;
-
-      &.active {
-        background: $color-white;
-        color: $color-primary;
-      }
-    }
-  }
-
-  &-current {
-    display: flex;
-    align-items: center;
-    gap: $spacing-xl;
-    margin-bottom: $spacing-xl;
-    padding: $spacing-lg 0;
-  }
-
-  &-temp {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: $color-white;
-    line-height: 1;
-  }
-
-  &-desc {
     font-size: $font-size-lg;
-    color: rgba(255, 255, 255, 0.9);
-    margin-top: $spacing-xs;
+    font-weight: 600;
+    color: $color-white;
   }
 
-  &-city {
-    font-size: $font-size-base;
-    color: rgba(255, 255, 255, 0.7);
-    margin-top: $spacing-xs;
-  }
-
-  &-forecast {
+  &-cards {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: $spacing-sm;
+    margin-bottom: $spacing-xl;
 
     @include tablet {
       grid-template-columns: repeat(4, 1fr);
@@ -87,137 +38,113 @@
     }
   }
 
-  &-icon {
-    font-size: 4rem;
-    line-height: 1;
-  }
-}
-
-.water {
-  &-info {
-    @include flex-column;
-    align-items: center;
-    gap: $spacing-sm;
-    margin-bottom: $spacing-lg;
-  }
-
-  &-river {
-    font-size: $font-size-lg;
-    font-weight: 600;
-    color: $color-white;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: $spacing-md;
-  }
-
-  &-level {
-    font-size: 4rem;
-    font-weight: 700;
-    color: $color-white;
-  }
-
-  &-badge {
-    padding: $spacing-xs $spacing-md;
-    border-radius: 20px;
-    background: $color-white;
-    color: $color-primary;
-    font-weight: 600;
-  }
-
-  &-desc {
-    opacity: 0.8;
-    text-align: center;
-    color: $color-white;
-  }
-
-  &-chart {
-    margin-top: $spacing-lg;
-    padding-bottom: $spacing-lg;
-
-    &-title {
-      font-weight: 500;
-      margin-bottom: $spacing-sm;
-      color: $color-white;
-    }
-  }
-}
-
-.hidden {
-  display: none;
-}
-
-.map-section {
-  padding: $spacing-xl 0;
-
-  &-header {
-    text-align: center;
-    margin-bottom: $spacing-lg;
-  }
-}
-
-.map {
-  &-header {
-    text-align: center;
-    margin-bottom: $spacing-lg;
-  }
-
-  &-title {
-    font-size: $font-size-xl;
-    font-weight: 700;
-  }
-
-  &-subtitle {
-    color: $color-text-light;
-  }
-
-  &-wrap {
-    height: 500px;
-    border-radius: $radius-lg;
-    border: 1px solid $color-border;
-    background: $color-primary-light;
-  }
-}
-
-.forecast {
   &-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: $radius-lg;
+    padding: $spacing-sm;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding: $spacing-sm;
-    border-radius: $radius-md;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    gap: $spacing-xs;
     transition: background 0.2s ease;
 
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
     &-today {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       border-color: $color-white;
     }
-  }
 
-  &-day {
-    font-size: $font-size-sm;
-    font-weight: 600;
-    color: $color-white;
-  }
+    &-header {
+      text-align: center;
+    }
 
-  &-date {
-    font-size: $font-size-sm;
-    color: rgba(255, 255, 255, 0.7);
-  }
+    &-day {
+      font-size: $font-size-base;
+      font-weight: 700;
+      color: $color-white;
+    }
 
-  &-icon {
-    font-size: 1.5rem;
-  }
+    &-date {
+      font-size: $font-size-sm;
+      color: rgba(255, 255, 255, 0.7);
+    }
 
-  &-temp-max {
-    font-size: $font-size-base;
-    font-weight: 700;
-    color: $color-white;
-  }
+    &-weather {
+      text-align: center;
+    }
 
-  &-temp-min {
-    font-size: $font-size-sm;
-    color: rgba(255, 255, 255, 0.7);
+    &-icon {
+      font-size: 2rem;
+      margin-bottom: $spacing-xs;
+    }
+
+    &-temp-max {
+      font-size: $font-size-lg;
+      font-weight: 700;
+      color: $color-white;
+    }
+
+    &-temp-min {
+      font-size: $font-size-sm;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    &-desc {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: $spacing-xs;
+    }
+
+    &-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: $spacing-xs 0;
+    }
+
+    &-water {
+      text-align: center;
+
+      &-icon {
+        font-size: 1.5rem;
+        margin-bottom: $spacing-xs;
+      }
+
+      &-level {
+        font-size: $font-size-lg;
+        font-weight: 700;
+        color: $color-white;
+      }
+
+      &-badge {
+        display: inline-block;
+        padding: 2px $spacing-sm;
+        background: $color-white;
+        border-radius: 20px;
+        font-size: $font-size-sm;
+        font-weight: 600;
+        margin: $spacing-xs 0;
+      }
+
+      &-desc {
+        font-size: $font-size-sm;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      &-na {
+        font-size: $font-size-sm;
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
   }
 }
+
+
+
+
+
+

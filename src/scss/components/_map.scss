@@ -23,6 +23,27 @@
         }
     }
 
+    &-header {
+        text-align: center;
+        margin-bottom: $spacing-lg;
+    }
+
+    &-title {
+        font-size: $font-size-xl;
+        font-weight: 700;
+    }
+
+    &-subtitle {
+        color: $color-text-light;
+    }
+
+    &-wrap {
+        height: 500px;
+        border-radius: $radius-lg;
+        border: 1px solid $color-border;
+        background: $color-primary-light;
+    }
+
     &-popup {
         padding: $spacing-xs;
 

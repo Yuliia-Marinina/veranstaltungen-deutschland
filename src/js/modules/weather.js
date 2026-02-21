@@ -1,82 +1,166 @@
-// Import API functions and helpers
-import { fetchWeather, getUserLocation } from '../utils/api.js';
-import { getWeatherIcon, getWeatherDescription, formatWeekday, formatDate } from '../utils/helpers.js';
+import { fetchWeather, getUserLocation, fetchWaterStations, fetchWaterLevels } from '../utils/api.js';
+import { getWeatherIcon, getWeatherDescription, formatWeekday, formatDate, getWaterStatus } from '../utils/helpers.js';
 
-// Initialize weather module
+let waterChart = null;
+
 export const initWeather = async () => {
     try {
         // Get user location
         const location = await getUserLocation();
 
-        // Update city name in UI
-        const cityEl = document.getElementById('weather-city');
+        // Update city name
         const locationEl = document.querySelector('.weather-location-name');
-
-        if (cityEl) cityEl.textContent = location.city || 'Berlin';
         if (locationEl) locationEl.textContent = `${location.city || 'Berlin'}, Germany`;
 
-        // Fetch weather data
-        const data = await fetchWeather(location.lat, location.lng);
+        // Fetch weather and water data in parallel
+        const [weatherData, stations] = await Promise.all([
+            fetchWeather(location.lat, location.lng),
+            fetchWaterStations(),
+        ]);
 
-        // Check if data is valid
-        if (!data || !data.daily) {
-        console.error('No weather data received');
-        return;
-        }
+        if (!weatherData || !weatherData.daily) return;
 
-        // Display current weather (first day)
-        renderCurrentWeather(data.daily, 0);
+        // Get water measurements
+        const station = stations?.find((s) => s.shortname === 'DRESDEN') || stations?.[0];
+        const measurements = station ? await fetchWaterLevels(station.uuid) : null;
 
-        // Display 7-day forecast
-        renderForecast(data.daily);
+        // Build daily water level map
+        const waterByDay = buildWaterByDay(measurements);
+
+        // Render cards
+        renderCards(weatherData.daily, waterByDay);
+
+        // Render chart
+        if (measurements) renderWaterChart(measurements);
 
     } catch (error) {
         console.error('Error initializing weather:', error);
     }
 };
 
-// Render current weather
-const renderCurrentWeather = (daily, index) => {
-    const tempEl = document.getElementById('weather-temp');
-    const descEl = document.getElementById('weather-desc');
-    const iconEl = document.getElementById('weather-icon');
+// Build map of date -> water level
+const buildWaterByDay = (measurements) => {
+    if (!measurements) return {};
 
-    if (!tempEl || !descEl || !iconEl) return;
-
-    const code = daily.weathercode[index];
-    const maxTemp = Math.round(daily.temperature_2m_max[index]);
-
-    tempEl.textContent = `${maxTemp}°C`;
-    descEl.textContent = getWeatherDescription(code);
-    iconEl.textContent = getWeatherIcon(code);
+    const map = {};
+    measurements.forEach((m) => {
+        const date = m.timestamp.split('T')[0];
+        map[date] = Math.round(m.value);
+    });
+    return map;
 };
 
-// Render 7-day forecast cards
-const renderForecast = (daily) => {
-    const forecastEl = document.getElementById('weather-forecast');
-    if (!forecastEl) return;
+// Water level description
+const getWaterDescription = (status) => {
+    const descriptions = {
+        'Hoch': 'Erhöhter Wasserstand',
+        'Niedrig': 'Niedriger Wasserstand',
+        'Normal': 'Normaler Wasserstand',
+    };
+    return descriptions[status] || '';
+};
 
-    // Clear existing content
-    forecastEl.innerHTML = '';
+// Render 7 day cards
+const renderCards = (daily, waterByDay) => {
+    const container = document.getElementById('weather-cards');
+    if (!container) return;
 
-    // Create card for each day
+    container.innerHTML = '';
+
+  // Get last known water level for future days
+    const lastKnownLevel = waterByDay[Object.keys(waterByDay).at(-1)];
+
     daily.time.forEach((date, index) => {
+        const isToday = index === 0;
         const code = daily.weathercode[index];
         const maxTemp = Math.round(daily.temperature_2m_max[index]);
         const minTemp = Math.round(daily.temperature_2m_min[index]);
-        const isToday = index === 0;
+
+        // Real or approximate water level
+        const waterLevel = waterByDay[date] || lastKnownLevel;
+        const isApprox = !waterByDay[date] && !!lastKnownLevel;
+        const status = waterLevel ? getWaterStatus(waterLevel) : null;
 
         const card = document.createElement('div');
-        card.className = `forecast-card ${isToday ? 'forecast-card-today' : ''}`;
+        card.className = `weather-card ${isToday ? 'weather-card-today' : ''}`;
 
         card.innerHTML = `
-        <p class="forecast-day">${isToday ? 'Heute' : formatWeekday(date)}</p>
-        <p class="forecast-date">${formatDate(date)}</p>
-        <p class="forecast-icon">${getWeatherIcon(code)}</p>
-        <p class="forecast-temp-max">${maxTemp}°</p>
-        <p class="forecast-temp-min">${minTemp}°</p>
+        <div class="weather-card-header">
+            <p class="weather-card-day">${isToday ? 'Heute' : formatWeekday(date)}</p>
+            <p class="weather-card-date">${formatDate(date)}</p>
+        </div>
+
+        <div class="weather-card-weather">
+            <p class="weather-card-icon">${getWeatherIcon(code)}</p>
+            <p class="weather-card-temp-max">${maxTemp}°</p>
+            <p class="weather-card-temp-min">${minTemp}°</p>
+            <p class="weather-card-desc">${getWeatherDescription(code)}</p>
+        </div>
+
+        <div class="weather-card-divider"></div>
+
+        <div class="weather-card-water">
+            <p class="weather-card-water-icon">🌊</p>
+            <p class="weather-card-water-level">
+            ${isApprox ? '~' : ''}${waterLevel} cm
+            </p>
+            <span class="weather-card-water-badge" style="color: ${status.color}">
+            ${status.text}
+            </span>
+            <p class="weather-card-water-desc">
+            ${isApprox ? 'Letzter bekannter Stand' : getWaterDescription(status.text)}
+            </p>
+        </div>
         `;
 
-        forecastEl.appendChild(card);
+        container.appendChild(card);
+    });
+};
+
+// Render chart
+const renderWaterChart = (measurements) => {
+    const ctx = document.getElementById('water-chart-canvas');
+    if (!ctx) return;
+
+    const filtered = measurements.filter((_, i) => i % 10 === 0);
+    const labels = filtered.map((m) => formatDate(m.timestamp));
+    const values = filtered.map((m) => Math.round(m.value));
+
+    if (waterChart) waterChart.destroy();
+
+    waterChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Wasserstand (cm)',
+                data: values,
+                borderColor: '#ffffff',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderWidth: 2,
+                tension: 0.4,
+                pointBackgroundColor: '#ffffff',
+                pointRadius: 3,
+                fill: true,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: {
+                    ticks: { color: 'rgba(255,255,255,0.8)', maxTicksLimit: 7 },
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                },
+                y: {
+                    ticks: {
+                        color: 'rgba(255,255,255,0.8)',
+                        callback: (v) => `${v} cm`,
+                    },
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                },
+            },
+        },
     });
 };
