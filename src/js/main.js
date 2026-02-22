@@ -1,13 +1,20 @@
-// Import modules
 import { initMap } from './modules/map.js';
 import { initWeather } from './modules/weather.js';
-import { initWaterLevel } from './modules/waterLevel.js';
+import { fetchTicketmasterEvents } from './utils/api.js';
+import { normalizeEvent } from './utils/ticketmaster.js';
+import { renderEvents } from './modules/events.js';
 
-// Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', async () => {
-  // Initialize map
-  initMap();
+  // Load real events from Ticketmaster
+  const rawEvents = await fetchTicketmasterEvents('', 6);
+  const events = rawEvents.map((e, i) => normalizeEvent(e, i));
 
-  // Initialize weather (default view)
+  // Render events on page
+  renderEvents(events);
+
+  // Initialize map with real events
+  initMap(events);
+
+  // Initialize weather
   await initWeather();
 });

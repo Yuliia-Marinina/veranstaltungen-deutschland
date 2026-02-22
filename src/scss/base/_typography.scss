@@ -56,7 +56,7 @@ strong {
 // =====================
 // Links
 // =====================
-a {
+a:not(.card-btn) {
   color: $color-primary;
   transition: color 0.2s ease;
 

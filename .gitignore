@@ -8,3 +8,6 @@ src/scss/main.css.map
 
 # Editor config
 .vscode/settings.json
+
+.env
+src/js/config.js

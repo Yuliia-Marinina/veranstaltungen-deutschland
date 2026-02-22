@@ -6,23 +6,6 @@
     overflow: hidden;
   }
 
-  &-wrap {
-    height: 600px !important;
-    background: transparent;
-    border: none !important;
-    border-radius: 0 !important;
-  }
-
-  &-label {
-    span {
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      color: $color-text;
-      white-space: nowrap;
-    }
-  }
-
   &-header {
     text-align: center;
     margin-bottom: $spacing-lg;
@@ -38,10 +21,36 @@
   }
 
   &-wrap {
-    height: 500px;
+    height: 600px;
     border-radius: $radius-lg;
     border: 1px solid $color-border;
     background: $color-primary-light;
+  }
+
+  &-marker {
+    pointer-events: none !important;
+
+    &-inner {
+      pointer-events: all;
+      width: 16px;
+      height: 16px;
+      background-color: $color-primary;
+      border: 3px solid $color-white;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
+    }
+  }
+
+  &-label {
+    pointer-events: none !important;
+
+    span {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: $color-text;
+      white-space: nowrap;
+    }
   }
 
   &-popup {
@@ -81,29 +90,23 @@
     }
   }
 
-  &-marker {
-    pointer-events: none !important;
+  // Cluster styles
+  &-cluster {
+    width: 36px;
+    height: 36px;
+    background: $color-primary;
+    border: 3px solid $color-white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-sm;
+    font-weight: 700;
+    color: $color-white;
+    box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
 
-    &-inner {
-      pointer-events: all;
-      width: 16px;
-      height: 16px;
-      background-color: $color-primary;
-      border: 3px solid $color-white;
-      border-radius: 50%;
-      box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
-    }
-  }
-
-  &-label {
-    pointer-events: none !important;
-
-    span {
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      color: $color-text;
-      white-space: nowrap;
+    &-wrap {
+      background: transparent;
     }
   }
 }
@@ -112,6 +115,5 @@
   width: 100% !important;
   max-width: 100% !important;
   background: transparent !important;
-  // Allow popup to overflow map container without clipping
   overflow: initial !important;
 }

@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Entdecken Sie die besten Veranstaltungen in Deutschland" />
     <title>Veranstaltungen in Deutschland</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"
+    />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/scss/main.css" />
   </head>
@@ -55,138 +63,13 @@
       </section>
 
       <!-- Events -->
-      <section class="events" id="events">
+      <section class="events-section" id="events">
         <div class="container">
           <div class="events-header">
-            <div class="events-header-left">
-              <h2 class="events-title">Bevorstehende Veranstaltungen</h2>
-              <p class="events-subtitle">Entdecken Sie die kulturelle Vielfalt Deutschlands</p>
-            </div>
-            <div class="events-header-right">
-              <a href="#" class="events-link">Alle anzeigen →</a>
-            </div>
+            <h2 class="events-title">Kommende Veranstaltungen</h2>
           </div>
-
-          <div class="events-grid grid">
-            <!-- Card 1 -->
-            <article class="card">
-              <div class="card-image">
-                <img src="https://picsum.photos/400/200?random=1" alt="Berliner Lichterfest" />
-                <span class="card-badge">Berlin</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Berliner Lichterfest</h3>
-                <p class="card-date">
-                  <span class="card-date-icon">📅</span>
-                  15. – 17. Februar 2026
-                </p>
-                <p class="card-text">
-                  Das größte Lichterfest Berlins verwandelt die Stadt in ein strahlendes Meer aus
-                  Farben und Licht.
-                </p>
-                <a href="event-detail.html?id=1" class="card-btn">Mehr erleben</a>
-              </div>
-            </article>
-
-            <!-- Card 2 -->
-            <article class="card">
-              <div class="card-image">
-                <img src="https://picsum.photos/400/200?random=2" alt="Münchner Opernfestspiele" />
-                <span class="card-badge">München</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Münchner Opernfestspiele</h3>
-                <p class="card-date">
-                  <span class="card-date-icon">📅</span>
-                  25. Juni – 31. Juli 2026
-                </p>
-                <p class="card-text">
-                  Weltklasse-Aufführungen im Bayerischen Nationaltheater. Ein Highlight für
-                  Kulturliebhaber.
-                </p>
-                <a href="event-detail.html?id=2" class="card-btn">Mehr erleben</a>
-              </div>
-            </article>
-
-            <!-- Card 3 -->
-            <article class="card">
-              <div class="card-image">
-                <img src="https://picsum.photos/400/200?random=3" alt="Hamburger Dom" />
-                <span class="card-badge">Hamburg</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Hamburger Dom</h3>
-                <p class="card-date">
-                  <span class="card-date-icon">📅</span>
-                  27. März – 26. April 2026
-                </p>
-                <p class="card-text">
-                  Norddeutschlands größtes Volksfest mit über 200 Attraktionen auf dem Hamburger
-                  Heiligengeistfeld.
-                </p>
-                <a href="event-detail.html?id=3" class="card-btn">Mehr erleben</a>
-              </div>
-            </article>
-
-            <!-- Card 4 -->
-            <article class="card">
-              <div class="card-image">
-                <img src="https://picsum.photos/400/200?random=4" alt="Dresdner Striezelmarkt" />
-                <span class="card-badge">Dresden</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Dresdner Striezelmarkt</h3>
-                <p class="card-date">
-                  <span class="card-date-icon">📅</span>
-                  25. November – 24. Dezember 2026
-                </p>
-                <p class="card-text">
-                  Der älteste Weihnachtsmarkt Deutschlands lädt ein zu Glühwein, Stollen und
-                  festlicher Atmosphäre.
-                </p>
-                <a href="event-detail.html?id=4" class="card-btn">Mehr erleben</a>
-              </div>
-            </article>
-
-            <!-- Card 5 -->
-            <article class="card">
-              <div class="card-image">
-                <img src="https://picsum.photos/400/200?random=5" alt="Rheinkarneval Düsseldorf" />
-                <span class="card-badge">Düsseldorf</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Rheinkarneval Düsseldorf</h3>
-                <p class="card-date">
-                  <span class="card-date-icon">📅</span>
-                  19. – 25. Februar 2026
-                </p>
-                <p class="card-text">
-                  Einer der größten Karnevalsumzüge Deutschlands mit bunten Kostümen und
-                  ausgelassener Stimmung.
-                </p>
-                <a href="event-detail.html?id=5" class="card-btn">Mehr erleben</a>
-              </div>
-            </article>
-
-            <!-- Card 6 -->
-            <article class="card">
-              <div class="card-image">
-                <img src="https://picsum.photos/400/200?random=6" alt="Kieler Woche" />
-                <span class="card-badge">Kiel</span>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">Kieler Woche</h3>
-                <p class="card-date">
-                  <span class="card-date-icon">📅</span>
-                  20. – 29. Juni 2026
-                </p>
-                <p class="card-text">
-                  Das weltgrößte Segelsportevent verbindet maritime Tradition mit Kultur und
-                  Unterhaltung an der Förde.
-                </p>
-                <a href="event-detail.html?id=6" class="card-btn">Mehr erleben</a>
-              </div>
-            </article>
+          <div class="grid" id="events-grid">
+            <!-- Filled by JS -->
           </div>
         </div>
       </section>
@@ -236,6 +119,7 @@
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="../src/js/main.js"></script>
   </body>

@@ -1,7 +1,32 @@
+import { CONFIG } from '../config.js';
+
+// Ticketmaster API key
+const TICKETMASTER_API_KEY = CONFIG.TICKETMASTER_API_KEY;
+const TICKETMASTER_BASE_URL = 'https://app.ticketmaster.com/discovery/v2';
 // Base URL for weather API
 const WEATHER_BASE_URL = 'https://api.open-meteo.com/v1/forecast';
 // Base URL for water level API
 const WATER_BASE_URL = 'https://pegelonline.wsv.de/webservices/rest-api/v2';
+
+// Get events from Ticketmaster for Germany
+export const fetchTicketmasterEvents = async (city = '', size = 6) => {
+  try {
+    const cityParam = city ? `&city=${city}` : '';
+    const url = `${TICKETMASTER_BASE_URL}/events.json?apikey=${TICKETMASTER_API_KEY}&countryCode=DE${cityParam}&size=${size}&sort=date,asc`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Ticketmaster API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data._embedded?.events || [];
+  } catch (error) {
+    console.error('Error fetching Ticketmaster events:', error);
+    return [];
+  }
+};
 
 // Get weather forecast by coordinates
 export const fetchWeather = async (lat, lng) => {

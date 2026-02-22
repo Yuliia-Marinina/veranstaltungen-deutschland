@@ -106,11 +106,11 @@ strong {
   color: #202124;
 }
 
-a {
+a:not(.card-btn) {
   color: #1a73e8;
   transition: color 0.2s ease;
 }
-a:hover {
+a:not(.card-btn):hover {
   color: #1557b0;
 }
 
@@ -237,6 +237,8 @@ a:hover {
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
   background-color: #ffffff;
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -274,6 +276,9 @@ a:hover {
   font-weight: 500;
 }
 .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -346,19 +351,6 @@ a:hover {
   padding: 32px 0;
   overflow: hidden;
 }
-.map-wrap {
-  height: 600px !important;
-  background: transparent;
-  border: none !important;
-  border-radius: 0 !important;
-}
-.map-label span {
-  font-family: "Inter", sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  color: #202124;
-  white-space: nowrap;
-}
 .map-header {
   text-align: center;
   margin-bottom: 24px;
@@ -371,10 +363,32 @@ a:hover {
   color: #5f6368;
 }
 .map-wrap {
-  height: 500px;
+  height: 600px;
   border-radius: 16px;
   border: 1px solid #dadce0;
   background: #e8f0fe;
+}
+.map-marker {
+  pointer-events: none !important;
+}
+.map-marker-inner {
+  pointer-events: all;
+  width: 16px;
+  height: 16px;
+  background-color: #1a73e8;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
+}
+.map-label {
+  pointer-events: none !important;
+}
+.map-label span {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #202124;
+  white-space: nowrap;
 }
 .map-popup {
   padding: 4px;
@@ -407,27 +421,22 @@ a:hover {
 .map-popup-link:hover {
   color: #1557b0;
 }
-.map-marker {
-  pointer-events: none !important;
-}
-.map-marker-inner {
-  pointer-events: all;
-  width: 16px;
-  height: 16px;
-  background-color: #1a73e8;
+.map-cluster {
+  width: 36px;
+  height: 36px;
+  background: #1a73e8;
   border: 3px solid #ffffff;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
   box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
 }
-.map-label {
-  pointer-events: none !important;
-}
-.map-label span {
-  font-family: "Inter", sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  color: #202124;
-  white-space: nowrap;
+.map-cluster-wrap {
+  background: transparent;
 }
 
 .leaflet-container {

@@ -1,6 +1,5 @@
-import { events } from '../data/events.js';
-
-export function initMap() {
+// Import events as parameter instead of from file
+export const initMap = (events) => {
   const map = L.map('germany-map', {
     zoomControl: false,
     scrollWheelZoom: false,
@@ -10,6 +9,7 @@ export function initMap() {
     boxZoom: false,
     keyboard: false,
     attributionControl: false,
+    maxZoom: 18,
   }).setView([51.1657, 10.4515], 5.5);
 
   // Load Germany borders with hover effect
@@ -23,10 +23,8 @@ export function initMap() {
           fillColor: '#e8f0fe',
           fillOpacity: 0.5,
         },
-        // Hover effects on each region
         onEachFeature: (feature, layer) => {
           const regionName = feature.properties.name;
-
           const hasEvent = events.some((event) => event.geoRegion === regionName);
 
           if (hasEvent) {
@@ -36,11 +34,9 @@ export function initMap() {
                   fillColor: '#1a73e8',
                   fillOpacity: 0.2,
                 });
-                // Prevent event from bubbling
                 L.DomEvent.stopPropagation(e);
               },
               mouseout: (e) => {
-                // Check if mouse moved to marker, not outside region
                 const relatedTarget = e.originalEvent.relatedTarget;
                 if (
                   relatedTarget &&
@@ -69,21 +65,48 @@ export function initMap() {
     iconAnchor: [8, 8],
   });
 
-  // Add markers with links to events
+  // Create marker cluster group
+  const markers = L.markerClusterGroup({
+    maxClusterRadius: 40,
+    zoomToBoundsOnClick: false,
+    iconCreateFunction: (cluster) => {
+      return L.divIcon({
+        html: `<div class="map-cluster">${cluster.getChildCount()}</div>`,
+        className: 'map-cluster-wrap',
+        iconSize: [36, 36],
+      });
+    },
+  });
+
+  // Show popup with list of events when cluster is clicked
+  markers.on('clusterclick', (e) => {
+    const childMarkers = e.layer.getAllChildMarkers();
+
+    const popupContent = childMarkers
+      .map((marker) => marker.getPopup().getContent())
+      .join('<hr style="margin: 8px 0; border-color: #dadce0;">');
+
+    L.popup({ autoPan: false })
+      .setLatLng(e.layer.getLatLng())
+      .setContent(`<div class="map-cluster-popup">${popupContent}</div>`)
+      .openOn(e.layer._map);
+  });
+
+  // Add markers to cluster
   events.forEach((event) => {
     const marker = L.marker([event.lat, event.lng], { icon: blueIcon });
 
     marker.bindPopup(
       `
-        <div class="map-popup">
-            <p class="map-popup-region">${event.region}</p>
-            <h3 class="map-popup-title">${event.title}</h3>
-            <p class="map-popup-date">${event.date}</p>
-            <a href="event-detail.html?id=${event.id}" class="map-popup-link">
-            Mehr erfahren →
-            </a>
-        </div>
-        `,
+      <div class="map-popup">
+        <p class="map-popup-region">${event.region}</p>
+        <h3 class="map-popup-title">${event.title}</h3>
+        <p class="map-popup-date">${event.date}</p>
+        <a href="event-detail.html?id=${event.id}" class="map-popup-link">
+          Mehr erfahren →
+        </a>
+      </div>
+      `,
       { autoPan: false },
     );
 
@@ -95,6 +118,9 @@ export function initMap() {
     });
 
     L.marker([event.lat, event.lng], { icon: label }).addTo(map);
-    marker.addTo(map);
+    markers.addLayer(marker);
   });
-}
+
+  // Add cluster to map
+  map.addLayer(markers);
+};
