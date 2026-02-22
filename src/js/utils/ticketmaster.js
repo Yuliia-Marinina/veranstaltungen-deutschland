@@ -7,6 +7,7 @@ export const normalizeEvent = (event, index) => {
 
   return {
     id: index + 1,
+    ticketmasterId: event.id,
     title: event.name,
     date: formatTicketmasterDate(event.dates?.start),
     region: city,
@@ -16,7 +17,10 @@ export const normalizeEvent = (event, index) => {
     image:
       event.images?.find((img) => img.ratio === '16_9' && img.width > 500)?.url ||
       `https://picsum.photos/1200/400?random=${index}`,
-    description: event.info || event.pleaseNote || `${event.name} findet in ${city} statt.`,
+    // Combine all available descriptions
+    description:
+      [event.description, event.info, event.pleaseNote].filter(Boolean).join('\n\n') ||
+      `${event.name} findet in ${city} statt.`,
     tags: event.classifications?.map((c) => c.segment?.name).filter(Boolean) || ['Event'],
     time: event.dates?.start?.localTime ? formatTime(event.dates.start.localTime) : 'Siehe Website',
     address: venue ? `${venue.address?.line1 || ''}, ${venue.postalCode || ''} ${city}` : city,
@@ -57,6 +61,12 @@ const normalizeGeoRegion = (city) => {
     Stuttgart: 'Baden-Württemberg',
     Leipzig: 'Sachsen',
     Bremen: 'Bremen',
+    Bochum: 'Nordrhein-Westfalen',
+    Dortmund: 'Nordrhein-Westfalen',
+    Essen: 'Nordrhein-Westfalen',
+    Hannover: 'Niedersachsen',
+    Nürnberg: 'Bayern',
+    Nuremberg: 'Bayern',
   };
   return regionMap[city] || '';
 };

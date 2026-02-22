@@ -28,27 +28,42 @@ export const fetchTicketmasterEvents = async (city = '', size = 6) => {
   }
 };
 
+// Get single event by Ticketmaster ID
+export const fetchEventById = async (ticketmasterId) => {
+  try {
+    const url = `${TICKETMASTER_BASE_URL}/events/${ticketmasterId}.json?apikey=${TICKETMASTER_API_KEY}`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Ticketmaster API error: ${response.status}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error('Error fetching event by id:', error);
+    return null;
+  }
+};
+
 // Get weather forecast by coordinates
 export const fetchWeather = async (lat, lng) => {
   try {
     const url = `${WEATHER_BASE_URL}?latitude=${lat}&longitude=${lng}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe/Berlin&forecast_days=7`;
     const response = await fetch(url);
 
-    // Check if response is successful (status 200-299)
     if (!response.ok) {
       throw new Error(`Weather API error: ${response.status} ${response.statusText}`);
     }
     return response.json();
   } catch (error) {
     console.error('Error fetching weather data:', error);
-    return null; // Return null on error
+    return null;
   }
 };
 
-// Get list of water measurement stations on river Elbe
+// Get list of water measurement stations
 export const fetchWaterStations = async () => {
   try {
-    // Removed ?waters=ELBE to get all stations
     const url = `${WATER_BASE_URL}/stations.json`;
     const response = await fetch(url);
 
@@ -82,7 +97,7 @@ export const fetchWaterLevels = async (stationId) => {
 export const getUserLocation = () => {
   return new Promise((resolve) => {
     if (!navigator.geolocation) {
-      resolve({ lat: 52.52, lng: 13.405, city: 'Berlin' }); // Default to Berlin if geolocation fails
+      resolve({ lat: 52.52, lng: 13.405, city: 'Berlin' });
       return;
     }
 

@@ -690,14 +690,12 @@ a:not(.card-btn):hover {
 .detail-hero-content {
   color: #ffffff;
 }
-
 .detail-tags {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   margin-bottom: 16px;
 }
-
 .detail-tag {
   padding: 4px 8px;
   background: rgba(255, 255, 255, 0.2);
@@ -707,7 +705,6 @@ a:not(.card-btn):hover {
   color: #ffffff;
   backdrop-filter: blur(4px);
 }
-
 .detail-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -720,7 +717,6 @@ a:not(.card-btn):hover {
     font-size: 1.5rem;
   }
 }
-
 .detail-meta {
   display: flex;
   gap: 24px;
@@ -733,12 +729,47 @@ a:not(.card-btn):hover {
   align-items: center;
   gap: 4px;
 }
-
+.detail-event-weather {
+  margin-top: 16px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  display: inline-block;
+}
+.detail-event-weather-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+.detail-event-weather-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.detail-event-weather-icon {
+  font-size: 1.5rem;
+}
+.detail-event-weather-temp {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+.detail-event-weather-desc {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+.detail-event-weather-na {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
 .detail-content {
   padding: 32px 0;
   background: #f8f9fa;
 }
-
 .detail-info {
   display: grid;
   grid-template-columns: 1fr 380px;
@@ -749,7 +780,6 @@ a:not(.card-btn):hover {
     grid-template-columns: 1fr;
   }
 }
-
 .detail-block {
   margin-bottom: 32px;
   overflow: hidden;
@@ -762,14 +792,12 @@ a:not(.card-btn):hover {
   padding-bottom: 8px;
   border-bottom: 2px solid #dadce0;
 }
-
 .detail-description {
   font-size: 1rem;
   color: #5f6368;
   line-height: 1.8;
   white-space: pre-line;
 }
-
 .detail-address {
   font-size: 1rem;
   color: #5f6368;
@@ -778,7 +806,6 @@ a:not(.card-btn):hover {
   align-items: center;
   gap: 4px;
 }
-
 .detail-map {
   height: 300px;
   border-radius: 16px;
@@ -787,7 +814,6 @@ a:not(.card-btn):hover {
   width: 100%;
   max-width: 100%;
 }
-
 .detail-card {
   background: #ffffff;
   border-radius: 16px;
@@ -830,7 +856,6 @@ a:not(.card-btn):hover {
   margin-top: 24px;
   justify-content: center;
 }
-
 .detail-weather-current {
   display: flex;
   align-items: center;
@@ -856,31 +881,32 @@ a:not(.card-btn):hover {
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
-
 .detail-forecast-item {
   text-align: center;
   padding: 8px;
   background: #f8f9fa;
   border-radius: 8px;
+  margin-bottom: 4px;
+}
+.detail-forecast-day {
   font-size: 0.75rem;
   color: #5f6368;
   margin-bottom: 4px;
 }
-.detail-forecast-item-day {
+.detail-forecast-date {
   font-size: 0.75rem;
   color: #5f6368;
   margin-bottom: 4px;
 }
-.detail-forecast-item-icon {
+.detail-forecast-icon {
   font-size: 1.5rem;
   margin-bottom: 4px;
 }
-.detail-forecast-item-temp {
+.detail-forecast-temp {
   font-size: 1rem;
   font-weight: 600;
   color: #202124;
 }
-
 .detail-water {
   margin-top: 24px;
   padding-top: 16px;
@@ -911,4 +937,13 @@ a:not(.card-btn):hover {
 .detail-water-station {
   font-size: 0.75rem;
   color: #5f6368;
+}
+.detail-link {
+  color: #1a73e8;
+  text-decoration: underline;
+  word-break: break-all;
+  font-size: 0.75rem;
+}
+.detail-link:hover {
+  color: #1557b0;
 }/*# sourceMappingURL=main.css.map */

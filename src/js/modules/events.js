@@ -36,7 +36,7 @@ export const renderEvents = (events) => {
         <h3 class="card-title">${event.title}</h3>
         <p class="card-date">📅 ${event.date}</p>
         <p class="card-text">${shortDesc}</p>
-        <a href="event-detail.html?id=${event.id}" class="btn btn-primary card-btn">
+        <a href="event-detail.html?id=${event.id}&tmid=${event.ticketmasterId}" class="btn btn-primary card-btn">
           Mehr erfahren
         </a>
       </div>
