@@ -5,16 +5,18 @@ import { normalizeEvent } from './utils/ticketmaster.js';
 import { renderEvents } from './modules/events.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // Load real events from Ticketmaster
-  const rawEvents = await fetchTicketmasterEvents('', 6);
-  const events = rawEvents.map((e, i) => normalizeEvent(e, i));
+  try {
+    // Load and normalize events from Ticketmaster
+    const rawEvents = await fetchTicketmasterEvents('', 6);
+    const events = await Promise.all(rawEvents.map((e, i) => normalizeEvent(e, i)));
 
-  // Render events on page
-  renderEvents(events);
+    // Render events and map with the same data
+    renderEvents(events);
+    initMap(events);
 
-  // Initialize map with real events
-  initMap(events);
-
-  // Initialize weather
-  await initWeather();
+    // Initialize weather independently
+    await initWeather();
+  } catch (error) {
+    console.error('Unexpected error on main page:', error);
+  }
 });
