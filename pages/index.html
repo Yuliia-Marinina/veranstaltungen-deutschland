@@ -68,6 +68,40 @@
           <div class="events-header">
             <h2 class="events-title">Kommende Veranstaltungen</h2>
           </div>
+          <div class="events-filters" id="events-filters">
+            <!-- Search -->
+            <div class="filter-search">
+              <span class="filter-search-icon">🔍</span>
+              <input
+                type="text"
+                id="filter-search"
+                class="filter-input"
+                placeholder="Veranstaltung suchen..."
+              />
+            </div>
+
+            <!-- City filter -->
+            <select id="filter-city" class="filter-select">
+              <option value="">Alle Städte</option>
+            </select>
+
+            <!-- Category filter -->
+            <select id="filter-category" class="filter-select">
+              <option value="">Alle Kategorien</option>
+            </select>
+
+            <!-- Sort -->
+            <select id="filter-sort" class="filter-select">
+              <option value="date-asc">Datum ↑</option>
+              <option value="date-desc">Datum ↓</option>
+              <option value="name-asc">Name A–Z</option>
+              <option value="name-desc">Name Z–A</option>
+            </select>
+
+            <!-- Reset -->
+            <button id="filter-reset" class="btn btn-secondary filter-reset">Zurücksetzen</button>
+          </div>
+
           <div class="grid" id="events-grid">
             <!-- Filled by JS -->
           </div>

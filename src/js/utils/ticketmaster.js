@@ -9,6 +9,7 @@ const REGION_MAP = {
   Cologne: 'Nordrhein-Westfalen',
   Köln: 'Nordrhein-Westfalen',
   Frankfurt: 'Hessen',
+  'Frankfurt am Main': 'Hessen',
   Stuttgart: 'Baden-Württemberg',
   Leipzig: 'Sachsen',
   Bremen: 'Bremen',
@@ -18,21 +19,47 @@ const REGION_MAP = {
   Hannover: 'Niedersachsen',
   Nürnberg: 'Bayern',
   Nuremberg: 'Bayern',
+  Mannheim: 'Baden-Württemberg',
+  Karlsruhe: 'Baden-Württemberg',
+  Freiburg: 'Baden-Württemberg',
+  Augsburg: 'Bayern',
+  Wiesbaden: 'Hessen',
+  Münster: 'Nordrhein-Westfalen',
+  Gelsenkirchen: 'Nordrhein-Westfalen',
+  Aachen: 'Nordrhein-Westfalen',
+  Bonn: 'Nordrhein-Westfalen',
+  Kiel: 'Schleswig-Holstein',
+  Lübeck: 'Schleswig-Holstein',
+  Rostock: 'Mecklenburg-Vorpommern',
+  Erfurt: 'Thüringen',
+  Magdeburg: 'Sachsen-Anhalt',
+  Halle: 'Sachsen-Anhalt',
+  Saarbrücken: 'Saarland',
+  Mainz: 'Rheinland-Pfalz',
+  Oberhausen: 'Nordrhein-Westfalen',
+  Bielefeld: 'Nordrhein-Westfalen',
 };
 
 // Get region
 const getGeoRegion = async (city, lat, lng) => {
+  // Check known cities first
   if (REGION_MAP[city]) return REGION_MAP[city];
 
-  // Fallback to Nominatim reverse geocoding
   try {
     const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=de`;
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'EventsInGermany/1.0',
+        Accept: 'application/json',
+      },
+    });
+
+    if (!response.ok) throw new Error('Nominatim error');
+
     const data = await response.json();
     const state = data.address?.state || '';
 
     if (state) REGION_MAP[city] = state;
-
     return state;
   } catch (error) {
     console.error('Error fetching geo region:', error);

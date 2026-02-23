@@ -613,6 +613,70 @@ a:not(.card-btn):hover {
   margin-bottom: 8px;
 }
 
+.events-filters {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+  align-items: center;
+}
+.events-empty {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 32px;
+}
+.events-empty-text {
+  font-size: 1.125rem;
+  color: #5f6368;
+  margin-bottom: 16px;
+}
+
+.filter-search {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+.filter-search-icon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+}
+.filter-input {
+  width: 100%;
+  padding: 8px 8px 8px 32px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+  color: #202124;
+  background: #ffffff;
+  transition: border-color 0.2s ease;
+}
+.filter-input:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
+.filter-select {
+  padding: 8px 16px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+  color: #202124;
+  background: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.filter-select:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
+.filter-reset {
+  white-space: nowrap;
+}
+
 .hero {
   padding: 32px 0;
   background-color: #f8f9fa;
