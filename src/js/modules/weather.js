@@ -13,6 +13,7 @@ import {
   getWaterDescription,
 } from '../utils/helpers.js';
 
+// Store chart instance to destroy before re-creating
 let waterChart = null;
 
 const CHART_SAMPLE_RATE = 10;

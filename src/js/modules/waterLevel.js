@@ -3,6 +3,7 @@ import { getWaterStatus, getWaterDescription, formatDate } from '../utils/helper
 
 let waterChart = null;
 
+// Show every Nth measurement to avoid too many chart points
 const CHART_SAMPLE_RATE = 10;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────

@@ -28,8 +28,7 @@ export const initMap = (events) => {
   map.addLayer(markers);
 };
 
-//  GeoJSON / Germany borders
-
+// GeoJSON / Germany borders
 const loadGeoJSON = (map, events) => {
   fetch('../src/js/data/germany.geojson')
     .then((response) => {
@@ -56,7 +55,6 @@ const loadGeoJSON = (map, events) => {
               },
               mouseout: (e) => {
                 const related = e.originalEvent.relatedTarget;
-                // Keep highlight if cursor moves to a marker or label
                 if (
                   related &&
                   (related.classList.contains('map-marker-inner') ||
@@ -75,7 +73,7 @@ const loadGeoJSON = (map, events) => {
     .catch((error) => console.error('GeoJSON error:', error));
 };
 
-//  Marker cluster
+// Marker cluster
 const createMarkerCluster = (map) => {
   const markers = L.markerClusterGroup({
     maxClusterRadius: 40,
@@ -88,7 +86,6 @@ const createMarkerCluster = (map) => {
       }),
   });
 
-  // Show popup with list of events when cluster is clicked
   markers.on('clusterclick', (e) => {
     const popupContent = e.layer
       .getAllChildMarkers()
@@ -104,7 +101,7 @@ const createMarkerCluster = (map) => {
   return markers;
 };
 
-//  Event markers & labels
+// Event markers & labels
 const createBlueIcon = () =>
   L.divIcon({
     className: 'map-marker',
@@ -127,16 +124,13 @@ const createPopupContent = (event) => `
 
 const addEventMarkers = (map, markers, events) => {
   const blueIcon = createBlueIcon();
-  // Track added labels to avoid duplicates per region
   const addedLabels = new Set();
 
   events.forEach((event) => {
-    // Add marker with popup
     const marker = L.marker([event.lat, event.lng], { icon: blueIcon });
     marker.bindPopup(createPopupContent(event), POPUP_OPTIONS);
     markers.addLayer(marker);
 
-    // Add city label only once per region
     if (!addedLabels.has(event.region)) {
       const label = L.divIcon({
         className: 'map-label',
