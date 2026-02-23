@@ -1,13 +1,17 @@
+# Dependencies
 node_modules/
+
+# Build output
 src/css/
 src/scss/main.css
 src/scss/main.css.map
 
-# Prettier cache
-.prettier_cache
-
-# Editor config
-.vscode/settings.json
-
+# Environment & secrets
 .env
 src/js/config.js
+
+# Cache
+.prettier_cache
+
+# Editor
+.vscode/settings.json

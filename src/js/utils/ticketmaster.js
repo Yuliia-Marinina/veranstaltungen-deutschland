@@ -20,7 +20,7 @@ const REGION_MAP = {
   Nuremberg: 'Bayern',
 };
 
-// Get region - first check map, then fallback to Nominatim API
+// Get region
 const getGeoRegion = async (city, lat, lng) => {
   // Check known cities first (faster, no API call)
   if (REGION_MAP[city]) return REGION_MAP[city];
