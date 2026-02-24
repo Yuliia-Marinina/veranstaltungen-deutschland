@@ -30,7 +30,7 @@ export const initMap = (events) => {
 
 // GeoJSON / Germany borders
 const loadGeoJSON = (map, events) => {
-  fetch('../src/js/data/germany.geojson')
+  fetch('src/js/data/germany.geojson')
     .then((response) => {
       if (!response.ok) throw new Error('Failed to load GeoJSON');
       return response.json();

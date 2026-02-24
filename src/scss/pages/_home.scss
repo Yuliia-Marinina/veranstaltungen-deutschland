@@ -51,4 +51,10 @@
     color: $color-primary;
     font-weight: 500;
   }
+
+  &-filters {
+    @include flex-between;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-lg;
+  }
 }

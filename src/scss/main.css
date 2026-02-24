@@ -613,24 +613,6 @@ a:not(.card-btn):hover {
   margin-bottom: 8px;
 }
 
-.events-filters {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 32px;
-  align-items: center;
-}
-.events-empty {
-  grid-column: 1/-1;
-  text-align: center;
-  padding: 32px;
-}
-.events-empty-text {
-  font-size: 1.125rem;
-  color: #5f6368;
-  margin-bottom: 16px;
-}
-
 .filter-search {
   position: relative;
   flex: 1;
@@ -642,16 +624,19 @@ a:not(.card-btn):hover {
   top: 50%;
   transform: translateY(-50%);
   font-size: 1rem;
+  pointer-events: none;
 }
 .filter-input {
   width: 100%;
-  padding: 8px 8px 8px 32px;
+  height: 42px;
+  padding: 0 8px 0 32px;
   border: 1px solid #dadce0;
   border-radius: 8px;
   font-size: 1rem;
   font-family: "Inter", sans-serif;
   color: #202124;
   background: #ffffff;
+  box-sizing: border-box;
   transition: border-color 0.2s ease;
 }
 .filter-input:focus {
@@ -659,7 +644,8 @@ a:not(.card-btn):hover {
   border-color: #1a73e8;
 }
 .filter-select {
-  padding: 8px 16px;
+  height: 42px;
+  padding: 0 32px 0 16px;
   border: 1px solid #dadce0;
   border-radius: 8px;
   font-size: 1rem;
@@ -667,6 +653,12 @@ a:not(.card-btn):hover {
   color: #202124;
   background: #ffffff;
   cursor: pointer;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
   transition: border-color 0.2s ease;
 }
 .filter-select:focus {
@@ -674,7 +666,9 @@ a:not(.card-btn):hover {
   border-color: #1a73e8;
 }
 .filter-reset {
+  height: 42px;
   white-space: nowrap;
+  padding: 0 16px;
 }
 
 .hero {
@@ -721,6 +715,13 @@ a:not(.card-btn):hover {
 .events-link {
   color: #1a73e8;
   font-weight: 500;
+}
+.events-filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 24px;
 }
 
 .detail-hero {
