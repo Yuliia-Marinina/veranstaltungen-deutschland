@@ -1,0 +1,3 @@
+export const CONFIG = {
+  TICKETMASTER_API_KEY: 'Qvkut633IEdLhc10N6AB7U25YG9Hg9jV',
+};
