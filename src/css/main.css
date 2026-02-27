@@ -106,11 +106,11 @@ strong {
   color: #202124;
 }
 
-a:not(.card-btn) {
+a:not(.btn-primary) {
   color: #1a73e8;
   transition: color 0.2s ease;
 }
-a:not(.card-btn):hover {
+a:not(.btn-primary):hover {
   color: #1557b0;
 }
 
@@ -835,11 +835,18 @@ a:not(.card-btn):hover {
   display: grid;
   grid-template-columns: 1fr 380px;
   gap: 32px;
+  align-items: start;
 }
 @media (max-width: 768px) {
   .detail-info {
     grid-template-columns: 1fr;
   }
+}
+.detail-info-left, .detail-info-right {
+  min-width: 0;
+}
+.detail-info-right {
+  overflow: hidden;
 }
 .detail-block {
   margin-bottom: 32px;
@@ -870,7 +877,7 @@ a:not(.card-btn):hover {
 .detail-map {
   height: 300px;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: hidden !important;
   border: 1px solid #dadce0;
   width: 100%;
   max-width: 100%;
@@ -917,55 +924,84 @@ a:not(.card-btn):hover {
   margin-top: 24px;
   justify-content: center;
 }
-.detail-weather-current {
+.detail-weather-block {
+  grid-column: 1/-1;
+  min-width: 0;
+}
+.detail-weather-block .detail-card-weather {
+  padding: 32px;
+}
+.detail-tide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.detail-tide-col-header {
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #dadce0;
+}
+.detail-tide-col-day {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #202124;
+}
+.detail-tide-col-date {
+  font-size: 0.75rem;
+  color: #5f6368;
+  margin-top: 2px;
+}
+.detail-tide-weather {
   display: flex;
   align-items: center;
   gap: 16px;
   margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #dadce0;
 }
-.detail-weather-icon {
-  font-size: 3rem;
-  line-height: 1;
+.detail-tide-weather-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
 }
-.detail-weather-temp {
-  font-size: 1.5rem;
+.detail-tide-weather-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.detail-tide-weather-label {
+  font-size: 0.75rem;
+  color: #5f6368;
+}
+.detail-tide-weather-temp {
+  font-size: 1.25rem;
   font-weight: 700;
   color: #202124;
 }
-.detail-weather-desc {
+.detail-tide-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.detail-tide-row-icon {
+  width: 28px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 1.7rem;
+}
+.detail-tide-row-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.detail-tide-row-label {
   font-size: 0.75rem;
   color: #5f6368;
-  margin-top: 4px;
 }
-.detail-weather-forecast {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-.detail-forecast-item {
-  text-align: center;
-  padding: 8px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  margin-bottom: 4px;
-}
-.detail-forecast-day {
+.detail-tide-row-time {
   font-size: 0.75rem;
-  color: #5f6368;
-  margin-bottom: 4px;
-}
-.detail-forecast-date {
-  font-size: 0.75rem;
-  color: #5f6368;
-  margin-bottom: 4px;
-}
-.detail-forecast-icon {
-  font-size: 1.5rem;
-  margin-bottom: 4px;
-}
-.detail-forecast-temp {
-  font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #202124;
 }
 .detail-water {

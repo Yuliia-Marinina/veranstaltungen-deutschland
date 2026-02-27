@@ -28,6 +28,8 @@ const setErrorState = (message = 'Ein Fehler ist aufgetreten.') => {
   setTextById('detail-title', message);
 };
 
+// ─── Init ─────────────────────────────────────────────────────────────────────
+
 export const initEventDetail = async () => {
   try {
     const params = new URLSearchParams(window.location.search);
@@ -66,6 +68,8 @@ export const initEventDetail = async () => {
     setErrorState('Ein Fehler ist aufgetreten. Bitte versuche es später erneut.');
   }
 };
+
+// ─── Event info ───────────────────────────────────────────────────────────────
 
 const renderEventInfo = (event) => {
   const image = document.getElementById('detail-image');
@@ -125,6 +129,8 @@ const renderTicketButton = (url) => {
   }
 };
 
+// ─── Map ──────────────────────────────────────────────────────────────────────
+
 const initDetailMap = (event) => {
   const map = L.map('detail-map', {
     scrollWheelZoom: false,
@@ -154,6 +160,8 @@ const initDetailMap = (event) => {
     .openPopup();
 };
 
+// ─── Weather ──────────────────────────────────────────────────────────────────
+
 const loadEventWeather = async (event, rawEvent) => {
   try {
     const [weatherData, stations] = await Promise.all([
@@ -163,22 +171,12 @@ const loadEventWeather = async (event, rawEvent) => {
 
     if (!weatherData?.daily) return;
 
-    renderCurrentWeather(weatherData);
     renderForecast(weatherData);
     renderEventDayWeather(weatherData, rawEvent);
     await renderWaterLevel(event, stations);
   } catch (error) {
     console.error('Error loading event weather:', error);
   }
-};
-
-const renderCurrentWeather = (weatherData) => {
-  const code = weatherData.daily.weathercode[0];
-  const maxTemp = Math.round(weatherData.daily.temperature_2m_max[0]);
-
-  setTextById('detail-weather-icon', getWeatherIcon(code));
-  setTextById('detail-weather-temp', `${maxTemp}°C`);
-  setTextById('detail-weather-desc', getWeatherDescription(code));
 };
 
 const renderForecast = (weatherData) => {
@@ -189,17 +187,43 @@ const renderForecast = (weatherData) => {
 
   weatherData.daily.time.slice(0, 3).forEach((date, index) => {
     const code = weatherData.daily.weathercode[index];
-    const temp = Math.round(weatherData.daily.temperature_2m_max[index]);
+    const tempMax = Math.round(weatherData.daily.temperature_2m_max[index]);
+    const tempMin = Math.round(weatherData.daily.temperature_2m_min[index]);
+    const isToday = index === 0;
 
-    const item = document.createElement('div');
-    item.className = 'detail-forecast-item';
-    item.innerHTML = `
-      <p class="detail-forecast-day">${index === 0 ? 'Heute' : escapeHTML(formatWeekday(date))}</p>
-      <p class="detail-forecast-date">${escapeHTML(formatDate(date))}</p>
-      <p class="detail-forecast-icon">${getWeatherIcon(code)}</p>
-      <p class="detail-forecast-temp">${temp}°</p>
+    const col = document.createElement('div');
+    col.className = 'detail-tide-col';
+    col.innerHTML = `
+      <div class="detail-tide-col-header">
+        <p class="detail-tide-col-day">${isToday ? 'Heute' : escapeHTML(formatWeekday(date))}</p>
+        <p class="detail-tide-col-date">${escapeHTML(formatDate(date))}</p>
+      </div>
+
+      <div class="detail-tide-weather">
+        <span class="detail-tide-weather-icon">${getWeatherIcon(code)}</span>
+        <div class="detail-tide-weather-info">
+          <span class="detail-tide-weather-label">Wetter</span>
+          <span class="detail-tide-weather-temp">${tempMax}° / ${tempMin}°</span>
+        </div>
+      </div>
+
+      <div class="detail-tide-row">
+        <span class="detail-tide-row-icon">🌊</span>
+        <div class="detail-tide-row-info">
+          <span class="detail-tide-row-label">Hochwasser</span>
+          <span class="detail-tide-row-time">— noch nicht verfügbar</span>
+        </div>
+      </div>
+
+      <div class="detail-tide-row">
+        <span class="detail-tide-row-icon">〰️</span>
+        <div class="detail-tide-row-info">
+          <span class="detail-tide-row-label">Niedrigwasser</span>
+          <span class="detail-tide-row-time">— noch nicht verfügbar</span>
+        </div>
+      </div>
     `;
-    fragment.appendChild(item);
+    fragment.appendChild(col);
   });
 
   el.innerHTML = '';
@@ -234,6 +258,8 @@ const renderEventDayWeather = (weatherData, rawEvent) => {
   `;
 };
 
+// ─── Water ────────────────────────────────────────────────────────────────────
+
 const renderWaterLevel = async (event, stations) => {
   const station = stations?.find((s) => s.longname?.includes(event.region)) ?? stations?.[0];
   if (!station) return;
@@ -244,11 +270,9 @@ const renderWaterLevel = async (event, stations) => {
   const lastLevel = Math.round(measurements[measurements.length - 1].value);
   const status = getWaterStatus(lastLevel);
 
-  const weatherCard = document.querySelector('.detail-card-weather');
-  if (!weatherCard) return;
+  const waterEl = document.getElementById('detail-water');
+  if (!waterEl) return;
 
-  const waterEl = document.createElement('div');
-  waterEl.className = 'detail-water';
   waterEl.innerHTML = `
     <div class="detail-water-info">
       <span class="detail-water-icon">🌊</span>
@@ -257,5 +281,4 @@ const renderWaterLevel = async (event, stations) => {
     </div>
     <p class="detail-water-station">${escapeHTML(station.longname)}</p>
   `;
-  weatherCard.appendChild(waterEl);
 };

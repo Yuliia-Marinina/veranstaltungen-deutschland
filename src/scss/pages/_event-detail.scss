@@ -141,10 +141,20 @@
     display: grid;
     grid-template-columns: 1fr 380px;
     gap: $spacing-xl;
+    align-items: start;
 
     @include tablet {
       grid-template-columns: 1fr;
     }
+  }
+
+  &-info-left,
+  &-info-right {
+    min-width: 0;
+  }
+
+  &-info-right {
+    overflow: hidden;
   }
 
   // Block
@@ -184,7 +194,7 @@
   &-map {
     height: 300px;
     border-radius: $radius-lg;
-    overflow: hidden;
+    overflow: hidden !important;
     border: 1px solid $color-border;
     width: 100%;
     max-width: 100%;
@@ -240,69 +250,102 @@
     }
   }
 
-  // Weather card
-  &-weather {
-    &-current {
-      display: flex;
-      align-items: center;
-      gap: $spacing-md;
-      margin-bottom: $spacing-lg;
-    }
+  // Weather block - full width
+  &-weather-block {
+    grid-column: 1 / -1;
+    min-width: 0;
 
-    &-icon {
-      font-size: 3rem;
-      line-height: 1;
-    }
-
-    &-temp {
-      font-size: $font-size-xxl;
-      font-weight: 700;
-      color: $color-text;
-    }
-
-    &-desc {
-      font-size: $font-size-sm;
-      color: $color-text-light;
-      margin-top: $spacing-xs;
-    }
-
-    &-forecast {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: $spacing-sm;
+    .detail-card-weather {
+      padding: $spacing-xl;
     }
   }
 
-  // Forecast
-  &-forecast {
-    &-item {
-      text-align: center;
-      padding: $spacing-sm;
-      background: $color-bg;
-      border-radius: $radius-md;
-      margin-bottom: $spacing-xs;
+  // Weather & Tide grid
+  &-tide-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-lg;
+    margin-bottom: $spacing-lg;
+  }
+
+  &-tide-col {
+    &-header {
+      margin-bottom: $spacing-md;
+      padding-bottom: $spacing-sm;
+      border-bottom: 2px solid $color-border;
     }
 
     &-day {
-      font-size: $font-size-sm;
-      color: $color-text-light;
-      margin-bottom: $spacing-xs;
+      font-size: $font-size-lg;
+      font-weight: 700;
+      color: $color-text;
     }
 
     &-date {
       font-size: $font-size-sm;
       color: $color-text-light;
-      margin-bottom: $spacing-xs;
+      margin-top: 2px;
     }
+  }
+
+  &-tide-weather {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid $color-border;
 
     &-icon {
-      font-size: 1.5rem;
-      margin-bottom: $spacing-xs;
+      font-size: 2.5rem;
+      flex-shrink: 0;
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    &-label {
+      font-size: $font-size-sm;
+      color: $color-text-light;
     }
 
     &-temp {
-      font-size: $font-size-base;
-      font-weight: 600;
+      font-size: $font-size-xl;
+      font-weight: 700;
+      color: $color-text;
+    }
+  }
+
+  &-tide-row {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+
+    &-icon {
+      width: 28px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 1.7rem;
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    &-label {
+      font-size: $font-size-sm;
+      color: $color-text-light;
+    }
+
+    &-time {
+      font-size: $font-size-sm;
+      font-weight: 700;
       color: $color-text;
     }
   }
