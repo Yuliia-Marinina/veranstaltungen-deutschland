@@ -4,12 +4,24 @@ import { fetchTicketmasterEvents } from './utils/api.js';
 import { normalizeEvent } from './utils/ticketmaster.js';
 import { renderEvents } from './modules/events.js';
 import { initFilters } from './modules/filters.js';
+import { husumEvent } from './data/husumEvent.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     // Load and normalize events from Ticketmaster
     const rawEvents = await fetchTicketmasterEvents('', 6);
-    const events = await Promise.all(rawEvents.map((e, i) => normalizeEvent(e, i)));
+    const allEvents = await Promise.all(rawEvents.map((e, i) => normalizeEvent(e, i)));
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const events = allEvents.filter((event) => {
+      const eventDate = new Date(event.dateRaw);
+
+      return isNaN(eventDate) || eventDate >= today;
+    });
+
+    events.push(husumEvent);
 
     // Initialize filters
     initFilters(events);

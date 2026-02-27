@@ -22,7 +22,8 @@ const fetchJSON = async (url, errorLabel = 'API') => {
 export const fetchTicketmasterEvents = async (city = '', size = 6) => {
   try {
     const cityParam = city ? `&city=${encodeURIComponent(city)}` : '';
-    const url = `${TICKETMASTER_BASE_URL}/events.json?apikey=${TICKETMASTER_API_KEY}&countryCode=DE${cityParam}&size=${size}&sort=date,asc`;
+    const today = new Date().toISOString().split('T')[0];
+    const url = `${TICKETMASTER_BASE_URL}/events.json?apikey=${TICKETMASTER_API_KEY}&countryCode=DE${cityParam}&size=${size}&sort=date,asc&startDateTime=${today}T00:00:00Z`;
     const data = await fetchJSON(url, 'Ticketmaster');
     return data._embedded?.events ?? [];
   } catch (error) {

@@ -38,6 +38,7 @@ const REGION_MAP = {
   Mainz: 'Rheinland-Pfalz',
   Oberhausen: 'Nordrhein-Westfalen',
   Bielefeld: 'Nordrhein-Westfalen',
+  Husum: 'Schleswig-Holstein',
 };
 
 // Get region
@@ -82,6 +83,7 @@ export const normalizeEvent = async (event, index) => {
     ticketmasterId: event.id,
     title: event.name,
     date: formatTicketmasterDate(event.dates?.start),
+    dateRaw: event.dates?.start?.localDate || null,
     region: city,
     geoRegion,
     lat,

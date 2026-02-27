@@ -40,6 +40,14 @@ export const initEventDetail = async () => {
 
     setTextById('detail-title', 'Wird geladen...');
 
+    if (tmid === 'husum-test') {
+      const { husumEvent } = await import('../data/husumEvent.js');
+      renderEventInfo(husumEvent);
+      initDetailMap(husumEvent);
+      await loadEventWeather(husumEvent, null);
+      return;
+    }
+
     const rawEvent = await fetchEventById(tmid);
 
     if (!rawEvent) {
