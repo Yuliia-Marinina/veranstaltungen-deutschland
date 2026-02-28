@@ -5,144 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Entdecken Sie die besten Veranstaltungen in Deutschland" />
     <title>Veranstaltungen in Deutschland</title>
-    <script type="module" crossorigin src="/veranstaltungen-deutschland/assets/index-BYHjzeR0.js"></script>
-    <link rel="stylesheet" crossorigin href="/veranstaltungen-deutschland/assets/index-nuu9BGRP.css">
+    <script type="module" crossorigin src="/veranstaltungen-deutschland/assets/index-C96wYoll.js"></script>
+    <link rel="stylesheet" crossorigin href="/veranstaltungen-deutschland/assets/index-DPHPNxP9.css">
   </head>
 
   <body>
-    <!-- Header -->
-    <header class="header">
-      <div class="container">
-        <div class="header-inner">
-          <a href="index.html" class="header-logo">
-            <span class="header-logo-icon">📍</span>
-            Events in Germany
-          </a>
+    <header class="header" id="header"></header>
 
-          <nav class="header-nav">
-            <ul class="header-list">
-              <li class="header-item">
-                <a href="#events" class="header-link">Events</a>
-              </li>
-              <li class="header-item">
-                <a href="#map" class="header-link">Germany Map</a>
-              </li>
-              <li class="header-item">
-                <a href="#weather" class="header-link">Wetter & Wasser</a>
-              </li>
-            </ul>
-          </nav>
-
-          <button class="header-btn">Anmelden</button>
-        </div>
-      </div>
-    </header>
-
-    <main>
-      <!-- Hero -->
-      <section class="hero">
-        <div class="container">
-          <p class="hero-subtitle">Entdecken Sie Deutschland</p>
-          <h1 class="hero-title">
-            Discover Upcoming <span class="hero-accent">Events</span>
-            Across the Country
-          </h1>
-          <p class="hero-text">
-            Von lebhaften Stadtfesten bis zu historischen Festivals Bayerns. Finden Sie Ihre nächste
-            unvergessliche Veranstaltung.
-          </p>
-        </div>
-      </section>
-
-      <!-- Events -->
-      <section class="events-section" id="events">
-        <div class="container">
-          <div class="events-header">
-            <h2 class="events-title">Kommende Veranstaltungen</h2>
-          </div>
-          <div class="events-filters" id="events-filters">
-            <!-- Search -->
-            <div class="filter-search">
-              <span class="filter-search-icon">🔍</span>
-              <input
-                type="text"
-                id="filter-search"
-                class="filter-input"
-                placeholder="Veranstaltung suchen..."
-              />
-            </div>
-
-            <!-- City filter -->
-            <select id="filter-city" class="filter-select">
-              <option value="">Alle Städte</option>
-            </select>
-
-            <!-- Category filter -->
-            <select id="filter-category" class="filter-select">
-              <option value="">Alle Kategorien</option>
-            </select>
-
-            <!-- Sort -->
-            <select id="filter-sort" class="filter-select">
-              <option value="date-asc">Datum ↑</option>
-              <option value="date-desc">Datum ↓</option>
-              <option value="name-asc">Name A–Z</option>
-              <option value="name-desc">Name Z–A</option>
-            </select>
-
-            <!-- Reset -->
-            <button id="filter-reset" class="btn btn-secondary filter-reset">Zurücksetzen</button>
-          </div>
-
-          <div class="grid" id="events-grid">
-            <!-- Filled by JS -->
-          </div>
-        </div>
-      </section>
-
-      <!-- Map -->
-      <section class="map-section" id="map">
-        <div class="container">
-          <div class="map-header">
-            <h2 class="map-title">Veranstaltungen auf der Karte</h2>
-            <p class="map-subtitle">Finden Sie Events direkt in Ihrer Nähe</p>
-          </div>
-          <div class="map-wrap" id="germany-map"></div>
-        </div>
-      </section>
-
-      <!-- Weather & Water -->
-      <section class="weather-section" id="weather">
-        <div class="container">
-          <div class="weather-top">
-            <div class="weather-location">
-              <span class="weather-location-icon">📍</span>
-              <span class="weather-location-name">Berlin, Germany</span>
-            </div>
-          </div>
-
-          <div class="weather-cards" id="weather-cards">
-            <!-- Filled by JS -->
-          </div>
-
-          <div class="water-chart">
-            <p class="water-chart-title">Wasserstand letzte 7 Tage</p>
-            <canvas id="water-chart-canvas"></canvas>
-          </div>
-        </div>
-      </section>
+    <main class="main" id="main">
+      <section class="hero" id="hero"></section>
+      <section class="events-section" id="events"></section>
+      <section class="map-section" id="map"></section>
+      <section class="weather-section" id="weather"></section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <p class="footer-copy">© 2026 Veranstaltungen in Deutschland. Alle Rechte vorbehalten.</p>
-        <div class="footer-links">
-          <a href="#" class="footer-link">Impressum</a>
-          <a href="#" class="footer-link">Datenschutz</a>
-        </div>
-      </div>
-    </footer>
-
+    <footer class="footer" id="footer"></footer>
   </body>
 </html>
