@@ -56,12 +56,12 @@ strong {
 // =====================
 // Links
 // =====================
-a:not(.btn-primary) {
-  color: $color-primary;
+a {
+  color: $color-secondary;
   transition: color 0.2s ease;
 
   &:hover {
-    color: $color-primary-dark;
+    color: $color-accent;
   }
 }
 
