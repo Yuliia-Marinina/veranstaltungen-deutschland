@@ -1,5 +1,6 @@
 import { fetchWaterStations, fetchWaterLevels } from '../utils/api.js';
 import { getWaterStatus, getWaterDescription, formatDate } from '../utils/helpers.js';
+import Chart from 'chart.js/auto';
 
 let waterChart = null;
 

@@ -20,8 +20,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       return true;
     });
 
-    console.log(allEvents.map((e) => ({ id: e.ticketmasterId, title: e.title })));
-
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
