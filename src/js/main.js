@@ -12,12 +12,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     const rawEvents = await fetchTicketmasterEvents('', 6);
     const allEvents = await Promise.all(rawEvents.map((e, i) => normalizeEvent(e, i)));
 
+    const seen = new Set();
+    const uniqueEvents = allEvents.filter((event) => {
+      const key = `${event.title}|${event.dateRaw}|${event.region}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    console.log(allEvents.map((e) => ({ id: e.ticketmasterId, title: e.title })));
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const events = allEvents.filter((event) => {
+    const events = uniqueEvents.filter((event) => {
       const eventDate = new Date(event.dateRaw);
-
       return isNaN(eventDate) || eventDate >= today;
     });
 
