@@ -5,6 +5,7 @@
 @use 'base/mixins' as *;
 @use 'base/reset';
 @use 'base/typography';
+@use 'base/helpers';
 
 // =====================
 // Layout
@@ -18,13 +19,14 @@
 // =====================
 @use 'components/card';
 @use 'components/button';
-@use 'components/map';
-@use 'components/weather';
 @use 'components/chart';
 @use 'components/filters';
 
 // =====================
-// Pages
+// Section
 // =====================
-@use 'pages/home';
-@use 'pages/event-detail';
+@use 'sections/hero';
+@use 'sections/events';
+@use 'sections/weather';
+@use 'sections/map';
+@use 'sections/event-detail';

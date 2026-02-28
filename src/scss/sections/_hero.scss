@@ -1,0 +1,135 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+.hero {
+  position: relative;
+  min-height: 580px;
+  color: $color-white;
+  @include flex-center;
+  background:
+    linear-gradient(to bottom, rgba($color-primary, 0.5), rgba($color-primary, 0.75)),
+    url('/veranstaltungen-deutschland/images/hero.jpg') center / cover no-repeat;
+
+  &-content {
+    position: relative;
+    z-index: 1;
+    padding-top: 80px;
+    max-width: 600px;
+  }
+
+  &-label {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    background: rgba($color-secondary, 0.2);
+    border: 1px solid rgba($color-secondary, 0.4);
+    color: $color-secondary;
+    padding: $spacing-xs $spacing-md;
+    border-radius: $radius-xl;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    backdrop-filter: blur(8px);
+    margin-bottom: $spacing-md;
+  }
+
+  &-title {
+    font-size: $font-size-hero;
+    font-weight: 800;
+    color: inherit;
+    margin-bottom: $spacing-md;
+    line-height: 1.1;
+    letter-spacing: -1px;
+
+    @include tablet {
+      font-size: 2.25rem;
+    }
+
+    @include mobile {
+      font-size: 1.75rem;
+    }
+  }
+
+  &-accent {
+    color: $color-accent;
+  }
+
+  &-sub {
+    color: rgba($color-white, 0.75);
+    font-size: $font-size-lg;
+    display: block;
+    margin-bottom: $spacing-xl;
+  }
+
+  &-search {
+    display: flex;
+    align-items: center;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    background: $color-white;
+    box-shadow: 0 8px 32px rgba($color-black, 0.2);
+
+    @include mobile {
+      flex-direction: column;
+      border-radius: $radius-md;
+    }
+
+    &-input {
+      color: $color-primary;
+      flex: 1;
+      padding: $spacing-md $spacing-xs;
+      border: none;
+      outline: none;
+      background: transparent;
+
+      &::placeholder {
+        color: rgba($color-black, 0.4);
+      }
+    }
+
+    &-btn {
+      padding: $spacing-sm $spacing-lg;
+      background: $color-primary;
+      color: $color-white;
+      border: none;
+      display: block;
+      border-radius: $radius-md;
+      font-size: $font-size-base;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 0 $spacing-sm;
+
+      @include mobile {
+        width: 100%;
+        margin: 0 0 6px 0;
+        border-radius: $radius-md;
+      }
+    }
+  }
+
+  &-stats {
+    display: flex;
+    gap: $spacing-xl;
+    margin-top: $spacing-xl;
+
+    @include mobile {
+      gap: $spacing-lg;
+    }
+  }
+
+  &-stat {
+    line-height: 1.2;
+
+    &-num {
+      font-size: $font-size-xxl;
+      font-weight: 700;
+      display: block;
+    }
+
+    &-label {
+      color: rgba($color-white, 0.6);
+      margin-top: 2px;
+      display: block;
+      font-size: $font-size-sm;
+    }
+  }
+}

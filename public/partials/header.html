@@ -1,24 +1,37 @@
 <div class="container">
   <div class="header-inner">
     <a href="index.html" class="header-logo">
-      <span class="header-logo-icon">📍</span>
+      <span class="header-logo-icon" aria-hidden="true">📍</span>
       Events in Germany
     </a>
 
-    <nav class="header-nav">
-      <ul class="header-list">
-        <li class="header-item">
-          <a href="#events" class="header-link">Events</a>
-        </li>
-        <li class="header-item">
-          <a href="#map" class="header-link">Germany Map</a>
-        </li>
-        <li class="header-item">
-          <a href="#weather" class="header-link">Wetter & Wasser</a>
-        </li>
-      </ul>
-    </nav>
+    <div class="header-wrap">
+      <nav class="header-nav" id="header-nav" aria-label="Hauptnavigation">
+        <ul class="header-list">
+          <li class="header-item">
+            <a href="#events" class="header-link">Events</a>
+          </li>
+          <li class="header-item">
+            <a href="#map" class="header-link">Germany Map</a>
+          </li>
+          <li class="header-item">
+            <a href="#weather" class="header-link">Wetter & Wasser</a>
+          </li>
+        </ul>
+      </nav>
 
-    <button class="header-btn">Anmelden</button>
+      <button class="header-btn" aria-haspopup="dialog">Anmelden</button>
+    </div>
+
+    <button
+      class="header-burger"
+      aria-label="Menü öffnen"
+      aria-expanded="false"
+      aria-controls="header-nav"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
   </div>
 </div>
