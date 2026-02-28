@@ -13,6 +13,9 @@ html {
 }
 
 body {
+  background-color: #f5f0e8;
+  color: #0a2540;
+  font-family: "Inter", sans-serif;
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   -webkit-font-smoothing: antialiased;
@@ -70,48 +73,48 @@ h6 {
 body {
   font-family: "Inter", sans-serif;
   font-size: 1rem;
-  color: #202124;
+  color: #0a2540;
   line-height: 1.6;
-  background-color: #f8f9fa;
+  background-color: #f5f0e8;
 }
 
 h1 {
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.2;
-  color: #202124;
+  color: #0a2540;
 }
 
 h2 {
   font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.3;
-  color: #202124;
+  color: #0a2540;
 }
 
 h3 {
   font-size: 1.125rem;
   font-weight: 600;
   line-height: 1.4;
-  color: #202124;
+  color: #0a2540;
 }
 
 p {
-  color: #5f6368;
+  color: #4a6580;
   line-height: 1.6;
 }
 
 strong {
   font-weight: 600;
-  color: #202124;
+  color: #0a2540;
 }
 
-a:not(.btn-primary) {
-  color: #1a73e8;
+a {
+  color: #48b4d4;
   transition: color 0.2s ease;
 }
-a:not(.btn-primary):hover {
-  color: #1557b0;
+a:hover {
+  color: #e8c87a;
 }
 
 .hidden {
@@ -145,7 +148,7 @@ a:not(.btn-primary):hover {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: #ffffff;
+  background-color: #0a2540;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 .header-inner {
@@ -160,7 +163,7 @@ a:not(.btn-primary):hover {
   gap: 8px;
   font-size: 1.125rem;
   font-weight: 700;
-  color: #1a73e8;
+  color: #ffffff;
 }
 .header-logo-icon {
   font-size: 1.25rem;
@@ -174,15 +177,15 @@ a:not(.btn-primary):hover {
 .header-link {
   font-size: 1rem;
   font-weight: 500;
-  color: #202124;
+  color: #ffffff;
   transition: color 0.2s ease;
 }
 .header-link:hover {
-  color: #1a73e8;
+  color: #48b4d4;
 }
 .header-btn {
   padding: 8px 16px;
-  background-color: #1a73e8;
+  background-color: #0a2540;
   color: #ffffff;
   border-radius: 8px;
   font-weight: 500;
@@ -190,7 +193,7 @@ a:not(.btn-primary):hover {
   transition: background-color 0.2s ease;
 }
 .header-btn:hover {
-  background-color: #1557b0;
+  background-color: #1e6091;
 }
 @media (max-width: 768px) {
   .header-nav {
@@ -200,7 +203,7 @@ a:not(.btn-primary):hover {
 
 .footer {
   background-color: #ffffff;
-  border-top: 1px solid #dadce0;
+  border-top: 1px solid #a8d8e8;
   padding: 24px 0;
 }
 .footer-container {
@@ -213,7 +216,7 @@ a:not(.btn-primary):hover {
 }
 .footer-copy {
   font-size: 0.75rem;
-  color: #5f6368;
+  color: #4a6580;
 }
 .footer-links {
   display: flex;
@@ -221,11 +224,11 @@ a:not(.btn-primary):hover {
 }
 .footer-link {
   font-size: 0.75rem;
-  color: #5f6368;
+  color: #4a6580;
   transition: color 0.2s ease;
 }
 .footer-link:hover {
-  color: #1a73e8;
+  color: #0a2540;
 }
 @media (max-width: 480px) {
   .footer-container {
@@ -257,7 +260,8 @@ a:not(.btn-primary):hover {
 .card-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   transition: transform 0.3s ease;
 }
 .card-image:hover img {
@@ -268,7 +272,7 @@ a:not(.btn-primary):hover {
   top: 8px;
   left: 8px;
   padding: 4px 8px;
-  background-color: #1a73e8;
+  background-color: #0a2540;
   color: #ffffff;
   border-radius: 20px;
   font-size: 0.75rem;
@@ -286,19 +290,19 @@ a:not(.btn-primary):hover {
 .card-title {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #202124;
+  color: #0a2540;
 }
 .card-date {
   display: flex;
   align-items: center;
   gap: 4px;
   font-size: 0.75rem;
-  color: #1a73e8;
+  color: #0a2540;
   font-weight: 500;
 }
 .card-text {
   font-size: 0.75rem;
-  color: #5f6368;
+  color: #4a6580;
   line-height: 1.5;
   flex: 1;
 }
@@ -306,7 +310,7 @@ a:not(.btn-primary):hover {
   display: block;
   width: 100%;
   padding: 8px;
-  background-color: #1a73e8;
+  background-color: #0a2540;
   color: #ffffff;
   border-radius: 8px;
   font-weight: 500;
@@ -316,7 +320,7 @@ a:not(.btn-primary):hover {
   margin-top: 8px;
 }
 .card-btn:hover {
-  background-color: #1557b0;
+  background-color: #1e6091;
 }
 
 .btn {
@@ -331,19 +335,19 @@ a:not(.btn-primary):hover {
   transition: all 0.2s ease;
 }
 .btn-primary {
-  background-color: #1a73e8;
+  background-color: #0a2540;
   color: #ffffff;
 }
 .btn-primary:hover {
-  background-color: #1557b0;
+  background-color: #1e6091;
 }
 .btn-outline {
   background-color: transparent;
-  color: #1a73e8;
-  border: 2px solid #1a73e8;
+  color: #0a2540;
+  border: 2px solid #0a2540;
 }
 .btn-outline:hover {
-  background-color: #e8f0fe;
+  background-color: #a8d8e8;
 }
 
 .map-section {
@@ -359,13 +363,13 @@ a:not(.btn-primary):hover {
   font-weight: 700;
 }
 .map-subtitle {
-  color: #5f6368;
+  color: #4a6580;
 }
 .map-wrap {
   height: 600px;
   border-radius: 16px;
-  border: 1px solid #dadce0;
-  background: #e8f0fe;
+  border: 1px solid #a8d8e8;
+  background: #a8d8e8;
 }
 .map-marker {
   pointer-events: none !important;
@@ -374,7 +378,7 @@ a:not(.btn-primary):hover {
   pointer-events: all;
   width: 16px;
   height: 16px;
-  background-color: #1a73e8;
+  background-color: #0a2540;
   border: 3px solid #ffffff;
   border-radius: 50%;
   box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
@@ -386,7 +390,7 @@ a:not(.btn-primary):hover {
   font-family: "Inter", sans-serif;
   font-size: 12px;
   font-weight: 600;
-  color: #202124;
+  color: #0a2540;
   white-space: nowrap;
 }
 .map-popup {
@@ -394,36 +398,36 @@ a:not(.btn-primary):hover {
 }
 .map-popup-region {
   font-size: 0.75rem;
-  color: #1a73e8;
+  color: #0a2540;
   font-weight: 500;
   margin: 2px 0 !important;
 }
 .map-popup-title {
   font-size: 1rem;
   font-weight: 600;
-  color: #202124;
+  color: #0a2540;
   margin-bottom: 4px;
 }
 .map-popup-date {
   font-size: 0.75rem;
-  color: #5f6368;
+  color: #4a6580;
   margin: 0.3em 0 !important;
 }
 .map-popup-link {
   display: inline-block;
   margin-top: 8px;
-  color: #1a73e8;
+  color: #0a2540;
   font-weight: 500;
   font-size: 0.75rem;
   transition: color 0.2s ease;
 }
 .map-popup-link:hover {
-  color: #1557b0;
+  color: #1e6091;
 }
 .map-cluster {
   width: 36px;
   height: 36px;
-  background: #1a73e8;
+  background: #0a2540;
   border: 3px solid #ffffff;
   border-radius: 50%;
   display: flex;
@@ -446,7 +450,7 @@ a:not(.btn-primary):hover {
 }
 
 .weather-section {
-  background: linear-gradient(135deg, #1a73e8, #0d47a1);
+  background: linear-gradient(135deg, #0a2540, #48b4d4);
   padding: 24px 0;
   display: flex;
   align-items: center;
@@ -590,7 +594,7 @@ a:not(.btn-primary):hover {
   padding: 4px 16px;
   border-radius: 20px;
   background: #ffffff;
-  color: #1a73e8;
+  color: #0a2540;
   font-weight: 600;
 }
 .water-desc {
@@ -629,30 +633,32 @@ a:not(.btn-primary):hover {
   width: 100%;
   height: 42px;
   padding: 0 8px 0 32px;
-  border: 1px solid #dadce0;
+  border: 1px solid #a8d8e8;
   border-radius: 8px;
   font-size: 1rem;
   font-family: "Inter", sans-serif;
-  color: #202124;
+  color: #0a2540;
   background: #ffffff;
   box-sizing: border-box;
   transition: border-color 0.2s ease;
 }
 .filter-input:focus {
   outline: none;
-  border-color: #1a73e8;
+  border-color: #0a2540;
 }
 .filter-select {
   height: 42px;
   padding: 0 32px 0 16px;
-  border: 1px solid #dadce0;
+  border: 1px solid #a8d8e8;
   border-radius: 8px;
   font-size: 1rem;
   font-family: "Inter", sans-serif;
-  color: #202124;
+  color: #0a2540;
   background: #ffffff;
   cursor: pointer;
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 8px center;
@@ -660,7 +666,7 @@ a:not(.btn-primary):hover {
 }
 .filter-select:focus {
   outline: none;
-  border-color: #1a73e8;
+  border-color: #0a2540;
 }
 .filter-reset {
   height: 42px;
@@ -670,25 +676,25 @@ a:not(.btn-primary):hover {
 
 .hero {
   padding: 32px 0;
-  background-color: #f8f9fa;
+  background-color: #f5f0e8;
 }
 .hero-subtitle {
   font-size: 0.75rem;
-  color: #1a73e8;
+  color: #0a2540;
   font-weight: 500;
   margin-bottom: 8px;
 }
 .hero-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #202124;
+  color: #0a2540;
   margin-bottom: 16px;
 }
 .hero-accent {
-  color: #1a73e8;
+  color: #0a2540;
 }
 .hero-text {
-  color: #5f6368;
+  color: #4a6580;
   max-width: 600px;
 }
 
@@ -706,11 +712,11 @@ a:not(.btn-primary):hover {
   font-weight: 700;
 }
 .events-subtitle {
-  color: #5f6368;
+  color: #4a6580;
   font-size: 0.75rem;
 }
 .events-link {
-  color: #1a73e8;
+  color: #0a2540;
   font-weight: 500;
 }
 .events-filters {
@@ -733,7 +739,8 @@ a:not(.btn-primary):hover {
 .detail-hero-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .detail-hero-overlay {
   position: absolute;
@@ -829,7 +836,7 @@ a:not(.btn-primary):hover {
 }
 .detail-content {
   padding: 32px 0;
-  background: #f8f9fa;
+  background: #f5f0e8;
 }
 .detail-info {
   display: grid;
@@ -855,20 +862,20 @@ a:not(.btn-primary):hover {
 .detail-block-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #202124;
+  color: #0a2540;
   margin-bottom: 16px;
   padding-bottom: 8px;
-  border-bottom: 2px solid #dadce0;
+  border-bottom: 2px solid #a8d8e8;
 }
 .detail-description {
   font-size: 1rem;
-  color: #5f6368;
+  color: #4a6580;
   line-height: 1.8;
   white-space: pre-line;
 }
 .detail-address {
   font-size: 1rem;
-  color: #5f6368;
+  color: #4a6580;
   margin-bottom: 16px;
   display: flex;
   align-items: center;
@@ -878,7 +885,7 @@ a:not(.btn-primary):hover {
   height: 300px;
   border-radius: 16px;
   overflow: hidden !important;
-  border: 1px solid #dadce0;
+  border: 1px solid #a8d8e8;
   width: 100%;
   max-width: 100%;
 }
@@ -892,10 +899,10 @@ a:not(.btn-primary):hover {
 .detail-card-title {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #202124;
+  color: #0a2540;
   margin-bottom: 24px;
   padding-bottom: 8px;
-  border-bottom: 2px solid #dadce0;
+  border-bottom: 2px solid #a8d8e8;
 }
 .detail-card-row {
   display: flex;
@@ -903,20 +910,20 @@ a:not(.btn-primary):hover {
   align-items: flex-start;
   gap: 16px;
   padding: 8px 0;
-  border-bottom: 1px solid #dadce0;
+  border-bottom: 1px solid #a8d8e8;
 }
 .detail-card-row:last-of-type {
   border-bottom: none;
 }
 .detail-card-label {
   font-size: 0.75rem;
-  color: #5f6368;
+  color: #4a6580;
   white-space: nowrap;
 }
 .detail-card-value {
   font-size: 0.75rem;
   font-weight: 500;
-  color: #202124;
+  color: #0a2540;
   text-align: right;
 }
 .detail-card-btn {
@@ -940,16 +947,16 @@ a:not(.btn-primary):hover {
 .detail-tide-col-header {
   margin-bottom: 16px;
   padding-bottom: 8px;
-  border-bottom: 2px solid #dadce0;
+  border-bottom: 2px solid #a8d8e8;
 }
 .detail-tide-col-day {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #202124;
+  color: #0a2540;
 }
 .detail-tide-col-date {
   font-size: 0.75rem;
-  color: #5f6368;
+  color: #4a6580;
   margin-top: 2px;
 }
 .detail-tide-weather {
@@ -958,7 +965,7 @@ a:not(.btn-primary):hover {
   gap: 16px;
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #dadce0;
+  border-bottom: 1px solid #a8d8e8;
 }
 .detail-tide-weather-icon {
   font-size: 2.5rem;
@@ -971,12 +978,12 @@ a:not(.btn-primary):hover {
 }
 .detail-tide-weather-label {
   font-size: 0.75rem;
-  color: #5f6368;
+  color: #4a6580;
 }
 .detail-tide-weather-temp {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #202124;
+  color: #0a2540;
 }
 .detail-tide-row {
   display: flex;
@@ -997,17 +1004,17 @@ a:not(.btn-primary):hover {
 }
 .detail-tide-row-label {
   font-size: 0.75rem;
-  color: #5f6368;
+  color: #4a6580;
 }
 .detail-tide-row-time {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #202124;
+  color: #0a2540;
 }
 .detail-water {
   margin-top: 24px;
   padding-top: 16px;
-  border-top: 1px solid #dadce0;
+  border-top: 1px solid #a8d8e8;
 }
 .detail-water-info {
   display: flex;
@@ -1021,28 +1028,26 @@ a:not(.btn-primary):hover {
 .detail-water-level {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #202124;
+  color: #0a2540;
 }
 .detail-water-badge {
   padding: 2px 8px;
-  background: #f8f9fa;
+  background: #f5f0e8;
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid #dadce0;
+  border: 1px solid #a8d8e8;
 }
 .detail-water-station {
   font-size: 0.75rem;
-  color: #5f6368;
+  color: #4a6580;
 }
 .detail-link {
-  color: #1a73e8;
+  color: #0a2540;
   text-decoration: underline;
   word-break: break-all;
   font-size: 0.75rem;
 }
 .detail-link:hover {
-  color: #1557b0;
-}
-
-/*# sourceMappingURL=main.css.map */
+  color: #1e6091;
+}/*# sourceMappingURL=main.css.map */
