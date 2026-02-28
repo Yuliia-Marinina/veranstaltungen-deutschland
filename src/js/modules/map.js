@@ -44,9 +44,9 @@ const loadGeoJSON = (map, events) => {
     .then((data) => {
       L.geoJSON(data, {
         style: {
-          color: '#1a73e8',
+          color: '#0a2540',
           weight: 2,
-          fillColor: '#e8f0fe',
+          fillColor: '#1e6091',
           fillOpacity: 0.5,
         },
         onEachFeature: (feature, layer) => {
@@ -56,7 +56,7 @@ const loadGeoJSON = (map, events) => {
           if (hasEvent) {
             layer.on({
               mouseover: (e) => {
-                e.target.setStyle({ fillColor: '#1a73e8', fillOpacity: 0.2 });
+                e.target.setStyle({ fillColor: '#a8d8e8', fillOpacity: 0.2 });
                 L.DomEvent.stopPropagation(e);
               },
               mouseout: (e) => {
@@ -69,7 +69,7 @@ const loadGeoJSON = (map, events) => {
                 ) {
                   return;
                 }
-                e.target.setStyle({ fillColor: '#e8f0fe', fillOpacity: 0.5 });
+                e.target.setStyle({ fillColor: '#a8d8e8', fillOpacity: 0.5 });
               },
             });
           }

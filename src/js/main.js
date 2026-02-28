@@ -5,8 +5,24 @@ import { normalizeEvent } from './utils/ticketmaster.js';
 import { renderEvents } from './modules/events.js';
 import { initFilters } from './modules/filters.js';
 import { husumEvent } from './data/husumEvent.js';
+import { loadPartial } from './utils/loadPartial.js';
+
+const BASE = '/veranstaltungen-deutschland';
+
+const loadPartials = async () => {
+  await Promise.all([
+    loadPartial('#header', `${BASE}/partials/header.html`),
+    loadPartial('#hero', `${BASE}/partials/hero.html`),
+    loadPartial('#events', `${BASE}/partials/events.html`),
+    loadPartial('#map', `${BASE}/partials/map.html`),
+    loadPartial('#weather', `${BASE}/partials/weather.html`),
+    loadPartial('#footer', `${BASE}/partials/footer.html`),
+  ]);
+};
 
 document.addEventListener('DOMContentLoaded', async () => {
+  await loadPartials();
+
   try {
     // Load and normalize events from Ticketmaster
     const rawEvents = await fetchTicketmasterEvents('', 6);
@@ -24,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     today.setHours(0, 0, 0, 0);
 
     const events = uniqueEvents.filter((event) => {
-      const eventDate = new Date(event.dateRaw);
+      const eventDate = new Date(event.dateRaw + 'T00:00:00');
       return isNaN(eventDate) || eventDate >= today;
     });
 
