@@ -1,2 +1,56 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
+
+.events {
+  &-section {
+    margin-top: 64px;
+  }
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-xl;
+
+    @include mobile {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-sm;
+    }
+  }
+
+  &-title {
+    font-size: $font-size-xxl;
+    font-weight: 700;
+    color: $color-primary;
+  }
+
+  &-all {
+    font-size: $font-size-base;
+    color: $color-primary-dark;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    transition: color 0.2s ease;
+
+    span {
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+
+    &:hover {
+      color: $color-primary;
+
+      span {
+        transform: translateX(4px);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary;
+      outline-offset: 3px;
+      border-radius: $radius-sm;
+    }
+  }
+}

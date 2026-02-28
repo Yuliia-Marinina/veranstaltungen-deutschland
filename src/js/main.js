@@ -18,6 +18,8 @@ const loadPartials = async () => {
     loadPartial('#weather', `${BASE}/partials/weather.html`),
     loadPartial('#footer', `${BASE}/partials/footer.html`),
   ]);
+
+  await loadPartial('#filters', `${BASE}/partials/filters.html`);
 };
 
 document.addEventListener('DOMContentLoaded', async () => {

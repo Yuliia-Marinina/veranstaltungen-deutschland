@@ -1,32 +1,65 @@
 @use '../base/variables' as *;
+@use '../base/mixins' as *;
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: $spacing-sm $spacing-md;
+  border: 2px solid transparent;
   border-radius: $radius-md;
-  font-size: $font-size-base;
-  font-weight: 500;
+  font-size: $font-size-sm;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+  width: auto;
+  max-width: fit-content;
+  text-decoration: none;
+  line-height: 1.2;
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 3px;
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 
   &-primary {
     background-color: $color-primary;
+    border-color: $color-primary;
     color: $color-white;
 
     &:hover {
       background-color: $color-primary-dark;
+      border-color: $color-primary-dark;
     }
   }
 
   &-outline {
     background-color: transparent;
+    border-color: $color-primary;
     color: $color-primary;
-    border: 2px solid $color-primary;
 
     &:hover {
       background-color: $color-primary-light;
+    }
+  }
+
+  &-secondary {
+    background-color: $color-secondary;
+    border-color: $color-border;
+    color: $color-text;
+
+    &:hover {
+      background-color: $color-border;
     }
   }
 }

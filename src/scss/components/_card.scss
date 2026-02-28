@@ -1,97 +1,137 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-.card {
-  display: flex;
-  flex-direction: column;
-  background-color: $color-white;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-card;
-  overflow: hidden;
-  transition:
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
-
-  &:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    transform: translateY(-4px);
+.events {
+  &-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
   }
 
-  &-image {
-    position: relative;
-    height: 200px;
-    overflow: hidden;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-
-    &:hover img {
-      transform: scale(1.05);
-    }
-  }
-
-  &-badge {
-    position: absolute;
-    top: $spacing-sm;
-    left: $spacing-sm;
-    padding: 4px $spacing-sm;
-    background-color: $color-primary;
-    color: $color-white;
-    border-radius: 20px;
-    font-size: $font-size-sm;
-    font-weight: 500;
-  }
-
-  &-body {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding: $spacing-md;
+  &-empty {
     @include flex-column;
-    gap: $spacing-sm;
-  }
-
-  &-title {
-    font-size: $font-size-lg;
-    font-weight: 600;
-    color: $color-text;
-  }
-
-  &-date {
-    display: flex;
     align-items: center;
-    gap: $spacing-xs;
-    font-size: $font-size-sm;
-    color: $color-primary;
-    font-weight: 500;
-  }
-
-  &-text {
-    font-size: $font-size-sm;
-    color: $color-text-light;
-    line-height: 1.5;
-    flex: 1;
-  }
-
-  &-btn {
-    display: block;
-    width: 100%;
-    padding: $spacing-sm;
-    background-color: $color-primary;
-    color: $color-white;
-    border-radius: $radius-md;
-    font-weight: 500;
+    gap: $spacing-md;
+    padding: $spacing-xl;
     text-align: center;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    margin-top: $spacing-sm;
+    color: $color-text-light;
+
+    &-text {
+      font-size: $font-size-lg;
+    }
+  }
+
+  &-card {
+    background: $color-white;
+    display: flex;
+    border-radius: $radius-lg;
+    border: 1px solid $color-border;
+    position: relative;
+    overflow: hidden;
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
 
     &:hover {
-      background-color: $color-primary-dark;
+      box-shadow: 0 8px 32px rgba($color-primary-dark, 0.12);
+      transform: translateY(-2px);
+
+      .events-card-image img {
+        transform: scale(1.05);
+      }
+    }
+
+    @include mobile {
+      flex-direction: column;
+    }
+
+    &-image {
+      width: 220px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      border-radius: $radius-lg 0 0 $radius-lg;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+      }
+
+      @include mobile {
+        width: 100%;
+        height: 200px;
+        border-radius: $radius-lg $radius-lg 0 0;
+      }
+    }
+
+    &-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: $color-primary;
+      color: $color-white;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $radius-xl;
+      font-size: $font-size-sm;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    &-body {
+      padding: $spacing-md $spacing-lg;
+      @include flex-column;
+      gap: $spacing-sm;
+      flex: 1;
+    }
+
+    &-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-sm;
+    }
+
+    &-tag {
+      padding: $spacing-xs $spacing-sm;
+      background: rgba($color-primary-dark, 0.12);
+      color: $color-primary-dark;
+      border-radius: $radius-xl;
+      font-size: $font-size-sm;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    &-title {
+      font-size: $font-size-lg;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    &-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-md;
+
+      &-item {
+        @include flex-center;
+        gap: $spacing-sm;
+        font-size: $font-size-sm;
+        color: $color-text-light;
+      }
+    }
+
+    &-desc {
+      font-size: $font-size-sm;
+      color: $color-text-light;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    &-btn {
+      margin-top: auto;
+      align-self: flex-start;
     }
   }
 }

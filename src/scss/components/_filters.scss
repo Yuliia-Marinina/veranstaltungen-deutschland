@@ -1,11 +1,44 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-.filter {
+%filter-field {
+  height: $input-height;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  color: $color-text;
+  background: $color-white;
+  transition: border-color 0.2s ease;
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+    border-color: $color-primary;
+  }
+}
+
+.filters {
+  &-inner {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+    margin-bottom: $spacing-lg;
+
+    @include mobile {
+      flex-direction: column;
+    }
+  }
+
   &-search {
     position: relative;
     flex: 1;
     min-width: 200px;
+
+    @include mobile {
+      width: 100%;
+    }
 
     &-icon {
       position: absolute;
@@ -18,49 +51,34 @@
   }
 
   &-input {
+    @extend %filter-field;
     width: 100%;
-    height: 42px;
     padding: 0 $spacing-sm 0 $spacing-xl;
-    border: 1px solid $color-border;
-    border-radius: $radius-md;
-    font-size: $font-size-base;
-    font-family: 'Inter', sans-serif;
-    color: $color-text;
-    background: $color-white;
-    box-sizing: border-box;
-    transition: border-color 0.2s ease;
-
-    &:focus {
-      outline: none;
-      border-color: $color-primary;
-    }
   }
 
   &-select {
-    height: 42px;
+    @extend %filter-field;
     padding: 0 $spacing-xl 0 $spacing-md;
-    border: 1px solid $color-border;
-    border-radius: $radius-md;
-    font-size: $font-size-base;
-    font-family: 'Inter', sans-serif;
-    color: $color-text;
-    background: $color-white;
     cursor: pointer;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-image: $select-arrow;
     background-repeat: no-repeat;
     background-position: right $spacing-sm center;
-    transition: border-color 0.2s ease;
 
-    &:focus {
-      outline: none;
-      border-color: $color-primary;
+    @include mobile {
+      width: 100%;
     }
   }
 
   &-reset {
-    height: 42px;
+    height: $input-height;
     white-space: nowrap;
-    padding: 0 $spacing-md;
+    font-size: $font-size-base;
+    font-family: $font-family-base;
+    font-weight: 400;
+
+    @include mobile {
+      width: 100%;
+    }
   }
 }

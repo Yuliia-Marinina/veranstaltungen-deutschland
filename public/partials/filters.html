@@ -1,0 +1,32 @@
+<div class="filters-inner">
+  <form class="filters-search" role="search">
+    <label for="filters-search" class="visually-hidden">Veranstaltung suchen</label>
+    <span class="filters-search-icon" aria-hidden="true">🔍</span>
+    <input
+      type="search"
+      id="filters-search"
+      class="filters-input"
+      placeholder="Veranstaltung suchen..."
+    />
+  </form>
+
+  <label for="filters-city" class="visually-hidden">Stadt auswählen</label>
+  <select id="filters-city" class="filters-select">
+    <option value="">Alle Städte</option>
+  </select>
+
+  <label for="filters-category" class="visually-hidden">Kategorie auswählen</label>
+  <select id="filters-category" class="filters-select">
+    <option value="">Alle Kategorien</option>
+  </select>
+
+  <label for="filters-sort" class="visually-hidden">Sortierung</label>
+  <select id="filters-sort" class="filters-select">
+    <option value="date-asc" aria-label="Datum aufsteigend">Datum ↑</option>
+    <option value="date-desc" aria-label="Datum absteigend">Datum ↓</option>
+    <option value="name-asc">Name A–Z</option>
+    <option value="name-desc">Name Z–A</option>
+  </select>
+
+  <button id="filters-reset" class="btn btn-secondary filters-reset">Zurücksetzen</button>
+</div>

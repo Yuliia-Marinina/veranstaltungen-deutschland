@@ -28,9 +28,15 @@ export const formatWeekday = (dateString) =>
 
 // Format date string to German short date
 // Example: '2026-02-20' → '20.02'
-export const formatDate = (dateString) =>
-  new Date(dateString).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
-
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  if (isNaN(date)) return dateString;
+  return new Intl.DateTimeFormat('de-DE', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
+};
 // ─── Water ────────────────────────────────────────────────────────────────────
 
 // Water level thresholds in cm

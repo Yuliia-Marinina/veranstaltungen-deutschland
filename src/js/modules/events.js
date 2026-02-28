@@ -1,58 +1,115 @@
-// Helper: Escape HTML to prevent XSS attacks
-const escapeHTML = (str) => {
-  const div = document.createElement('div');
-  div.textContent = str ?? '';
-  return div.innerHTML;
+import { formatDate } from '../utils/helpers.js';
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+// Helper: Truncate text by last word boundary, fallback to hard cut
+const truncate = (text, max = 100) => {
+  if (!text) return '';
+  if (text.length <= max) return text;
+  const cut = text.lastIndexOf(' ', max);
+  return (cut > 0 ? text.substring(0, cut) : text.substring(0, max)) + '…';
 };
 
-// Helper: Truncate text to a max length
-const truncate = (text, max = 100) =>
-  text?.length > max ? `${text.substring(0, max)}...` : text || '';
+// ─── Card ─────────────────────────────────────────────────────────────────────
 
 // Helper: Create a single event card
 const createEventCard = (event) => {
-  const card = document.createElement('div');
-  card.className = 'card';
+  const card = document.createElement('article');
+  card.className = 'events-card';
 
-  const imageSrc = event.image || `https://picsum.photos/400/200?random=${event.id}`;
-  const shortDesc = truncate(event.description);
+  // Image
+  const img = document.createElement('img');
+  img.src = event.image || `https://picsum.photos/400/300?random=${event.id}`;
+  img.alt = event.title ?? '';
+  img.loading = 'lazy';
+  img.addEventListener('error', () => {
+    img.src = `https://picsum.photos/400/300?random=${event.id}`;
+  });
 
-  card.innerHTML = `
-    <div class="card-image">
-      <img
-        src="${escapeHTML(imageSrc)}"
-        alt="${escapeHTML(event.title)}"
-        onerror="this.src='https://picsum.photos/400/200?random=${escapeHTML(String(event.id))}'"
-      />
-      <span class="card-badge">${escapeHTML(event.region)}</span>
-    </div>
-    <div class="card-body">
-      <h3 class="card-title">${escapeHTML(event.title)}</h3>
-      <p class="card-date">📅 ${escapeHTML(event.date)}</p>
-      <p class="card-text">${escapeHTML(shortDesc)}</p>
-      <a href="event-detail.html?id=${escapeHTML(String(event.id))}&tmid=${escapeHTML(event.ticketmasterId)}"
-         class="btn btn-primary card-btn">
-        Mehr erfahren
-      </a>
-    </div>
-  `;
+  // Badge
+  const badge = document.createElement('span');
+  badge.className = 'events-card-badge';
+  badge.textContent = event.region ?? '';
 
+  const imageWrap = document.createElement('div');
+  imageWrap.className = 'events-card-image';
+  imageWrap.append(img, badge);
+
+  // Tags
+  const tagsWrap = document.createElement('div');
+  tagsWrap.className = 'events-card-tags';
+  event.tags?.slice(0, 2).forEach((tag) => {
+    const span = document.createElement('span');
+    span.className = 'events-card-tag';
+    span.textContent = tag;
+    tagsWrap.appendChild(span);
+  });
+
+  // Title
+  const title = document.createElement('h3');
+  title.className = 'events-card-title';
+  title.textContent = event.title ?? '';
+
+  // Date meta
+  const dateIcon = document.createElement('span');
+  dateIcon.setAttribute('aria-hidden', 'true');
+  dateIcon.textContent = '📅 ';
+
+  const dateMeta = document.createElement('span');
+  dateMeta.className = 'events-card-meta-item';
+  dateMeta.append(dateIcon, formatDate(event.date));
+
+  const meta = document.createElement('div');
+  meta.className = 'events-card-meta';
+  meta.appendChild(dateMeta);
+
+  // Description
+  const desc = document.createElement('p');
+  desc.className = 'events-card-desc';
+  desc.textContent = truncate(event.description, 120);
+
+  // Button
+  const btn = document.createElement('a');
+  btn.href = `events-detail.html?id=${event.id}&tmid=${event.ticketmasterId}`;
+  btn.className = 'events-card-btn btn-primary btn';
+  btn.textContent = 'Mehr erfahren';
+  btn.setAttribute('aria-label', `Mehr erfahren über ${event.title}`);
+
+  // Body
+  const body = document.createElement('div');
+  body.className = 'events-card-body';
+  body.append(tagsWrap, title, meta, desc, btn);
+
+  card.append(imageWrap, body);
   return card;
 };
 
+// ─── Render ───────────────────────────────────────────────────────────────────
+
 // Render events cards on main page
-export const renderEvents = (events) => {
+export const renderEvents = (events, onReset) => {
   const container = document.getElementById('events-grid');
   if (!container) return;
 
   container.innerHTML = '';
 
-  if (events.length === 0) {
-    container.innerHTML = `<p class="events-empty">Keine Veranstaltungen gefunden.</p>`;
+  if (!events.length) {
+    const empty = document.createElement('p');
+    empty.className = 'events-empty';
+    empty.textContent = 'Keine Veranstaltungen gefunden.';
+
+    if (onReset) {
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-secondary';
+      btn.textContent = 'Filter zurücksetzen';
+      btn.addEventListener('click', onReset);
+      container.append(empty, btn);
+    } else {
+      container.appendChild(empty);
+    }
     return;
   }
 
-  // Use DocumentFragment for better performance
   const fragment = document.createDocumentFragment();
   events.forEach((event) => fragment.appendChild(createEventCard(event)));
   container.appendChild(fragment);

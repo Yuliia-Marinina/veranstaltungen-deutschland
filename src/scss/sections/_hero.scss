@@ -3,7 +3,7 @@
 
 .hero {
   position: relative;
-  min-height: 580px;
+  min-height: 630px;
   color: $color-white;
   @include flex-center;
   background:
@@ -82,14 +82,12 @@
       background: transparent;
 
       &::placeholder {
-        color: rgba($color-black, 0.4);
+        color: $color-placeholder;
       }
     }
 
     &-btn {
       padding: $spacing-sm $spacing-lg;
-      background: $color-primary;
-      color: $color-white;
       border: none;
       display: block;
       border-radius: $radius-md;

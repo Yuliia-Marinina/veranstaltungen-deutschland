@@ -1,19 +1,36 @@
 // =====================
-// Colors
+// Colors — Brand
 // =====================
 $color-primary: #0a2540;
 $color-primary-dark: #1e6091;
 $color-primary-light: #a8d8e8;
 $color-secondary: #48b4d4;
 $color-accent: #e8c87a;
+
+// =====================
+// Colors — Text
+// =====================
 $color-text: #0a2540;
 $color-text-light: #4a6580;
+$color-placeholder: #aab4bd; // used for input placeholder text
+
+// =====================
+// Colors — Background & Surface
+// =====================
 $color-bg: #f5f0e8;
+$color-surface: #f0f4f8; // neutral surface, e.g. btn-secondary background
+$color-bg-secondary: #e8edf2; // hover state for btn-secondary
+
+// =====================
+// Colors — Base
+// =====================
 $color-white: #ffffff;
 $color-black: #000000;
 $color-border: #a8d8e8;
 
-// Погодные иконки
+// =====================
+// Colors — Weather Icons
+// =====================
 $color-icon-sun: #f0a500;
 $color-icon-cloud: #7a94aa;
 $color-icon-rain: #3c82c8;
@@ -21,7 +38,9 @@ $color-icon-wind: #4aaa90;
 $color-icon-temp: #dc503c;
 $color-icon-humid: #48b4d4;
 
-// Tidenkalender
+// =====================
+// Colors — Tide Calendar
+// =====================
 $color-hochwasser: #e8c87a;
 $color-niedrigwasser: #1e6091;
 
@@ -35,7 +54,7 @@ $font-size-base: 1rem; // 16px
 $font-size-lg: 1.125rem; // 18px
 $font-size-xl: 1.25rem; // 20px
 $font-size-xxl: 1.5rem; // 24px
-$font-size-hero: 3rem;
+$font-size-hero: 3rem; // 48px — used only in hero section
 
 // =====================
 // Spacing
@@ -45,6 +64,14 @@ $spacing-sm: 8px;
 $spacing-md: 16px;
 $spacing-lg: 24px;
 $spacing-xl: 32px;
+
+// =====================
+// Inputs
+// =====================
+$input-height: 42px; // shared height for inputs, selects and filter buttons
+
+// SVG chevron for custom <select> elements (used with appearance: none)
+$select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
 
 // =====================
 // Border Radius
@@ -60,7 +87,16 @@ $radius-xl: 20px;
 $shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
 
 // =====================
+// Z-index
+// Keep all stacking context values here to avoid conflicts
+// =====================
+$z-header: 100;
+$z-modal: 200;
+$z-tooltip: 300;
+
+// =====================
 // Breakpoints
+// Use via mixins in _mixins.scss — do not use $bp-* directly in components
 // =====================
 $bp-mobile: 480px;
 $bp-tablet: 768px;

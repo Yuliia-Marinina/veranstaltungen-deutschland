@@ -3,27 +3,51 @@ import { renderEvents } from './events.js';
 let allEvents = [];
 
 const FILTER_IDS = {
-  search: 'filter-search',
-  city: 'filter-city',
-  category: 'filter-category',
-  sort: 'filter-sort',
-  reset: 'filter-reset',
+  search: 'filters-search',
+  city: 'filters-city',
+  category: 'filters-category',
+  sort: 'filters-sort',
+  reset: 'filters-reset',
+};
+
+const FILTER_DEFAULTS = {
+  [FILTER_IDS.search]: '',
+  [FILTER_IDS.city]: '',
+  [FILTER_IDS.category]: '',
+  [FILTER_IDS.sort]: 'date-asc',
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const getById = (id) => document.getElementById(id);
+const getById = (id) => {
+  const el = document.getElementById(id);
+  if (!el && import.meta.env?.DEV) {
+    console.warn(`[filters] Element #${id} not found`);
+  }
+  return el;
+};
+
 const getValue = (id) => getById(id)?.value || '';
+
+const debounce = (fn, delay = 300) => {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+};
 
 // ─── Initialization ───────────────────────────────────────────────────────────
 
 export const initFilters = (events) => {
-  allEvents = events;
+  if (!events?.length) return;
+
+  allEvents = [...events]; // копия, не ссылка
 
   populateSelect(FILTER_IDS.city, getUniqueValues(events, 'region'));
   populateSelect(FILTER_IDS.category, getUniqueValues(events, 'tags'));
 
-  getById(FILTER_IDS.search)?.addEventListener('input', applyFilters);
+  getById(FILTER_IDS.search)?.addEventListener('input', debounce(applyFilters));
   getById(FILTER_IDS.city)?.addEventListener('change', applyFilters);
   getById(FILTER_IDS.category)?.addEventListener('change', applyFilters);
   getById(FILTER_IDS.sort)?.addEventListener('change', applyFilters);
@@ -71,7 +95,8 @@ const applyFilters = () => {
     filtered = filtered.filter(
       (event) =>
         event.title?.toLowerCase().includes(search) ||
-        event.description?.toLowerCase().includes(search),
+        event.description?.toLowerCase().includes(search) ||
+        event.region?.toLowerCase().includes(search),
     );
   }
 
@@ -80,37 +105,8 @@ const applyFilters = () => {
 
   filtered = sortEvents(filtered, sort);
 
-  if (filtered.length === 0) {
-    renderEmptyState();
-    return;
-  }
-
-  renderEvents(filtered);
-};
-
-// ─── Empty state ──────────────────────────────────────────────────────────────
-
-const renderEmptyState = () => {
-  const container = getById('events-grid');
-  if (!container) return;
-
-  // Use addEventListener instead of onclick to avoid XSS
-  const text = document.createElement('p');
-  text.className = 'events-empty-text';
-  text.textContent = '🔍 Keine Veranstaltungen gefunden.';
-
-  const btn = document.createElement('button');
-  btn.className = 'btn btn-secondary';
-  btn.textContent = 'Filter zurücksetzen';
-  btn.addEventListener('click', resetFilters);
-
-  const wrapper = document.createElement('div');
-  wrapper.className = 'events-empty';
-  wrapper.appendChild(text);
-  wrapper.appendChild(btn);
-
-  container.innerHTML = '';
-  container.appendChild(wrapper);
+  // renderEvents сам обработает пустой массив и покажет empty-state
+  renderEvents(filtered, resetFilters);
 };
 
 // ─── Sorting ──────────────────────────────────────────────────────────────────
@@ -123,9 +119,9 @@ const sortEvents = (events, sort) => {
       case 'date-desc':
         return new Date(b.dateFrom || 0) - new Date(a.dateFrom || 0);
       case 'name-asc':
-        return a.title.localeCompare(b.title, 'de');
+        return (a.title ?? '').localeCompare(b.title ?? '', 'de');
       case 'name-desc':
-        return b.title.localeCompare(a.title, 'de');
+        return (b.title ?? '').localeCompare(a.title ?? '', 'de');
       default:
         return 0;
     }
@@ -135,13 +131,10 @@ const sortEvents = (events, sort) => {
 // ─── Reset ────────────────────────────────────────────────────────────────────
 
 const resetFilters = () => {
-  [FILTER_IDS.search, FILTER_IDS.city, FILTER_IDS.category].forEach((id) => {
+  Object.entries(FILTER_DEFAULTS).forEach(([id, value]) => {
     const el = getById(id);
-    if (el) el.value = '';
+    if (el) el.value = value;
   });
-
-  const sortEl = getById(FILTER_IDS.sort);
-  if (sortEl) sortEl.value = 'date-asc';
 
   renderEvents(allEvents);
 };
