@@ -1,5 +1,7 @@
 import { formatDate, truncate, escapeHTML } from '../utils/utils.js';
 
+const BASE = '/veranstaltungen-deutschland';
+
 // ─── Card ─────────────────────────────────────────────────────────────────────
 
 const createEventCard = (event) => {
@@ -59,7 +61,7 @@ const createEventCard = (event) => {
 
   // Button
   const btn = document.createElement('a');
-  btn.href = `event-detail.html?id=${escapeHTML(String(event.id))}&tmid=${escapeHTML(event.ticketmasterId)}`;
+  btn.href = `${BASE}/event-detail.html?id=${escapeHTML(String(event.id))}&tmid=${escapeHTML(event.ticketmasterId)}`;
   btn.className = 'events-card-btn btn btn-primary';
   btn.textContent = 'Mehr erfahren';
   btn.setAttribute('aria-label', `Mehr erfahren über ${event.title}`);
