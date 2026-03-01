@@ -1,17 +1,20 @@
 <div class="container">
-  <div class="weather-top">
-    <div class="weather-location">
-      <span class="weather-location-icon">📍</span>
-      <span class="weather-location-name">Berlin, Germany</span>
+  <div class="weather-inner">
+    <div class="weather-top">
+      <div class="weather-top-header">
+        <h2 class="weather-title" id="weather-detail-title">Wetter & Tidenkalender</h2>
+        <span class="weather-location-name">Husum · Nordsee</span>
+      </div>
+      <p class="weather-subtitle">3-Tage-Vorschau mit Hochwasser- und Niedrigwasserzeiten</p>
     </div>
-  </div>
 
-  <div class="weather-cards" id="weather-cards">
-    <!-- Filled by JS -->
-  </div>
-
-  <div class="water-chart">
-    <p class="water-chart-title">Wasserstand letzte 7 Tage</p>
-    <canvas id="water-chart-canvas"></canvas>
+    <div
+      class="weather-cards"
+      id="weather-cards"
+      aria-live="polite"
+      aria-label="3-Tage-Wettervorhersage"
+    >
+      <!-- Filled by JS -->
+    </div>
   </div>
 </div>

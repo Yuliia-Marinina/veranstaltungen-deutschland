@@ -10,22 +10,20 @@ import {
   getWeatherDescription,
   formatWeekday,
   formatDate,
-  getWaterStatus,
-  getWaterDescription,
 } from '../utils/utils.js';
 
 let waterChart = null;
 
 const CHART_SAMPLE_RATE = 10;
 
-// ─── Initialization ───────────────────────────────────────────────────────────
+// ─── Init ─────────────────────────────────────────────────────────────────────
 
 export const initWeather = async () => {
   try {
     const location = await getUserLocation();
 
     const locationEl = document.querySelector('.weather-location-name');
-    if (locationEl) locationEl.textContent = `${location.city || 'Berlin'}, Germany`;
+    if (locationEl) locationEl.textContent = `${location.city ?? 'Husum'} · Nordsee`;
 
     const [weatherData, stations] = await Promise.all([
       fetchWeather(location.lat, location.lng),
@@ -39,7 +37,6 @@ export const initWeather = async () => {
 
     const station = stations?.find((s) => s.shortname === 'DRESDEN') ?? stations?.[0];
     const measurements = station ? await fetchWaterLevels(station.uuid) : null;
-
     const waterByDay = buildWaterByDay(measurements);
 
     renderCards(weatherData.daily, waterByDay);
@@ -62,7 +59,7 @@ const showError = (message = 'Daten nicht verfügbar') => {
   container.replaceChildren(p);
 };
 
-// Build map of date → water level from measurements
+// Builds a date → water level map from raw measurements
 const buildWaterByDay = (measurements) => {
   if (!measurements) return {};
   return measurements.reduce((map, m) => {
@@ -81,7 +78,7 @@ const renderCards = (daily, waterByDay) => {
   const lastKnownLevel = waterByDay[Object.keys(waterByDay).at(-1)] ?? null;
   const fragment = document.createDocumentFragment();
 
-  daily.time.forEach((date, index) => {
+  daily.time.slice(0, 3).forEach((date, index) => {
     fragment.appendChild(createCard(daily, waterByDay, date, index, lastKnownLevel));
   });
 
@@ -90,17 +87,33 @@ const renderCards = (daily, waterByDay) => {
 
 const createCard = (daily, waterByDay, date, index, lastKnownLevel) => {
   const isToday = index === 0;
-  const code = daily.weathercode[index];
+  const code = parseInt(daily.weathercode[index], 10);
   const maxTemp = Math.round(daily.temperature_2m_max[index]);
   const minTemp = Math.round(daily.temperature_2m_min[index]);
+  const wind = Math.round(daily.windspeed_10m_max?.[index] ?? 0);
+  const precip = daily.precipitation_probability_max?.[index] ?? 0;
   const waterLevel = waterByDay[date] ?? lastKnownLevel;
-  const isApprox = !waterByDay[date] && waterLevel !== null;
-  const status = waterLevel !== null ? getWaterStatus(waterLevel) : null;
 
-  // ── Header ──
-  const dayEl = document.createElement('p');
-  dayEl.className = 'weather-card-day';
-  dayEl.textContent = isToday ? 'Heute' : formatWeekday(date);
+  const card = document.createElement('div');
+  card.className = `weather-card${isToday ? ' weather-card-today' : ''}`;
+
+  card.append(
+    createHeader(isToday, date),
+    createWeatherRow(code, maxTemp, minTemp),
+    createDetails(wind, precip),
+    createDivider(),
+    createTideSection(),
+  );
+
+  return card;
+};
+
+// ─── Card sections ────────────────────────────────────────────────────────────
+
+const createHeader = (isToday, date) => {
+  const day = document.createElement('p');
+  day.className = 'weather-card-day';
+  day.textContent = isToday ? 'Heute' : formatWeekday(date);
 
   const dateEl = document.createElement('p');
   dateEl.className = 'weather-card-date';
@@ -108,13 +121,18 @@ const createCard = (daily, waterByDay, date, index, lastKnownLevel) => {
 
   const header = document.createElement('div');
   header.className = 'weather-card-header';
-  header.append(dayEl, dateEl);
+  header.append(day, dateEl);
+  return header;
+};
 
-  // ── Weather ──
-  const iconEl = document.createElement('p');
-  iconEl.className = 'weather-card-icon';
+const createWeatherRow = (code, maxTemp, minTemp) => {
+  const iconWrap = document.createElement('div');
+  iconWrap.className = 'weather-card-icon';
+
+  const iconEl = document.createElement('span');
   iconEl.setAttribute('aria-hidden', 'true');
   iconEl.textContent = getWeatherIcon(code);
+  iconWrap.appendChild(iconEl);
 
   const tempMax = document.createElement('p');
   tempMax.className = 'weather-card-temp-max';
@@ -124,55 +142,74 @@ const createCard = (daily, waterByDay, date, index, lastKnownLevel) => {
   tempMin.className = 'weather-card-temp-min';
   tempMin.textContent = `${minTemp}°`;
 
-  const descEl = document.createElement('p');
-  descEl.className = 'weather-card-desc';
-  descEl.textContent = getWeatherDescription(code);
+  const desc = document.createElement('p');
+  desc.className = 'weather-card-desc';
+  desc.textContent = getWeatherDescription(code);
 
-  const weatherSection = document.createElement('div');
-  weatherSection.className = 'weather-card-weather';
-  weatherSection.append(iconEl, tempMax, tempMin, descEl);
+  const tempInfo = document.createElement('div');
+  tempInfo.append(tempMax, tempMin, desc);
 
-  // ── Divider ──
-  const divider = document.createElement('div');
-  divider.className = 'weather-card-divider';
+  const section = document.createElement('div');
+  section.className = 'weather-card-weather';
+  section.append(iconWrap, tempInfo);
+  return section;
+};
 
-  // ── Water ──
-  const waterIcon = document.createElement('p');
-  waterIcon.className = 'weather-card-water-icon';
-  waterIcon.setAttribute('aria-hidden', 'true');
-  waterIcon.textContent = '🌊';
+const createDetails = (wind, precip) => {
+  const createDetail = (emoji, text) => {
+    const icon = document.createElement('span');
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = emoji;
 
-  const waterLevelEl = document.createElement('p');
-  waterLevelEl.className = 'weather-card-water-level';
-  waterLevelEl.textContent = waterLevel !== null ? `${isApprox ? '~' : ''}${waterLevel} cm` : '—';
+    const el = document.createElement('div');
+    el.className = 'weather-card-detail';
+    el.append(icon, ` ${text}`);
+    return el;
+  };
 
-  const waterSection = document.createElement('div');
-  waterSection.className = 'weather-card-water';
-  waterSection.append(waterIcon, waterLevelEl);
+  const section = document.createElement('div');
+  section.className = 'weather-card-details';
+  section.append(
+    createDetail('💨', `Wind ${wind} km/h`),
+    createDetail('💧', `${precip}% Niederschlag`),
+  );
+  return section;
+};
 
-  if (status) {
-    const badge = document.createElement('span');
-    badge.className = `weather-card-water-badge ${status.className}`;
-    badge.textContent = status.text;
+const createDivider = () => {
+  const el = document.createElement('div');
+  el.className = 'weather-card-divider';
+  return el;
+};
 
-    const waterDesc = document.createElement('p');
-    waterDesc.className = 'weather-card-water-desc';
-    waterDesc.textContent = isApprox ? 'Letzter bekannter Stand' : getWaterDescription(status.text);
+const createTideSection = () => {
+  const createTideRow = (type, label) => {
+    const icon = document.createElement('span');
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = type === 'hw' ? '🌊' : '〰️';
 
-    waterSection.append(badge, waterDesc);
-  } else {
-    const waterDesc = document.createElement('p');
-    waterDesc.className = 'weather-card-water-desc';
-    waterDesc.textContent = 'Keine Wasserdaten';
-    waterSection.appendChild(waterDesc);
-  }
+    const labelEl = document.createElement('span');
+    labelEl.textContent = label;
 
-  // ── Card ──
-  const card = document.createElement('div');
-  card.className = `weather-card${isToday ? ' weather-card-today' : ''}`;
-  card.append(header, weatherSection, divider, waterSection);
+    const time = document.createElement('span');
+    time.className = 'tide-time';
+    time.textContent = '— noch nicht verfügbar';
 
-  return card;
+    const row = document.createElement('div');
+    row.className = `tide-row tide-${type}`;
+    row.append(icon, labelEl, time);
+    return row;
+  };
+
+  const section = document.createElement('div');
+  section.className = 'weather-card-tide';
+  section.append(
+    createTideRow('hw', 'Hochwasser'),
+    createTideRow('nw', 'Niedrigwasser'),
+    createTideRow('hw', 'Hochwasser'),
+    createTideRow('nw', 'Niedrigwasser'),
+  );
+  return section;
 };
 
 // ─── Chart ────────────────────────────────────────────────────────────────────

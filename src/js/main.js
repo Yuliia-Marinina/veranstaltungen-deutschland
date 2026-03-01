@@ -22,6 +22,7 @@ const loadPartials = async () => {
     loadPartial('#footer', `${BASE}/partials/footer.html`),
   ]);
   await loadPartial('#filters', `${BASE}/partials/filters.html`);
+  await loadPartial('#chart', `${BASE}/partials/chart.html`);
 };
 
 // ─── Load More ────────────────────────────────────────────────────────────────

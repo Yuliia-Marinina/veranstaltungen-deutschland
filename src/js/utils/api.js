@@ -46,7 +46,7 @@ export const fetchEventById = async (ticketmasterId) => {
 
 export const fetchWeather = async (lat, lng) => {
   try {
-    const url = `${WEATHER_BASE}?latitude=${lat}&longitude=${lng}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe/Berlin&forecast_days=7`;
+    const url = `${WEATHER_BASE}?latitude=${lat}&longitude=${lng}&daily=temperature_2m_max,temperature_2m_min,weathercode,windspeed_10m_max,precipitation_probability_max&timezone=Europe/Berlin&forecast_days=7`;
     return await fetchJSON(url, 'Weather');
   } catch (error) {
     console.error('fetchWeather:', error.message);
