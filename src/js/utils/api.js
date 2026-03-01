@@ -16,16 +16,19 @@ const fetchJSON = async (url, label = 'API') => {
 
 // ─── Ticketmaster ─────────────────────────────────────────────────────────────
 
-export const fetchTicketmasterEvents = async (city = '', size = 6) => {
+export const fetchTicketmasterEvents = async (city = '', size = 6, page = 0) => {
   try {
     const cityParam = city ? `&city=${encodeURIComponent(city)}` : '';
     const today = new Date().toISOString().split('T')[0];
-    const url = `${TICKETMASTER_BASE}/events.json?apikey=${CONFIG.TICKETMASTER_API_KEY}&countryCode=DE${cityParam}&size=${size}&sort=date,asc&startDateTime=${today}T00:00:00Z`;
+    const url = `${TICKETMASTER_BASE}/events.json?apikey=${CONFIG.TICKETMASTER_API_KEY}&countryCode=DE${cityParam}&size=${size}&page=${page}&sort=date,asc&startDateTime=${today}T00:00:00Z`;
     const data = await fetchJSON(url, 'Ticketmaster');
-    return data._embedded?.events ?? [];
+    return {
+      events: data._embedded?.events ?? [],
+      total: data.page?.totalElements ?? 0,
+    };
   } catch (error) {
     console.error('fetchTicketmasterEvents:', error.message);
-    return [];
+    return { events: [], total: 0 };
   }
 };
 
