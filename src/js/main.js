@@ -23,6 +23,7 @@ const loadPartials = async () => {
 
   // Filters depend on events partial being rendered first
   await loadPartial('#filters', `${BASE}/partials/filters.html`);
+  await loadPartial('#chart', `${BASE}/partials/chart.html`);
 };
 
 // ─── Init ─────────────────────────────────────────────────────────────────────

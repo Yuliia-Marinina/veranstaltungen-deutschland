@@ -755,124 +755,148 @@ a:hover {
 }
 
 .weather-section {
-  background: linear-gradient(135deg, #0a2540, #48b4d4);
-  padding: 24px 0;
-  display: flex;
-  align-items: center;
-  color: #ffffff;
+  background: #ffffff;
+  padding: 64px 0;
 }
-.weather-top {
-  margin-bottom: 24px;
-}
-.weather-location {
+.weather-top-header {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #ffffff;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+@media (max-width: 480px) {
+  .weather-top-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+.weather-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0a2540;
+  line-height: 1.2;
+}
+.weather-location-name {
+  font-size: 1rem;
+  color: #4a6580;
+}
+.weather-subtitle {
+  font-size: 1rem;
+  color: #4a6580;
+  margin-bottom: 32px;
+}
+.weather-error {
+  color: #4a6580;
+  padding: 32px 0;
 }
 .weather-cards {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-  margin-bottom: 32px;
-}
-@media (max-width: 768px) {
-  .weather-cards {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 @media (max-width: 480px) {
   .weather-cards {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 .weather-card {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #0a2540;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  transition: background 0.2s ease;
-}
-.weather-card:hover {
-  background: rgba(255, 255, 255, 0.15);
+  padding: 24px;
+  color: #ffffff;
 }
 .weather-card-today {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: #ffffff;
+  outline: 2px solid #48b4d4;
+  outline-offset: -2px;
 }
 .weather-card-header {
-  text-align: center;
+  margin-bottom: 16px;
 }
 .weather-card-day {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin-bottom: 4px;
 }
 .weather-card-date {
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.7);
 }
 .weather-card-weather {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
 }
 .weather-card-icon {
-  font-size: 2rem;
-  margin-bottom: 4px;
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
 }
 .weather-card-temp-max {
-  font-size: 1.125rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #ffffff;
+  line-height: 1;
 }
 .weather-card-temp-min {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.5);
 }
 .weather-card-desc {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin-top: 4px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+.weather-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+.weather-card-detail {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
 }
 .weather-card-divider {
-  width: 100%;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 4px 0;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 16px 0;
 }
-.weather-card-water {
-  text-align: center;
+.weather-card-tide {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
-.weather-card-water-icon {
-  font-size: 1.5rem;
-  margin-bottom: 4px;
-}
-.weather-card-water-level {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #ffffff;
-}
-.weather-card-water-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  background: #ffffff;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  margin: 4px 0;
-}
-.weather-card-water-desc {
+
+.tide-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.7);
 }
-.weather-card-water-na {
+.tide-hw {
+  color: #e8c87a;
+}
+.tide-nw {
+  color: #48b4d4;
+}
+.tide-time {
+  margin-left: auto;
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
+  opacity: 0.6;
 }
 
 .map-section {
