@@ -1,11 +1,43 @@
 <div class="container">
-  <p class="hero-subtitle">Entdecken Sie Deutschland</p>
-  <h1 class="hero-title">
-    Discover Upcoming <span class="hero-accent">Events</span>
-    Across the Country
-  </h1>
-  <p class="hero-text">
-    Von lebhaften Stadtfesten bis zu historischen Festivals Bayerns. Finden Sie Ihre nächste
-    unvergessliche Veranstaltung.
-  </p>
+  <div class="hero-content">
+    <p class="hero-label">Von Nordsee bis Bayern</p>
+
+    <h1 id="hero-title" class="hero-title">
+      Entdecke Events in
+      <span class="hero-accent">Deutschland</span>
+    </h1>
+
+    <p class="hero-sub">
+      Von lebhaften Stadtfesten bis zu historischen Festivals. Finde deine nächste unvergessliche
+      Veranstaltung.
+    </p>
+
+    <form class="hero-search" role="search">
+      <label for="hero-search-input" class="visually-hidden">
+        Event, Stadt oder Kategorie suchen
+      </label>
+      <input
+        id="hero-search-input"
+        type="search"
+        class="hero-search-input"
+        placeholder="Event, Stadt oder Kategorie suchen..."
+      />
+      <button type="submit" class="hero-search-btn btn-primary">Suchen</button>
+    </form>
+
+    <ul class="hero-stats">
+      <li class="hero-stat">
+        <span class="hero-stat-num">200+</span>
+        <span class="hero-stat-label">Events gefunden</span>
+      </li>
+      <li class="hero-stat">
+        <span class="hero-stat-num">16</span>
+        <span class="hero-stat-label">Bundesländer</span>
+      </li>
+      <li class="hero-stat">
+        <span class="hero-stat-num">Live</span>
+        <span class="hero-stat-label">Echtzeitdaten</span>
+      </li>
+    </ul>
+  </div>
 </div>

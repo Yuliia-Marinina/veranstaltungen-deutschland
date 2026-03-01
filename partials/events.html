@@ -1,42 +1,14 @@
 <div class="container">
   <div class="events-header">
-    <h2 class="events-title">Kommende Veranstaltungen</h2>
-  </div>
-  <div class="events-filters" id="events-filters">
-    <!-- Search -->
-    <div class="filter-search">
-      <span class="filter-search-icon">🔍</span>
-      <input
-        type="text"
-        id="filter-search"
-        class="filter-input"
-        placeholder="Veranstaltung suchen..."
-      />
-    </div>
-
-    <!-- City filter -->
-    <select id="filter-city" class="filter-select">
-      <option value="">Alle Städte</option>
-    </select>
-
-    <!-- Category filter -->
-    <select id="filter-category" class="filter-select">
-      <option value="">Alle Kategorien</option>
-    </select>
-
-    <!-- Sort -->
-    <select id="filter-sort" class="filter-select">
-      <option value="date-asc">Datum ↑</option>
-      <option value="date-desc">Datum ↓</option>
-      <option value="name-asc">Name A–Z</option>
-      <option value="name-desc">Name Z–A</option>
-    </select>
-
-    <!-- Reset -->
-    <button id="filter-reset" class="btn btn-secondary filter-reset">Zurücksetzen</button>
+    <h2 class="events-title" id="events-title">Kommende Veranstaltungen</h2>
+    <a href="/events" class="events-all" aria-label="Alle Veranstaltungen anzeigen">
+      Alle anzeigen <span aria-hidden="true">→</span>
+    </a>
   </div>
 
-  <div class="grid" id="events-grid">
+  <div class="filters" id="filters" role="search" aria-label="Veranstaltungen filtern"></div>
+
+  <div class="events-grid" id="events-grid" aria-live="polite" aria-label="Veranstaltungsliste">
     <!-- Filled by JS -->
   </div>
 </div>
