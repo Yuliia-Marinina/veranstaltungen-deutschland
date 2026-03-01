@@ -3,7 +3,7 @@
 
 .events {
   &-section {
-    margin-top: 64px;
+    padding: $spacing-xxl 0;
   }
 
   &-header {
@@ -34,6 +34,12 @@
     gap: $spacing-xs;
     transition: color 0.2s ease;
 
+    &::after {
+      content: '→';
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+
     span {
       display: inline-block;
       transition: transform 0.2s ease;
@@ -42,7 +48,7 @@
     &:hover {
       color: $color-primary;
 
-      span {
+      &::after {
         transform: translateX(4px);
       }
     }
@@ -51,6 +57,23 @@
       outline: 2px solid $color-primary;
       outline-offset: 3px;
       border-radius: $radius-sm;
+    }
+  }
+
+  &-more {
+    text-align: center;
+    margin-top: $spacing-xl;
+
+    &-btn {
+      background-color: $color-white;
+      font-size: $font-size-base;
+      padding: $spacing-md $spacing-xl;
+    }
+
+    &-count {
+      margin-top: $spacing-sm;
+      font-size: $font-size-sm;
+      color: $color-text-light;
     }
   }
 }

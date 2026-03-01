@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 *,
 *::before,
@@ -737,7 +738,7 @@ a:hover {
 }
 
 .events-section {
-  margin-top: 64px;
+  padding: 64px 0;
 }
 .events-header {
   display: flex;
@@ -766,6 +767,11 @@ a:hover {
   gap: 4px;
   transition: color 0.2s ease;
 }
+.events-all::after {
+  content: "→";
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
 .events-all span {
   display: inline-block;
   transition: transform 0.2s ease;
@@ -773,13 +779,27 @@ a:hover {
 .events-all:hover {
   color: #0a2540;
 }
-.events-all:hover span {
+.events-all:hover::after {
   transform: translateX(4px);
 }
 .events-all:focus-visible {
   outline: 2px solid #0a2540;
   outline-offset: 3px;
   border-radius: 4px;
+}
+.events-more {
+  text-align: center;
+  margin-top: 32px;
+}
+.events-more-btn {
+  background-color: #ffffff;
+  font-size: 1rem;
+  padding: 16px 32px;
+}
+.events-more-count {
+  margin-top: 8px;
+  font-size: 0.75rem;
+  color: #4a6580;
 }
 
 .weather-section {
