@@ -2,7 +2,7 @@
   <div class="events-header">
     <h2 class="events-title" id="events-title">Kommende Veranstaltungen</h2>
     <a href="/events" class="events-all" aria-label="Alle Veranstaltungen anzeigen">
-      Alle anzeigen <span aria-hidden="true">→</span>
+      Alle anzeigen
     </a>
   </div>
 
@@ -10,5 +10,16 @@
 
   <div class="events-grid" id="events-grid" aria-live="polite" aria-label="Veranstaltungsliste">
     <!-- Filled by JS -->
+  </div>
+
+  <div class="events-more">
+    <button
+      class="btn btn-outline events-more-btn"
+      id="events-load-more"
+      aria-controls="events-grid"
+    >
+      Weitere Events laden
+    </button>
+    <p class="events-more-count" id="events-count" aria-live="polite"></p>
   </div>
 </div>
