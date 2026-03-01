@@ -1,4 +1,3 @@
-import Chart from 'chart.js/auto';
 import {
   fetchWeather,
   getUserLocation,
@@ -11,10 +10,6 @@ import {
   formatWeekday,
   formatDate,
 } from '../utils/utils.js';
-
-let waterChart = null;
-
-const CHART_SAMPLE_RATE = 10;
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
@@ -32,7 +27,7 @@ export const initWeather = async () => {
 
     if (!weatherData?.daily) {
       showError('Wetterdaten nicht verfügbar');
-      return;
+      return null;
     }
 
     const station = stations?.find((s) => s.shortname === 'DRESDEN') ?? stations?.[0];
@@ -41,10 +36,14 @@ export const initWeather = async () => {
 
     renderCards(weatherData.daily, waterByDay);
 
-    if (measurements) renderWaterChart(measurements);
+    return {
+      measurements,
+      stationName: station?.longname ?? station?.shortname ?? null,
+    };
   } catch (error) {
     console.error('initWeather:', error.message);
     showError('Fehler beim Laden der Wetterdaten');
+    return null;
   }
 };
 
@@ -59,7 +58,6 @@ const showError = (message = 'Daten nicht verfügbar') => {
   container.replaceChildren(p);
 };
 
-// Builds a date → water level map from raw measurements
 const buildWaterByDay = (measurements) => {
   if (!measurements) return {};
   return measurements.reduce((map, m) => {
@@ -210,53 +208,4 @@ const createTideSection = () => {
     createTideRow('nw', 'Niedrigwasser'),
   );
   return section;
-};
-
-// ─── Chart ────────────────────────────────────────────────────────────────────
-
-const buildChartConfig = (labels, values) => ({
-  type: 'line',
-  data: {
-    labels,
-    datasets: [
-      {
-        label: 'Wasserstand (cm)',
-        data: values,
-        borderColor: '#ffffff',
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        borderWidth: 2,
-        tension: 0.4,
-        pointBackgroundColor: '#ffffff',
-        pointRadius: 3,
-        fill: true,
-      },
-    ],
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: {
-      x: {
-        ticks: { color: 'rgba(255,255,255,0.8)', maxTicksLimit: 7 },
-        grid: { color: 'rgba(255,255,255,0.1)' },
-      },
-      y: {
-        ticks: { color: 'rgba(255,255,255,0.8)', callback: (v) => `${v} cm` },
-        grid: { color: 'rgba(255,255,255,0.1)' },
-      },
-    },
-  },
-});
-
-const renderWaterChart = (measurements) => {
-  const ctx = document.getElementById('water-chart-canvas');
-  if (!ctx) return;
-
-  const filtered = measurements.filter((_, i) => i % CHART_SAMPLE_RATE === 0);
-  const labels = filtered.map((m) => formatDate(m.timestamp));
-  const values = filtered.map((m) => Math.round(m.value));
-
-  if (waterChart) waterChart.destroy();
-  waterChart = new Chart(ctx, buildChartConfig(labels, values));
 };

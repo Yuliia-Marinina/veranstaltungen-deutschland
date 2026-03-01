@@ -1,4 +1,32 @@
-<div class="water-chart" role="img" aria-label="Wasserstand der letzten 7 Tage">
-  <p class="water-chart-title" aria-hidden="true">Wasserstand letzte 7 Tage</p>
-  <canvas id="water-chart-canvas"></canvas>
+<div class="container">
+  <div class="chart-inner">
+    <div class="chart-header">
+      <div>
+        <h2 class="chart-title" id="chart-title">Wasserstand letzte 7 Tage</h2>
+        <p class="chart-subtitle" id="chart-subtitle">Laden…</p>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-stats">
+        <div class="chart-stat">
+          <p class="chart-stat-val" id="chart-stat-current">— cm</p>
+          <p class="chart-stat-label">Aktueller Stand</p>
+          <span class="chart-stat-badge" id="chart-stat-badge">—</span>
+        </div>
+        <div class="chart-stat">
+          <p class="chart-stat-val" id="chart-stat-max">— cm</p>
+          <p class="chart-stat-label">Maximum (7 Tage)</p>
+        </div>
+        <div class="chart-stat">
+          <p class="chart-stat-val" id="chart-stat-min">— cm</p>
+          <p class="chart-stat-label">Minimum (7 Tage)</p>
+        </div>
+      </div>
+
+      <div class="chart-canvas-wrap" role="img" aria-label="Wasserstand der letzten 7 Tage">
+        <canvas id="water-chart-canvas"></canvas>
+      </div>
+    </div>
+  </div>
 </div>

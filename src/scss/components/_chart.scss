@@ -1,56 +1,93 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-.water {
-  &-info {
-    @include flex-column;
-    align-items: center;
-    gap: $spacing-sm;
-    margin-bottom: $spacing-lg;
+.chart {
+  &-section {
+    padding: $spacing-xxl 0;
+    background: $color-bg;
   }
 
-  &-river {
-    font-size: $font-size-lg;
-    font-weight: 600;
-    color: $color-white;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: $spacing-md;
+  &-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: $spacing-sm;
   }
 
-  &-level {
-    font-size: 4rem;
+  &-title {
+    font-size: $font-size-xxl;
     font-weight: 700;
-    color: $color-white;
+    color: $color-text;
+    margin-bottom: $spacing-xs;
   }
 
-  &-badge {
-    padding: $spacing-xs $spacing-md;
-    border-radius: 20px;
+  &-subtitle {
+    font-size: $font-size-sm;
+    color: $color-text-light;
+    margin-bottom: $spacing-xl;
+  }
+
+  &-card {
     background: $color-white;
-    color: $color-primary;
-    font-weight: 600;
+    border-radius: $radius-lg;
+    padding: $spacing-xl;
+    border: 1px solid $color-border;
+    box-shadow: $shadow-card;
   }
 
-  &-desc {
-    opacity: 0.8;
-    text-align: center;
-    color: $color-white;
+  &-stats {
+    display: flex;
+    gap: $spacing-xl;
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-lg;
+    border-bottom: 1px solid rgba($color-border, 0.6);
   }
 
-  &-chart {
-    margin-top: $spacing-md;
-    height: 200px;
-
-    canvas {
-      max-height: 200px;
+  &-stat {
+    &-val {
+      font-size: 28px;
+      font-weight: 700;
+      color: $color-text;
     }
 
-    &-title {
+    &-label {
       font-size: $font-size-sm;
+      color: $color-text-light;
+      margin-top: $spacing-xs;
+    }
+
+    &-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: $radius-xl;
+      font-size: 11px;
       font-weight: 600;
-      color: $color-white;
-      margin-bottom: $spacing-sm;
+      margin-top: $spacing-xs;
+
+      &.badge-normal {
+        background: rgba($color-secondary, 0.15);
+        color: $color-primary-dark;
+      }
+
+      &.badge-high {
+        background: rgba($color-accent, 0.25);
+        color: #b8860b;
+      }
+
+      &.badge-low {
+        background: rgba($color-primary-light, 0.3);
+        color: $color-primary-dark;
+      }
+    }
+  }
+
+  &-canvas-wrap {
+    height: 240px;
+    position: relative;
+
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
     }
   }
 }

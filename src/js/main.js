@@ -6,6 +6,7 @@ import { renderEvents } from './modules/events.js';
 import { initFilters } from './modules/filters.js';
 import { husumEvent } from './data/husumEvent.js';
 import { loadPartial } from './utils/loadPartial.js';
+import { initChart } from './modules/chart.js';
 
 const BASE = '/veranstaltungen-deutschland';
 
@@ -59,7 +60,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderEvents(events);
     initMap(events);
 
-    await initWeather();
+    const weatherResult = await initWeather();
+
+    if (weatherResult?.measurements) {
+      initChart(weatherResult.measurements, weatherResult.stationName);
+    }
   } catch (error) {
     console.error('main:', error.message);
   }
