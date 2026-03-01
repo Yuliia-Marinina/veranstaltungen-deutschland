@@ -1,110 +1,91 @@
 import { CONFIG } from '../config.js';
 
-const TICKETMASTER_API_KEY = CONFIG.TICKETMASTER_API_KEY;
+const TICKETMASTER_BASE = 'https://app.ticketmaster.com/discovery/v2';
+const WEATHER_BASE = 'https://api.open-meteo.com/v1/forecast';
+const WATER_BASE = 'https://pegelonline.wsv.de/webservices/rest-api/v2';
 
-// ─── Base URLs ────────────────────────────────────────────────────────────────
+const DEFAULT_LOCATION = { lat: 52.52, lng: 13.405, city: 'Berlin' };
 
-const TICKETMASTER_BASE_URL = 'https://app.ticketmaster.com/discovery/v2';
-const WEATHER_BASE_URL = 'https://api.open-meteo.com/v1/forecast';
-const WATER_BASE_URL = 'https://pegelonline.wsv.de/webservices/rest-api/v2';
+// ─── Core ─────────────────────────────────────────────────────────────────────
 
-// ─── Core fetch helper ────────────────────────────────────────────────────────
-
-const fetchJSON = async (url, errorLabel = 'API') => {
+const fetchJSON = async (url, label = 'API') => {
   const response = await fetch(url);
-  if (!response.ok) throw new Error(`${errorLabel} error: ${response.status}`);
+  if (!response.ok) throw new Error(`${label} error: ${response.status}`);
   return response.json();
 };
 
 // ─── Ticketmaster ─────────────────────────────────────────────────────────────
 
-// Get events from Ticketmaster for Germany
 export const fetchTicketmasterEvents = async (city = '', size = 6) => {
   try {
     const cityParam = city ? `&city=${encodeURIComponent(city)}` : '';
     const today = new Date().toISOString().split('T')[0];
-    const url = `${TICKETMASTER_BASE_URL}/events.json?apikey=${TICKETMASTER_API_KEY}&countryCode=DE${cityParam}&size=${size}&sort=date,asc&startDateTime=${today}T00:00:00Z`;
+    const url = `${TICKETMASTER_BASE}/events.json?apikey=${CONFIG.TICKETMASTER_API_KEY}&countryCode=DE${cityParam}&size=${size}&sort=date,asc&startDateTime=${today}T00:00:00Z`;
     const data = await fetchJSON(url, 'Ticketmaster');
     return data._embedded?.events ?? [];
   } catch (error) {
-    console.error('Error fetching Ticketmaster events:', error.message);
+    console.error('fetchTicketmasterEvents:', error.message);
     return [];
   }
 };
 
-// Get single event by Ticketmaster ID
 export const fetchEventById = async (ticketmasterId) => {
   try {
-    const url = `${TICKETMASTER_BASE_URL}/events/${encodeURIComponent(ticketmasterId)}.json?apikey=${TICKETMASTER_API_KEY}`;
+    const url = `${TICKETMASTER_BASE}/events/${encodeURIComponent(ticketmasterId)}.json?apikey=${CONFIG.TICKETMASTER_API_KEY}`;
     return await fetchJSON(url, 'Ticketmaster');
   } catch (error) {
-    console.error('Error fetching event by id:', error.message);
+    console.error('fetchEventById:', error.message);
     return null;
   }
 };
 
 // ─── Weather ──────────────────────────────────────────────────────────────────
 
-// Get weather forecast by coordinates
 export const fetchWeather = async (lat, lng) => {
   try {
-    const url = `${WEATHER_BASE_URL}?latitude=${lat}&longitude=${lng}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe/Berlin&forecast_days=7`;
+    const url = `${WEATHER_BASE}?latitude=${lat}&longitude=${lng}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe/Berlin&forecast_days=7`;
     return await fetchJSON(url, 'Weather');
   } catch (error) {
-    console.error('Error fetching weather data:', error.message);
+    console.error('fetchWeather:', error.message);
     return null;
   }
 };
 
 // ─── Water ────────────────────────────────────────────────────────────────────
 
-// Get list of water measurement stations
 export const fetchWaterStations = async () => {
   try {
-    const url = `${WATER_BASE_URL}/stations.json`;
-    return await fetchJSON(url, 'Water');
+    return await fetchJSON(`${WATER_BASE}/stations.json`, 'Water');
   } catch (error) {
-    console.error('Error fetching water stations:', error.message);
+    console.error('fetchWaterStations:', error.message);
     return null;
   }
 };
 
-// Get water level measurements for specific station (last 7 days)
 export const fetchWaterLevels = async (stationId) => {
   try {
-    const url = `${WATER_BASE_URL}/stations/${encodeURIComponent(stationId)}/W/measurements.json?start=P7D`;
+    const url = `${WATER_BASE}/stations/${encodeURIComponent(stationId)}/W/measurements.json?start=P7D`;
     return await fetchJSON(url, 'Water');
   } catch (error) {
-    console.error('Error fetching water levels:', error.message);
+    console.error('fetchWaterLevels:', error.message);
     return null;
   }
 };
 
 // ─── Geolocation ──────────────────────────────────────────────────────────────
 
-// Default location: Berlin
-const DEFAULT_LOCATION = { lat: 52.52, lng: 13.405, city: 'Berlin' };
-
-// Get user's current location via browser geolocation API
-// Returns null for city if location is detected — UI decides what to display
-export const getUserLocation = () => {
-  return new Promise((resolve) => {
+export const getUserLocation = () =>
+  new Promise((resolve) => {
     if (!navigator.geolocation) {
       resolve(DEFAULT_LOCATION);
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      (position) =>
-        resolve({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-          city: null, // Real coordinates detected, city name unknown
-        }),
+      ({ coords }) => resolve({ lat: coords.latitude, lng: coords.longitude, city: null }),
       (error) => {
-        console.error('Geolocation error:', error.message);
+        console.error('Geolocation:', error.message);
         resolve(DEFAULT_LOCATION);
       },
     );
   });
-};

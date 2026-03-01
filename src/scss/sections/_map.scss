@@ -3,22 +3,24 @@
 
 .map {
   &-section {
-    padding: $spacing-xl 0;
+    padding: $spacing-xxl 0;
     overflow: hidden;
+    background: $color-primary;
   }
 
   &-header {
-    text-align: center;
     margin-bottom: $spacing-lg;
   }
 
   &-title {
-    font-size: $font-size-xl;
+    font-size: $font-size-xxl;
     font-weight: 700;
+    color: $color-white;
+    margin-bottom: $spacing-sm;
   }
 
   &-subtitle {
-    color: $color-text-light;
+    color: rgba($color-white, 0.5);
   }
 
   &-wrap {
@@ -30,15 +32,36 @@
 
   &-marker {
     pointer-events: none !important;
+    background: rgba($color-accent, 0.3);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid $color-accent;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+
+    &:hover {
+      border-color: $color-primary-light;
+      background: rgba($color-primary-light, 0.3);
+
+      .map-marker-inner {
+        background: $color-primary-light;
+        box-shadow: 0 2px 8px rgba($color-primary-light, 0.5);
+      }
+    }
 
     &-inner {
       pointer-events: all;
-      width: 16px;
-      height: 16px;
-      background-color: $color-primary;
-      border: 3px solid $color-white;
+      width: 6px;
+      height: 6px;
+      background-color: $color-accent;
       border-radius: 50%;
-      box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
+      box-shadow: 0 2px 8px rgba($color-accent, 0.5);
+      transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease;
     }
   }
 
@@ -46,10 +69,10 @@
     pointer-events: none !important;
 
     span {
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      color: $color-text;
+      font-family: $font-family-base;
+      font-size: $font-size-sm;
+      font-weight: 400;
+      color: rgba($color-white, 0.7);
       white-space: nowrap;
     }
   }
@@ -61,7 +84,6 @@
       font-size: $font-size-sm;
       color: $color-primary;
       font-weight: 500;
-      margin: 2px 0 !important;
     }
 
     &-title {
@@ -74,7 +96,6 @@
     &-date {
       font-size: $font-size-sm;
       color: $color-text-light;
-      margin: 0.3em 0 !important;
     }
 
     &-link {
@@ -83,10 +104,17 @@
       color: $color-primary;
       font-weight: 500;
       font-size: $font-size-sm;
+      text-decoration: none;
       transition: color 0.2s ease;
 
       &:hover {
         color: $color-primary-dark;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $color-primary;
+        outline-offset: 2px;
+        border-radius: $radius-sm;
       }
     }
   }
@@ -104,7 +132,7 @@
     font-size: $font-size-sm;
     font-weight: 700;
     color: $color-white;
-    box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
+    box-shadow: 0 2px 8px rgba($color-primary-dark, 0.4);
 
     &-wrap {
       background: transparent;
@@ -112,9 +140,20 @@
   }
 }
 
+// Override Leaflet defaults — raise specificity to avoid !important
+.leaflet-popup-content {
+  .map-popup-region {
+    margin: 2px 0;
+  }
+  .map-popup-date {
+    margin: 0.3em 0;
+  }
+}
+
 .leaflet-container {
   width: 100% !important;
   max-width: 100% !important;
-  background: transparent !important;
+  background: rgba($color-white, 0.03) !important;
   overflow: initial !important;
+  border: 1px solid rgba($color-white, 0.1);
 }

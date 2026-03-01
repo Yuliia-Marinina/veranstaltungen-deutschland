@@ -876,19 +876,21 @@ a:hover {
 }
 
 .map-section {
-  padding: 32px 0;
+  padding: 64px 0;
   overflow: hidden;
+  background: #0a2540;
 }
 .map-header {
-  text-align: center;
   margin-bottom: 24px;
 }
 .map-title {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
 }
 .map-subtitle {
-  color: #4a6580;
+  color: rgba(255, 255, 255, 0.5);
 }
 .map-wrap {
   height: 600px;
@@ -898,24 +900,39 @@ a:hover {
 }
 .map-marker {
   pointer-events: none !important;
+  background: rgba(232, 200, 122, 0.3);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid #e8c87a;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.map-marker:hover {
+  border-color: #a8d8e8;
+  background: rgba(168, 216, 232, 0.3);
+}
+.map-marker:hover .map-marker-inner {
+  background: #a8d8e8;
+  box-shadow: 0 2px 8px rgba(168, 216, 232, 0.5);
 }
 .map-marker-inner {
   pointer-events: all;
-  width: 16px;
-  height: 16px;
-  background-color: #0a2540;
-  border: 3px solid #ffffff;
+  width: 6px;
+  height: 6px;
+  background-color: #e8c87a;
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
+  box-shadow: 0 2px 8px rgba(232, 200, 122, 0.5);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 .map-label {
   pointer-events: none !important;
 }
 .map-label span {
   font-family: "Inter", sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  color: #0a2540;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
   white-space: nowrap;
 }
 .map-popup {
@@ -925,7 +942,6 @@ a:hover {
   font-size: 0.75rem;
   color: #0a2540;
   font-weight: 500;
-  margin: 2px 0 !important;
 }
 .map-popup-title {
   font-size: 1rem;
@@ -936,7 +952,6 @@ a:hover {
 .map-popup-date {
   font-size: 0.75rem;
   color: #4a6580;
-  margin: 0.3em 0 !important;
 }
 .map-popup-link {
   display: inline-block;
@@ -944,10 +959,16 @@ a:hover {
   color: #0a2540;
   font-weight: 500;
   font-size: 0.75rem;
+  text-decoration: none;
   transition: color 0.2s ease;
 }
 .map-popup-link:hover {
   color: #1e6091;
+}
+.map-popup-link:focus-visible {
+  outline: 2px solid #0a2540;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 .map-cluster {
   width: 36px;
@@ -961,17 +982,25 @@ a:hover {
   font-size: 0.75rem;
   font-weight: 700;
   color: #ffffff;
-  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
+  box-shadow: 0 2px 8px rgba(30, 96, 145, 0.4);
 }
 .map-cluster-wrap {
   background: transparent;
 }
 
+.leaflet-popup-content .map-popup-region {
+  margin: 2px 0;
+}
+.leaflet-popup-content .map-popup-date {
+  margin: 0.3em 0;
+}
+
 .leaflet-container {
   width: 100% !important;
   max-width: 100% !important;
-  background: transparent !important;
+  background: rgba(255, 255, 255, 0.03) !important;
   overflow: initial !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .detail-hero {

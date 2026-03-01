@@ -21,9 +21,7 @@ const FILTER_DEFAULTS = {
 
 const getById = (id) => {
   const el = document.getElementById(id);
-  if (!el && import.meta.env?.DEV) {
-    console.warn(`[filters] Element #${id} not found`);
-  }
+  if (!el && import.meta.env?.DEV) console.warn(`[filters] Element #${id} not found`);
   return el;
 };
 
@@ -37,12 +35,12 @@ const debounce = (fn, delay = 300) => {
   };
 };
 
-// ─── Initialization ───────────────────────────────────────────────────────────
+// ─── Init ─────────────────────────────────────────────────────────────────────
 
 export const initFilters = (events) => {
   if (!events?.length) return;
 
-  allEvents = [...events]; // копия, не ссылка
+  allEvents = [...events];
 
   populateSelect(FILTER_IDS.city, getUniqueValues(events, 'region'));
   populateSelect(FILTER_IDS.category, getUniqueValues(events, 'tags'));
@@ -56,7 +54,6 @@ export const initFilters = (events) => {
 
 // ─── Unique values ────────────────────────────────────────────────────────────
 
-// Get unique values from events array for a given field
 const getUniqueValues = (events, field) => {
   const values = events.flatMap((event) => {
     const val = event[field];
@@ -81,7 +78,7 @@ const populateSelect = (id, values) => {
   });
 };
 
-// ─── Filtering ────────────────────────────────────────────────────────────────
+// ─── Filter ───────────────────────────────────────────────────────────────────
 
 const applyFilters = () => {
   const search = getValue(FILTER_IDS.search).toLowerCase().trim();
@@ -93,26 +90,24 @@ const applyFilters = () => {
 
   if (search) {
     filtered = filtered.filter(
-      (event) =>
-        event.title?.toLowerCase().includes(search) ||
-        event.description?.toLowerCase().includes(search) ||
-        event.region?.toLowerCase().includes(search),
+      (e) =>
+        e.title?.toLowerCase().includes(search) ||
+        e.description?.toLowerCase().includes(search) ||
+        e.region?.toLowerCase().includes(search),
     );
   }
 
-  if (city) filtered = filtered.filter((event) => event.region === city);
-  if (category) filtered = filtered.filter((event) => event.tags?.includes(category));
+  if (city) filtered = filtered.filter((e) => e.region === city);
+  if (category) filtered = filtered.filter((e) => e.tags?.includes(category));
 
   filtered = sortEvents(filtered, sort);
-
-  // renderEvents сам обработает пустой массив и покажет empty-state
   renderEvents(filtered, resetFilters);
 };
 
-// ─── Sorting ──────────────────────────────────────────────────────────────────
+// ─── Sort ─────────────────────────────────────────────────────────────────────
 
-const sortEvents = (events, sort) => {
-  return [...events].sort((a, b) => {
+const sortEvents = (events, sort) =>
+  [...events].sort((a, b) => {
     switch (sort) {
       case 'date-asc':
         return new Date(a.dateFrom || 0) - new Date(b.dateFrom || 0);
@@ -126,7 +121,6 @@ const sortEvents = (events, sort) => {
         return 0;
     }
   });
-};
 
 // ─── Reset ────────────────────────────────────────────────────────────────────
 
@@ -135,6 +129,5 @@ const resetFilters = () => {
     const el = getById(id);
     if (el) el.value = value;
   });
-
   renderEvents(allEvents);
 };

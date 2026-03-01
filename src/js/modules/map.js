@@ -3,18 +3,24 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import { escapeHTML, formatDate } from '../utils/utils.js';
 
-// Helper: Escape HTML to prevent XSS attacks
-const escapeHTML = (str) => {
-  const div = document.createElement('div');
-  div.textContent = str ?? '';
-  return div.innerHTML;
-};
+// ─── Constants ────────────────────────────────────────────────────────────────
 
-// Shared popup options
 const POPUP_OPTIONS = { autoPan: false };
 
-// Import events as parameter instead of from file
+const GEOJSON_STYLE = {
+  color: 'rgba(72, 180, 212, 0.5)',
+  weight: 2,
+  fillColor: 'rgba(255, 255, 255, 0.06)',
+  fillOpacity: 0.06,
+};
+
+const GEOJSON_HOVER_STYLE = { fillOpacity: 0.2 };
+const GEOJSON_DEFAULT_STYLE = { fillOpacity: 0.06 };
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+
 export const initMap = (events) => {
   const map = L.map('germany-map', {
     zoomControl: false,
@@ -29,57 +35,59 @@ export const initMap = (events) => {
   }).setView([51.1657, 10.4515], 5.5);
 
   loadGeoJSON(map, events);
+
   const markers = createMarkerCluster(map);
   addEventMarkers(map, markers, events);
   map.addLayer(markers);
 };
 
-// GeoJSON / Germany borders
+// ─── GeoJSON ──────────────────────────────────────────────────────────────────
+
 const loadGeoJSON = (map, events) => {
-  fetch('/veranstaltungen-deutschland/data/germany.geojson')
-    .then((response) => {
-      if (!response.ok) throw new Error('Failed to load GeoJSON');
-      return response.json();
+  const controller = new AbortController();
+
+  fetch('/veranstaltungen-deutschland/data/germany.geojson', { signal: controller.signal })
+    .then((res) => {
+      if (!res.ok) throw new Error(`Failed to load GeoJSON: ${res.status}`);
+      return res.json();
     })
     .then((data) => {
       L.geoJSON(data, {
-        style: {
-          color: '#0a2540',
-          weight: 2,
-          fillColor: '#1e6091',
-          fillOpacity: 0.5,
-        },
+        style: GEOJSON_STYLE,
         onEachFeature: (feature, layer) => {
-          const regionName = feature.properties.name;
-          const hasEvent = events.some((event) => event.geoRegion === regionName);
+          const hasEvent = events.some((e) => e.geoRegion === feature.properties.name);
+          if (!hasEvent) return;
 
-          if (hasEvent) {
-            layer.on({
-              mouseover: (e) => {
-                e.target.setStyle({ fillColor: '#a8d8e8', fillOpacity: 0.2 });
-                L.DomEvent.stopPropagation(e);
-              },
-              mouseout: (e) => {
-                const related = e.originalEvent.relatedTarget;
-                if (
-                  related &&
-                  (related.classList.contains('map-marker-inner') ||
-                    related.classList.contains('map-label') ||
-                    related.closest('.map-label'))
-                ) {
-                  return;
-                }
-                e.target.setStyle({ fillColor: '#a8d8e8', fillOpacity: 0.5 });
-              },
-            });
-          }
+          layer.on({
+            mouseover: (e) => {
+              e.target.setStyle(GEOJSON_HOVER_STYLE);
+              L.DomEvent.stopPropagation(e);
+            },
+            mouseout: (e) => {
+              const related = e.originalEvent.relatedTarget;
+              if (
+                related &&
+                (related.classList.contains('map-marker-inner') ||
+                  related.classList.contains('map-label') ||
+                  related.closest('.map-label'))
+              )
+                return;
+              e.target.setStyle(GEOJSON_DEFAULT_STYLE);
+            },
+          });
         },
       }).addTo(map);
     })
-    .catch((error) => console.error('GeoJSON error:', error));
+    .catch((error) => {
+      if (error.name === 'AbortError') return;
+      console.error('loadGeoJSON:', error.message);
+    });
+
+  return controller;
 };
 
-// Marker cluster
+// ─── Marker Cluster ───────────────────────────────────────────────────────────
+
 const createMarkerCluster = (map) => {
   const markers = L.markerClusterGroup({
     maxClusterRadius: 40,
@@ -107,7 +115,8 @@ const createMarkerCluster = (map) => {
   return markers;
 };
 
-// Event markers & labels
+// ─── Markers & Labels ─────────────────────────────────────────────────────────
+
 const createBlueIcon = () =>
   L.divIcon({
     className: 'map-marker',
@@ -120,10 +129,10 @@ const createPopupContent = (event) => `
   <div class="map-popup">
     <p class="map-popup-region">${escapeHTML(event.region)}</p>
     <h3 class="map-popup-title">${escapeHTML(event.title)}</h3>
-    <p class="map-popup-date">${escapeHTML(event.date)}</p>
+    <p class="map-popup-date">${escapeHTML(formatDate(event.date))}</p>
     <a href="event-detail.html?id=${escapeHTML(String(event.id))}&tmid=${escapeHTML(event.ticketmasterId)}"
        class="map-popup-link">
-      Mehr erfahren →
+      Mehr erfahren <span aria-hidden="true">→</span>
     </a>
   </div>
 `;
@@ -133,6 +142,8 @@ const addEventMarkers = (map, markers, events) => {
   const addedLabels = new Set();
 
   events.forEach((event) => {
+    if (!event.lat || !event.lng) return;
+
     const marker = L.marker([event.lat, event.lng], { icon: blueIcon });
     marker.bindPopup(createPopupContent(event), POPUP_OPTIONS);
     markers.addLayer(marker);

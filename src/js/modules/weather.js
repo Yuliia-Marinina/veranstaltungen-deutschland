@@ -1,5 +1,4 @@
 import Chart from 'chart.js/auto';
-
 import {
   fetchWeather,
   getUserLocation,
@@ -13,9 +12,8 @@ import {
   formatDate,
   getWaterStatus,
   getWaterDescription,
-} from '../utils/helpers.js';
+} from '../utils/utils.js';
 
-// Store chart instance to destroy before re-creating
 let waterChart = null;
 
 const CHART_SAMPLE_RATE = 10;
@@ -39,7 +37,6 @@ export const initWeather = async () => {
       return;
     }
 
-    // Find station by shortname, fall back to first station
     const station = stations?.find((s) => s.shortname === 'DRESDEN') ?? stations?.[0];
     const measurements = station ? await fetchWaterLevels(station.uuid) : null;
 
@@ -49,7 +46,7 @@ export const initWeather = async () => {
 
     if (measurements) renderWaterChart(measurements);
   } catch (error) {
-    console.error('Error initializing weather:', error);
+    console.error('initWeather:', error.message);
     showError('Fehler beim Laden der Wetterdaten');
   }
 };
@@ -58,13 +55,16 @@ export const initWeather = async () => {
 
 const showError = (message = 'Daten nicht verfügbar') => {
   const container = document.getElementById('weather-cards');
-  if (container) container.innerHTML = `<p class="weather-error">${message}</p>`;
+  if (!container) return;
+  const p = document.createElement('p');
+  p.className = 'weather-error';
+  p.textContent = message;
+  container.replaceChildren(p);
 };
 
 // Build map of date → water level from measurements
 const buildWaterByDay = (measurements) => {
   if (!measurements) return {};
-
   return measurements.reduce((map, m) => {
     const date = m.timestamp.split('T')[0];
     map[date] = Math.round(m.value);
@@ -78,17 +78,14 @@ const renderCards = (daily, waterByDay) => {
   const container = document.getElementById('weather-cards');
   if (!container) return;
 
-  // Get last known water level for future days without data
   const lastKnownLevel = waterByDay[Object.keys(waterByDay).at(-1)] ?? null;
-
   const fragment = document.createDocumentFragment();
 
   daily.time.forEach((date, index) => {
     fragment.appendChild(createCard(daily, waterByDay, date, index, lastKnownLevel));
   });
 
-  container.innerHTML = '';
-  container.appendChild(fragment);
+  container.replaceChildren(fragment);
 };
 
 const createCard = (daily, waterByDay, date, index, lastKnownLevel) => {
@@ -96,55 +93,87 @@ const createCard = (daily, waterByDay, date, index, lastKnownLevel) => {
   const code = daily.weathercode[index];
   const maxTemp = Math.round(daily.temperature_2m_max[index]);
   const minTemp = Math.round(daily.temperature_2m_min[index]);
-
   const waterLevel = waterByDay[date] ?? lastKnownLevel;
   const isApprox = !waterByDay[date] && waterLevel !== null;
   const status = waterLevel !== null ? getWaterStatus(waterLevel) : null;
 
+  // ── Header ──
+  const dayEl = document.createElement('p');
+  dayEl.className = 'weather-card-day';
+  dayEl.textContent = isToday ? 'Heute' : formatWeekday(date);
+
+  const dateEl = document.createElement('p');
+  dateEl.className = 'weather-card-date';
+  dateEl.textContent = formatDate(date);
+
+  const header = document.createElement('div');
+  header.className = 'weather-card-header';
+  header.append(dayEl, dateEl);
+
+  // ── Weather ──
+  const iconEl = document.createElement('p');
+  iconEl.className = 'weather-card-icon';
+  iconEl.setAttribute('aria-hidden', 'true');
+  iconEl.textContent = getWeatherIcon(code);
+
+  const tempMax = document.createElement('p');
+  tempMax.className = 'weather-card-temp-max';
+  tempMax.textContent = `${maxTemp}°`;
+
+  const tempMin = document.createElement('p');
+  tempMin.className = 'weather-card-temp-min';
+  tempMin.textContent = `${minTemp}°`;
+
+  const descEl = document.createElement('p');
+  descEl.className = 'weather-card-desc';
+  descEl.textContent = getWeatherDescription(code);
+
+  const weatherSection = document.createElement('div');
+  weatherSection.className = 'weather-card-weather';
+  weatherSection.append(iconEl, tempMax, tempMin, descEl);
+
+  // ── Divider ──
+  const divider = document.createElement('div');
+  divider.className = 'weather-card-divider';
+
+  // ── Water ──
+  const waterIcon = document.createElement('p');
+  waterIcon.className = 'weather-card-water-icon';
+  waterIcon.setAttribute('aria-hidden', 'true');
+  waterIcon.textContent = '🌊';
+
+  const waterLevelEl = document.createElement('p');
+  waterLevelEl.className = 'weather-card-water-level';
+  waterLevelEl.textContent = waterLevel !== null ? `${isApprox ? '~' : ''}${waterLevel} cm` : '—';
+
+  const waterSection = document.createElement('div');
+  waterSection.className = 'weather-card-water';
+  waterSection.append(waterIcon, waterLevelEl);
+
+  if (status) {
+    const badge = document.createElement('span');
+    badge.className = `weather-card-water-badge ${status.className}`;
+    badge.textContent = status.text;
+
+    const waterDesc = document.createElement('p');
+    waterDesc.className = 'weather-card-water-desc';
+    waterDesc.textContent = isApprox ? 'Letzter bekannter Stand' : getWaterDescription(status.text);
+
+    waterSection.append(badge, waterDesc);
+  } else {
+    const waterDesc = document.createElement('p');
+    waterDesc.className = 'weather-card-water-desc';
+    waterDesc.textContent = 'Keine Wasserdaten';
+    waterSection.appendChild(waterDesc);
+  }
+
+  // ── Card ──
   const card = document.createElement('div');
   card.className = `weather-card${isToday ? ' weather-card-today' : ''}`;
-  card.innerHTML = buildCardHTML({
-    isToday,
-    date,
-    code,
-    maxTemp,
-    minTemp,
-    waterLevel,
-    isApprox,
-    status,
-  });
+  card.append(header, weatherSection, divider, waterSection);
 
   return card;
 };
-
-const buildCardHTML = ({ isToday, date, code, maxTemp, minTemp, waterLevel, isApprox, status }) => `
-  <div class="weather-card-header">
-    <p class="weather-card-day">${isToday ? 'Heute' : formatWeekday(date)}</p>
-    <p class="weather-card-date">${formatDate(date)}</p>
-  </div>
-
-  <div class="weather-card-weather">
-    <p class="weather-card-icon">${getWeatherIcon(code)}</p>
-    <p class="weather-card-temp-max">${maxTemp}°</p>
-    <p class="weather-card-temp-min">${minTemp}°</p>
-    <p class="weather-card-desc">${getWeatherDescription(code)}</p>
-  </div>
-
-  <div class="weather-card-divider"></div>
-
-  <div class="weather-card-water">
-    <p class="weather-card-water-icon">🌊</p>
-    <p class="weather-card-water-level">${waterLevel !== null ? `${isApprox ? '~' : ''}${waterLevel} cm` : '—'}</p>
-    ${
-      status
-        ? `
-      <span class="weather-card-water-badge" style="color: ${status.color}">${status.text}</span>
-      <p class="weather-card-water-desc">${isApprox ? 'Letzter bekannter Stand' : getWaterDescription(status.text)}</p>
-    `
-        : '<p class="weather-card-water-desc">Keine Wasserdaten</p>'
-    }
-  </div>
-`;
 
 // ─── Chart ────────────────────────────────────────────────────────────────────
 
@@ -187,12 +216,10 @@ const renderWaterChart = (measurements) => {
   const ctx = document.getElementById('water-chart-canvas');
   if (!ctx) return;
 
-  // Sample measurements to reduce chart points
   const filtered = measurements.filter((_, i) => i % CHART_SAMPLE_RATE === 0);
   const labels = filtered.map((m) => formatDate(m.timestamp));
   const values = filtered.map((m) => Math.round(m.value));
 
   if (waterChart) waterChart.destroy();
-
   waterChart = new Chart(ctx, buildChartConfig(labels, values));
 };

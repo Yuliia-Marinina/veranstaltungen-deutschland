@@ -1,4 +1,4 @@
-// Known city to region map (cache for common cities)
+// Known city → state map (avoids Nominatim requests for common cities)
 const REGION_MAP = {
   Berlin: 'Berlin',
   München: 'Bayern',
@@ -41,9 +41,10 @@ const REGION_MAP = {
   Husum: 'Schleswig-Holstein',
 };
 
-// Get region
+// ─── Geo ──────────────────────────────────────────────────────────────────────
+
+// Resolves state via cache first, then Nominatim reverse geocoding as fallback
 const getGeoRegion = async (city, lat, lng) => {
-  // Check known cities first
   if (REGION_MAP[city]) return REGION_MAP[city];
 
   try {
@@ -58,56 +59,21 @@ const getGeoRegion = async (city, lat, lng) => {
     if (!response.ok) throw new Error('Nominatim error');
 
     const data = await response.json();
-    const state = data.address?.state || '';
+    const state = data.address?.state ?? '';
 
     if (state) REGION_MAP[city] = state;
     return state;
   } catch (error) {
-    console.error('Error fetching geo region:', error);
+    console.error('getGeoRegion:', error.message);
     return '';
   }
 };
 
-// Convert Ticketmaster event
-export const normalizeEvent = async (event, index) => {
-  const venue = event._embedded?.venues?.[0];
-  const lat = parseFloat(venue?.location?.latitude) || 51.1657;
-  const lng = parseFloat(venue?.location?.longitude) || 10.4515;
-  const city = venue?.city?.name || 'Deutschland';
+// ─── Date / Time ──────────────────────────────────────────────────────────────
 
-  // Get region dynamically
-  const geoRegion = await getGeoRegion(city, lat, lng);
-
-  return {
-    id: index + 1,
-    ticketmasterId: event.id,
-    title: event.name,
-    date: formatTicketmasterDate(event.dates?.start),
-    dateRaw: event.dates?.start?.localDate || null,
-    region: city,
-    geoRegion,
-    lat,
-    lng,
-    image:
-      event.images?.find((img) => img.ratio === '16_9' && img.width > 500)?.url ||
-      `https://picsum.photos/1200/400?random=${index}`,
-    description:
-      [event.description, event.info, event.pleaseNote].filter(Boolean).join('\n\n') ||
-      `${event.name} findet in ${city} statt.`,
-    tags: event.classifications
-      ?.flatMap((c) => [c.segment?.name, c.genre?.name])
-      .filter(Boolean) || ['Event'],
-    time: event.dates?.start?.localTime ? formatTime(event.dates.start.localTime) : 'Siehe Website',
-    address: venue ? `${venue.address?.line1 || ''}, ${venue.postalCode || ''} ${city}` : city,
-    url: event.url,
-    waterStation: 'DRESDEN',
-  };
-};
-
-// Format date from Ticketmaster
 const formatTicketmasterDate = (start) => {
   if (!start) return 'Datum unbekannt';
-  const date = new Date(start.dateTime || start.localDate);
+  const date = new Date(start.dateTime ?? start.localDate);
   return date.toLocaleDateString('de-DE', {
     day: '2-digit',
     month: 'long',
@@ -115,8 +81,46 @@ const formatTicketmasterDate = (start) => {
   });
 };
 
-// Format time
 const formatTime = (time) => {
   const [hours, minutes] = time.split(':');
   return `${hours}:${minutes} Uhr`;
+};
+
+// ─── Normalize ────────────────────────────────────────────────────────────────
+
+export const normalizeEvent = async (event, index) => {
+  const venue = event._embedded?.venues?.[0];
+  const lat = parseFloat(venue?.location?.latitude) || 51.1657;
+  const lng = parseFloat(venue?.location?.longitude) || 10.4515;
+  const city = venue?.city?.name ?? 'Deutschland';
+  const geoRegion = await getGeoRegion(city, lat, lng);
+  const dateRaw = event.dates?.start?.localDate ?? null;
+
+  return {
+    id: index + 1,
+    ticketmasterId: event.id,
+    title: event.name,
+    date: formatTicketmasterDate(event.dates?.start),
+    dateFrom: dateRaw,
+    dateRaw,
+    region: city,
+    geoRegion,
+    lat,
+    lng,
+    image:
+      event.images?.find((img) => img.ratio === '16_9' && img.width > 500)?.url ??
+      `https://picsum.photos/1200/400?random=${index}`,
+    description:
+      [event.description, event.info, event.pleaseNote].filter(Boolean).join('\n\n') ||
+      `${event.name} findet in ${city} statt.`,
+    tags: event.classifications
+      ?.flatMap((c) => [c.segment?.name, c.genre?.name])
+      .filter(Boolean) ?? ['Event'],
+    time: event.dates?.start?.localTime ? formatTime(event.dates.start.localTime) : 'Siehe Website',
+    address: venue
+      ? `${venue.address?.line1 ?? ''}, ${venue.postalCode ?? ''} ${city}`.trim()
+      : city,
+    url: event.url,
+    waterStation: 'DRESDEN',
+  };
 };

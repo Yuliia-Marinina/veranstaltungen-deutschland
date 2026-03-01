@@ -1,18 +1,7 @@
-import { formatDate } from '../utils/helpers.js';
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-// Helper: Truncate text by last word boundary, fallback to hard cut
-const truncate = (text, max = 100) => {
-  if (!text) return '';
-  if (text.length <= max) return text;
-  const cut = text.lastIndexOf(' ', max);
-  return (cut > 0 ? text.substring(0, cut) : text.substring(0, max)) + '…';
-};
+import { formatDate, truncate, escapeHTML } from '../utils/utils.js';
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
 
-// Helper: Create a single event card
 const createEventCard = (event) => {
   const card = document.createElement('article');
   card.className = 'events-card';
@@ -70,8 +59,8 @@ const createEventCard = (event) => {
 
   // Button
   const btn = document.createElement('a');
-  btn.href = `events-detail.html?id=${event.id}&tmid=${event.ticketmasterId}`;
-  btn.className = 'events-card-btn btn-primary btn';
+  btn.href = `event-detail.html?id=${escapeHTML(String(event.id))}&tmid=${escapeHTML(event.ticketmasterId)}`;
+  btn.className = 'events-card-btn btn btn-primary';
   btn.textContent = 'Mehr erfahren';
   btn.setAttribute('aria-label', `Mehr erfahren über ${event.title}`);
 
@@ -86,7 +75,6 @@ const createEventCard = (event) => {
 
 // ─── Render ───────────────────────────────────────────────────────────────────
 
-// Render events cards on main page
 export const renderEvents = (events, onReset) => {
   const container = document.getElementById('events-grid');
   if (!container) return;
@@ -94,19 +82,30 @@ export const renderEvents = (events, onReset) => {
   container.innerHTML = '';
 
   if (!events.length) {
+    const icon = document.createElement('span');
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = '🔍 ';
+
+    const text = document.createElement('span');
+    text.textContent = 'Keine Veranstaltungen gefunden.';
+
     const empty = document.createElement('p');
-    empty.className = 'events-empty';
-    empty.textContent = 'Keine Veranstaltungen gefunden.';
+    empty.className = 'events-empty-text';
+    empty.append(icon, text);
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'events-empty';
+    wrapper.appendChild(empty);
 
     if (onReset) {
       const btn = document.createElement('button');
       btn.className = 'btn btn-secondary';
       btn.textContent = 'Filter zurücksetzen';
       btn.addEventListener('click', onReset);
-      container.append(empty, btn);
-    } else {
-      container.appendChild(empty);
+      wrapper.appendChild(btn);
     }
+
+    container.appendChild(wrapper);
     return;
   }
 

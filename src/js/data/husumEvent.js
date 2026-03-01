@@ -3,6 +3,8 @@ export const husumEvent = {
   ticketmasterId: 'husum-test',
   title: 'Wattenmeer Festival Husum',
   date: '15. März 2026',
+  dateFrom: '2026-03-15',
+  dateRaw: '2026-03-15',
   region: 'Husum',
   geoRegion: 'Schleswig-Holstein',
   lat: 54.4833,

@@ -4,6 +4,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     await initEventDetail();
   } catch (error) {
-    console.error('Unexpected error on event detail page:', error);
+    console.error('main-detail:', error.message);
   }
 });

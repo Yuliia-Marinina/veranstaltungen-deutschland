@@ -9,6 +9,8 @@ import { loadPartial } from './utils/loadPartial.js';
 
 const BASE = '/veranstaltungen-deutschland';
 
+// ─── Partials ─────────────────────────────────────────────────────────────────
+
 const loadPartials = async () => {
   await Promise.all([
     loadPartial('#header', `${BASE}/partials/header.html`),
@@ -19,45 +21,45 @@ const loadPartials = async () => {
     loadPartial('#footer', `${BASE}/partials/footer.html`),
   ]);
 
+  // Filters depend on events partial being rendered first
   await loadPartial('#filters', `${BASE}/partials/filters.html`);
 };
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadPartials();
 
   try {
-    // Load and normalize events from Ticketmaster
-    const rawEvents = await fetchTicketmasterEvents('', 6);
-    const allEvents = await Promise.all(rawEvents.map((e, i) => normalizeEvent(e, i)));
+    const rawEvents = await fetchTicketmasterEvents('', 12);
+    const normalized = await Promise.all(rawEvents.map((e, i) => normalizeEvent(e, i)));
 
+    // Deduplicate by title + date + region
     const seen = new Set();
-    const uniqueEvents = allEvents.filter((event) => {
+    const unique = normalized.filter((event) => {
       const key = `${event.title}|${event.dateRaw}|${event.region}`;
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
     });
 
+    // Filter out past events (invalid dates are kept)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const events = uniqueEvents.filter((event) => {
+    const events = unique.filter((event) => {
       const eventDate = new Date(event.dateRaw + 'T00:00:00');
       return isNaN(eventDate) || eventDate >= today;
     });
 
     events.push(husumEvent);
 
-    // Initialize filters
     initFilters(events);
-
-    // Render events and map with the same data
     renderEvents(events);
     initMap(events);
 
-    // Initialize weather independently
     await initWeather();
   } catch (error) {
-    console.error('Unexpected error on main page:', error);
+    console.error('main:', error.message);
   }
 });
