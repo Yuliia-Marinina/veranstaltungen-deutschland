@@ -3,8 +3,7 @@ node_modules/
 
 # Build output
 dist/
-src/scss/main.css
-src/scss/main.css.map
+src/css/
 
 # Environment & secrets
 .env

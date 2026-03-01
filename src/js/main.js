@@ -1,5 +1,6 @@
 import { initMap } from './modules/map.js';
 import { initWeather } from './modules/weather.js';
+import { initChart } from './modules/chart.js';
 import { fetchTicketmasterEvents } from './utils/api.js';
 import { normalizeEvent } from './utils/ticketmaster.js';
 import { renderEvents } from './modules/events.js';
@@ -55,7 +56,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     let currentPage = 0;
     let allLoadedEvents = [];
 
-    // Load first page
     const { events: rawEvents, total } = await fetchTicketmasterEvents('', PAGE_SIZE, currentPage);
     const firstPageEvents = await normalizeAndFilter(rawEvents, 0);
 
@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     initMap(allLoadedEvents);
     updateLoadMore(allLoadedEvents.length, total);
 
-    // Load more button
     const btn = document.getElementById('events-load-more');
     btn?.addEventListener('click', async () => {
       btn.disabled = true;
@@ -77,7 +76,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const { events: nextRaw } = await fetchTicketmasterEvents('', PAGE_SIZE, currentPage);
         const nextEvents = await normalizeAndFilter(nextRaw, allLoadedEvents.length);
 
-        // Deduplicate against already loaded
         const seen = new Set(allLoadedEvents.map((e) => `${e.title}|${e.dateRaw}|${e.region}`));
         const unique = nextEvents.filter((e) => {
           const key = `${e.title}|${e.dateRaw}|${e.region}`;
@@ -99,7 +97,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
 
-    await initWeather();
+    const weatherResult = await initWeather();
+    if (weatherResult?.measurements) {
+      initChart(weatherResult.measurements, weatherResult.stationName);
+    }
   } catch (error) {
     console.error('main:', error.message);
   }
