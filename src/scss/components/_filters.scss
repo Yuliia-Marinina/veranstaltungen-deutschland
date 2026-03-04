@@ -47,6 +47,9 @@
       transform: translateY(-50%);
       font-size: $font-size-base;
       pointer-events: none;
+      stroke: $color-text-light;
+      width: 15px;
+      height: 15px;
     }
   }
 

@@ -76,4 +76,12 @@
       color: $color-text-light;
     }
   }
+
+  // ─── Lucide Icon Colors ───────────────────────────────────────────────────────
+  &-card-meta-icon {
+    stroke: $color-secondary;
+  }
+  &-empty-icon {
+    stroke: $color-text-light;
+  }
 }

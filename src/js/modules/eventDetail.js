@@ -252,9 +252,10 @@ const renderForecast = (weatherData) => {
     colHeader.className = 'detail-tide-col-header';
     colHeader.append(dayLabel, dateLabel);
 
+    const { icon, cls } = getWeatherIconFn(code);
     const weatherIcon = createIcon(getWeatherIconFn(code), {
       size: 22,
-      className: 'detail-tide-weather-icon',
+      className: `detail-tide-weather-icon ${cls}`,
     });
 
     const weatherLabel = document.createElement('span');
@@ -323,7 +324,8 @@ const renderEventDayWeather = (weatherData, rawEvent) => {
   const dayIndex = weatherData.daily.time.findIndex((d) => d === eventDate);
 
   if (dayIndex === -1) {
-    const icon = createIcon(getWeatherIconFn(3), { size: 16, className: 'detail-weather-na-icon' });
+    const { icon: naIcon, cls: naCls } = getWeatherIconFn(3);
+    const icon = createIcon(naIcon, { size: 16, className: `detail-weather-na-icon ${naCls}` });
 
     const na = document.createElement('p');
     na.className = 'detail-event-weather-na';
@@ -342,9 +344,10 @@ const renderEventDayWeather = (weatherData, rawEvent) => {
   title.className = 'detail-event-weather-title';
   title.append(titleIcon, 'Wetter am Veranstaltungstag');
 
-  const weatherIcon = createIcon(getWeatherIconFn(code), {
+  const { icon: wIcon, cls: wCls } = getWeatherIconFn(code);
+  const weatherIcon = createIcon(wIcon, {
     size: 24,
-    className: 'detail-event-weather-icon',
+    className: `detail-event-weather-icon ${wCls}`,
   });
 
   const temp = document.createElement('span');

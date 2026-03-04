@@ -46,17 +46,17 @@ export const createIcon = (iconData, options = {}) => {
 };
 
 const WEATHER_ICON_MAP = [
-  { max: 0, icon: Sun },
-  { max: 2, icon: CloudSun },
-  { max: 3, icon: Cloud },
-  { max: 48, icon: CloudFog },
-  { max: 67, icon: CloudRain },
-  { max: 77, icon: CloudSnow },
-  { max: 82, icon: CloudDrizzle },
-  { max: 99, icon: CloudLightning },
+  { max: 0, icon: Sun, cls: 'icon-clear' },
+  { max: 2, icon: CloudSun, cls: 'icon-partly' },
+  { max: 3, icon: Cloud, cls: 'icon-cloud' },
+  { max: 48, icon: CloudFog, cls: 'icon-cloud' },
+  { max: 67, icon: CloudRain, cls: 'icon-rain' },
+  { max: 77, icon: CloudSnow, cls: 'icon-snow' },
+  { max: 82, icon: CloudDrizzle, cls: 'icon-rain' },
+  { max: 99, icon: CloudLightning, cls: 'icon-thunder' },
 ];
 
 export const getWeatherIconFn = (code) =>
-  (WEATHER_ICON_MAP.find(({ max }) => code <= max) ?? { icon: CloudSun }).icon;
+  WEATHER_ICON_MAP.find(({ max }) => code <= max) ?? { icon: CloudSun, cls: 'icon-partly' };
 
 export { Wind, Droplets, TrendingUp, TrendingDown, Calendar, Search, MapPin, Waves, CalendarDays };

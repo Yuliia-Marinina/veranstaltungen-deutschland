@@ -399,4 +399,65 @@
       color: $color-primary-dark;
     }
   }
+
+  // ─── Lucide Icon Colors ───────────────────────────────────────────────────────
+  &-meta-item {
+    svg {
+      stroke: $color-secondary;
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+  }
+
+  &-card-label {
+    svg {
+      stroke: $color-secondary;
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+  }
+
+  &-address-icon {
+    stroke: $color-secondary;
+  }
+
+  &-weather {
+    &-title-icon {
+      stroke: $color-secondary;
+    }
+
+    &-na-icon {
+      stroke: $color-icon-cloud;
+    }
+  }
+
+  &-event-weather-icon {
+    stroke: $color-icon-sun;
+  }
+
+  &-tide {
+    &-row-icon {
+      flex-shrink: 0;
+
+      &.tide-icon {
+        &-hw {
+          stroke: $color-hochwasser;
+        }
+        &-nw {
+          stroke: $color-niedrigwasser;
+        }
+      }
+    }
+
+    &-weather-icon {
+      stroke: $color-white;
+      opacity: 0.9;
+    }
+  }
+
+  &-water-icon {
+    stroke: $color-niedrigwasser;
+  }
 }

@@ -130,7 +130,8 @@ const createWeatherRow = (code, maxTemp, minTemp) => {
   const iconWrap = document.createElement('div');
   iconWrap.className = 'weather-card-icon';
 
-  const iconEl = createIcon(getWeatherIconFn(code), { size: 28, className: 'weather-icon-svg' });
+  const { icon, cls } = getWeatherIconFn(code);
+  const iconEl = createIcon(icon, { size: 28, className: `weather-icon-svg ${cls}` });
   iconWrap.appendChild(iconEl);
 
   const tempMax = document.createElement('p');
@@ -155,9 +156,8 @@ const createWeatherRow = (code, maxTemp, minTemp) => {
 };
 
 const createDetails = (wind, precip) => {
-  const createDetail = (IconFn, text) => {
-    const icon = createIcon(IconFn, { size: 14, className: 'weather-detail-svg' });
-
+  const createDetail = (IconFn, text, iconClass = 'weather-detail-svg') => {
+    const icon = createIcon(IconFn, { size: 14, className: iconClass });
     const el = document.createElement('div');
     el.className = 'weather-card-detail';
     el.append(icon, ` ${text}`);
@@ -167,8 +167,8 @@ const createDetails = (wind, precip) => {
   const section = document.createElement('div');
   section.className = 'weather-card-details';
   section.append(
-    createDetail(Wind, `Wind ${wind} km/h`),
-    createDetail(Droplets, `${precip}% Niederschlag`),
+    createDetail(Wind, `Wind ${wind} km/h`, 'weather-detail-wind'),
+    createDetail(Droplets, `${precip}% Niederschlag`, 'weather-detail-rain'),
   );
   return section;
 };
