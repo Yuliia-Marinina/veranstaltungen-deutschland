@@ -10,10 +10,19 @@ import {
   escapeHTML,
   formatDate,
   formatWeekday,
-  getWeatherIcon,
   getWeatherDescription,
   getWaterStatus,
 } from '../utils/utils.js';
+
+import {
+  createIcon,
+  getWeatherIconFn,
+  MapPin,
+  Waves,
+  CalendarDays,
+  TrendingUp,
+  TrendingDown,
+} from '../utils/icons.js';
 
 const TEST_EVENT_ID = 'husum-test';
 
@@ -128,9 +137,7 @@ const renderAddress = (address) => {
   const el = document.getElementById('detail-card-address');
   if (!el || !address) return;
 
-  const icon = document.createElement('span');
-  icon.setAttribute('aria-hidden', 'true');
-  icon.textContent = '🗺️ ';
+  const icon = createIcon(MapPin, { size: 14, className: 'detail-address-icon' });
 
   const a = document.createElement('a');
   a.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
@@ -245,10 +252,11 @@ const renderForecast = (weatherData) => {
     colHeader.className = 'detail-tide-col-header';
     colHeader.append(dayLabel, dateLabel);
 
-    const weatherIcon = document.createElement('span');
-    weatherIcon.className = 'detail-tide-weather-icon';
-    weatherIcon.setAttribute('aria-hidden', 'true');
-    weatherIcon.textContent = getWeatherIcon(code);
+    const { icon, cls } = getWeatherIconFn(code);
+    const weatherIcon = createIcon(getWeatherIconFn(code), {
+      size: 22,
+      className: `detail-tide-weather-icon ${cls}`,
+    });
 
     const weatherLabel = document.createElement('span');
     weatherLabel.className = 'detail-tide-weather-label';
@@ -271,8 +279,8 @@ const renderForecast = (weatherData) => {
     col.append(
       colHeader,
       weatherRow,
-      createTideRow('🌊', 'Hochwasser'),
-      createTideRow('〰️', 'Niedrigwasser'),
+      createTideRow('hw', 'Hochwasser'),
+      createTideRow('nw', 'Niedrigwasser'),
     );
 
     fragment.appendChild(col);
@@ -281,11 +289,11 @@ const renderForecast = (weatherData) => {
   el.replaceChildren(fragment);
 };
 
-const createTideRow = (emoji, label) => {
-  const icon = document.createElement('span');
-  icon.className = 'detail-tide-row-icon';
-  icon.setAttribute('aria-hidden', 'true');
-  icon.textContent = emoji;
+const createTideRow = (type, label) => {
+  const icon = createIcon(type === 'hw' ? TrendingUp : TrendingDown, {
+    size: 14,
+    className: `detail-tide-row-icon tide-icon-${type}`,
+  });
 
   const rowLabel = document.createElement('span');
   rowLabel.className = 'detail-tide-row-label';
@@ -316,9 +324,8 @@ const renderEventDayWeather = (weatherData, rawEvent) => {
   const dayIndex = weatherData.daily.time.findIndex((d) => d === eventDate);
 
   if (dayIndex === -1) {
-    const icon = document.createElement('span');
-    icon.setAttribute('aria-hidden', 'true');
-    icon.textContent = '🌤️ ';
+    const { icon: naIcon, cls: naCls } = getWeatherIconFn(3);
+    const icon = createIcon(naIcon, { size: 16, className: `detail-weather-na-icon ${naCls}` });
 
     const na = document.createElement('p');
     na.className = 'detail-event-weather-na';
@@ -331,18 +338,17 @@ const renderEventDayWeather = (weatherData, rawEvent) => {
   const tempMax = Math.round(weatherData.daily.temperature_2m_max[dayIndex]);
   const tempMin = Math.round(weatherData.daily.temperature_2m_min[dayIndex]);
 
-  const titleIcon = document.createElement('span');
-  titleIcon.setAttribute('aria-hidden', 'true');
-  titleIcon.textContent = '🗓️ ';
+  const titleIcon = createIcon(CalendarDays, { size: 14, className: 'detail-weather-title-icon' });
 
   const title = document.createElement('p');
   title.className = 'detail-event-weather-title';
   title.append(titleIcon, 'Wetter am Veranstaltungstag');
 
-  const weatherIcon = document.createElement('span');
-  weatherIcon.className = 'detail-event-weather-icon';
-  weatherIcon.setAttribute('aria-hidden', 'true');
-  weatherIcon.textContent = getWeatherIcon(code);
+  const { icon: wIcon, cls: wCls } = getWeatherIconFn(code);
+  const weatherIcon = createIcon(wIcon, {
+    size: 24,
+    className: `detail-event-weather-icon ${wCls}`,
+  });
 
   const temp = document.createElement('span');
   temp.className = 'detail-event-weather-temp';
@@ -378,10 +384,7 @@ const renderWaterLevel = async (event, stations) => {
   const waterEl = document.getElementById('detail-water');
   if (!waterEl) return;
 
-  const icon = document.createElement('span');
-  icon.className = 'detail-water-icon';
-  icon.setAttribute('aria-hidden', 'true');
-  icon.textContent = '🌊';
+  const icon = createIcon(Waves, { size: 16, className: 'detail-water-icon' });
 
   const level = document.createElement('span');
   level.className = 'detail-water-level';

@@ -20,14 +20,17 @@
 
   &-logo {
     display: flex;
-    align-items: center;
     gap: $spacing-sm;
     font-size: $font-size-lg;
     font-weight: 700;
     color: $color-white;
+    line-height: 1.2;
 
     &-icon {
       font-size: $font-size-xl;
+      stroke: $color-secondary;
+      width: 18px;
+      height: 18px;
     }
   }
 

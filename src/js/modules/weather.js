@@ -4,12 +4,15 @@ import {
   fetchWaterStations,
   fetchWaterLevels,
 } from '../utils/api.js';
+import { getWeatherDescription, formatWeekday, formatDate } from '../utils/utils.js';
 import {
-  getWeatherIcon,
-  getWeatherDescription,
-  formatWeekday,
-  formatDate,
-} from '../utils/utils.js';
+  createIcon,
+  getWeatherIconFn,
+  Wind,
+  Droplets,
+  TrendingUp,
+  TrendingDown,
+} from '../utils/icons.js';
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
@@ -127,9 +130,8 @@ const createWeatherRow = (code, maxTemp, minTemp) => {
   const iconWrap = document.createElement('div');
   iconWrap.className = 'weather-card-icon';
 
-  const iconEl = document.createElement('span');
-  iconEl.setAttribute('aria-hidden', 'true');
-  iconEl.textContent = getWeatherIcon(code);
+  const { icon, cls } = getWeatherIconFn(code);
+  const iconEl = createIcon(icon, { size: 28, className: `weather-icon-svg ${cls}` });
   iconWrap.appendChild(iconEl);
 
   const tempMax = document.createElement('p');
@@ -154,11 +156,8 @@ const createWeatherRow = (code, maxTemp, minTemp) => {
 };
 
 const createDetails = (wind, precip) => {
-  const createDetail = (emoji, text) => {
-    const icon = document.createElement('span');
-    icon.setAttribute('aria-hidden', 'true');
-    icon.textContent = emoji;
-
+  const createDetail = (IconFn, text, iconClass = 'weather-detail-svg') => {
+    const icon = createIcon(IconFn, { size: 14, className: iconClass });
     const el = document.createElement('div');
     el.className = 'weather-card-detail';
     el.append(icon, ` ${text}`);
@@ -168,8 +167,8 @@ const createDetails = (wind, precip) => {
   const section = document.createElement('div');
   section.className = 'weather-card-details';
   section.append(
-    createDetail('💨', `Wind ${wind} km/h`),
-    createDetail('💧', `${precip}% Niederschlag`),
+    createDetail(Wind, `Wind ${wind} km/h`, 'weather-detail-wind'),
+    createDetail(Droplets, `${precip}% Niederschlag`, 'weather-detail-rain'),
   );
   return section;
 };
@@ -182,9 +181,10 @@ const createDivider = () => {
 
 const createTideSection = () => {
   const createTideRow = (type, label) => {
-    const icon = document.createElement('span');
-    icon.setAttribute('aria-hidden', 'true');
-    icon.textContent = type === 'hw' ? '🌊' : '〰️';
+    const icon = createIcon(type === 'hw' ? TrendingUp : TrendingDown, {
+      size: 14,
+      className: `tide-icon tide-icon-${type}`,
+    });
 
     const labelEl = document.createElement('span');
     labelEl.textContent = label;

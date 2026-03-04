@@ -178,14 +178,17 @@ a:hover {
 }
 .header-logo {
   display: flex;
-  align-items: center;
   gap: 8px;
   font-size: 1.125rem;
   font-weight: 700;
   color: #ffffff;
+  line-height: 1.2;
 }
 .header-logo-icon {
   font-size: 1.25rem;
+  stroke: #48b4d4;
+  width: 18px;
+  height: 18px;
 }
 .header-list {
   display: flex;
@@ -578,6 +581,9 @@ a:hover {
   transform: translateY(-50%);
   font-size: 1rem;
   pointer-events: none;
+  stroke: #4a6580;
+  width: 15px;
+  height: 15px;
 }
 .filters-input {
   width: 100%;
@@ -801,6 +807,12 @@ a:hover {
   font-size: 0.75rem;
   color: #4a6580;
 }
+.events-card-meta-icon {
+  stroke: #48b4d4;
+}
+.events-empty-icon {
+  stroke: #4a6580;
+}
 
 .weather-section {
   background: #ffffff;
@@ -895,6 +907,7 @@ a:hover {
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1;
+  color: rgba(255, 255, 255, 0.7);
 }
 .weather-card-temp-min {
   font-size: 0.75rem;
@@ -917,6 +930,12 @@ a:hover {
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.6);
 }
+.weather-card-detail .weather-detail-svg {
+  flex-shrink: 0;
+}
+.weather-card-detail .weather-detail-svg:first-child {
+  stroke: #4aaa90;
+}
 .weather-card-divider {
   border: none;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -926,6 +945,30 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+.weather-icon-svg {
+  stroke: rgba(255, 255, 255, 0.85);
+}
+.weather-icon-svg.icon-clear {
+  stroke: #f0a500;
+}
+.weather-icon-svg.icon-partly {
+  stroke: #e8c87a;
+}
+.weather-icon-svg.icon-rain {
+  stroke: #3c82c8;
+}
+.weather-icon-svg.icon-snow {
+  stroke: #a8d8e8;
+}
+.weather-icon-svg.icon-thunder {
+  stroke: #e8c87a;
+}
+.weather-detail-wind {
+  stroke: #4aaa90;
+}
+.weather-detail-rain {
+  stroke: #3c82c8;
 }
 
 .tide-row {
@@ -945,6 +988,12 @@ a:hover {
   margin-left: auto;
   font-size: 0.75rem;
   opacity: 0.6;
+}
+.tide-icon-hw {
+  stroke: #e8c87a;
+}
+.tide-icon-nw {
+  stroke: #48b4d4;
 }
 
 .map-section {
@@ -1398,4 +1447,44 @@ a:hover {
 }
 .detail-link:hover {
   color: #1e6091;
+}
+.detail-meta-item svg {
+  stroke: #48b4d4;
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+.detail-card-label svg {
+  stroke: #48b4d4;
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+.detail-address-icon {
+  stroke: #48b4d4;
+}
+.detail-weather-title-icon {
+  stroke: #48b4d4;
+}
+.detail-weather-na-icon {
+  stroke: #7a94aa;
+}
+.detail-event-weather-icon {
+  stroke: #f0a500;
+}
+.detail-tide-row-icon {
+  flex-shrink: 0;
+}
+.detail-tide-row-icon.tide-icon-hw {
+  stroke: #e8c87a;
+}
+.detail-tide-row-icon.tide-icon-nw {
+  stroke: #48b4d4;
+}
+.detail-tide-weather-icon {
+  stroke: #ffffff;
+  opacity: 0.9;
+}
+.detail-water-icon {
+  stroke: #48b4d4;
 }/*# sourceMappingURL=main.css.map */

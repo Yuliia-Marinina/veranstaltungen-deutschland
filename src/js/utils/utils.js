@@ -35,21 +35,18 @@ export const truncate = (text, max = 100) => {
 // ─── Weather ──────────────────────────────────────────────────────────────────
 
 const WEATHER_MAP = [
-  { max: 0, icon: '☀️', desc: 'Klarer Himmel' },
-  { max: 2, icon: '⛅', desc: 'Teilweise bewölkt' },
-  { max: 3, icon: '☁️', desc: 'Bewölkt' },
-  { max: 48, icon: '🌫️', desc: 'Neblig' },
-  { max: 67, icon: '🌧️', desc: 'Regen' },
-  { max: 77, icon: '❄️', desc: 'Schnee' },
-  { max: 82, icon: '🌦️', desc: 'Schauer' },
-  { max: 99, icon: '⛈️', desc: 'Gewitter' },
+  { max: 0, desc: 'Klarer Himmel' },
+  { max: 2, desc: 'Teilweise bewölkt' },
+  { max: 3, desc: 'Bewölkt' },
+  { max: 48, desc: 'Neblig' },
+  { max: 67, desc: 'Regen' },
+  { max: 77, desc: 'Schnee' },
+  { max: 82, desc: 'Schauer' },
+  { max: 99, desc: 'Gewitter' },
 ];
 
-const getWeatherInfo = (code) =>
-  WEATHER_MAP.find(({ max }) => code <= max) ?? { icon: '🌤️', desc: 'Wechselhaft' };
-
-export const getWeatherIcon = (code) => getWeatherInfo(code).icon;
-export const getWeatherDescription = (code) => getWeatherInfo(code).desc;
+export const getWeatherDescription = (code) =>
+  WEATHER_MAP.find(({ max }) => code <= max)?.desc ?? 'Wechselhaft';
 
 // ─── Water ────────────────────────────────────────────────────────────────────
 

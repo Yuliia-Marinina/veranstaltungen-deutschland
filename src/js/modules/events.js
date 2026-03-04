@@ -1,4 +1,5 @@
 import { formatDate, truncate, escapeHTML } from '../utils/utils.js';
+import { createIcon, Calendar, Search } from '../utils/icons.js';
 
 const BASE = '/veranstaltungen-deutschland';
 
@@ -42,9 +43,7 @@ const createEventCard = (event) => {
   title.textContent = event.title ?? '';
 
   // Date meta
-  const dateIcon = document.createElement('span');
-  dateIcon.setAttribute('aria-hidden', 'true');
-  dateIcon.textContent = '📅 ';
+  const dateIcon = createIcon(Calendar, { size: 13, className: 'events-card-meta-icon' });
 
   const dateMeta = document.createElement('span');
   dateMeta.className = 'events-card-meta-item';
@@ -84,9 +83,7 @@ export const renderEvents = (events, onReset) => {
   container.innerHTML = '';
 
   if (!events.length) {
-    const icon = document.createElement('span');
-    icon.setAttribute('aria-hidden', 'true');
-    icon.textContent = '🔍 ';
+    const icon = createIcon(Search, { size: 16, className: 'events-empty-icon' });
 
     const text = document.createElement('span');
     text.textContent = 'Keine Veranstaltungen gefunden.';
