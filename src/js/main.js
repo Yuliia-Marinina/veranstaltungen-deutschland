@@ -7,6 +7,7 @@ import { renderEvents } from './modules/events.js';
 import { initFilters } from './modules/filters.js';
 import { husumEvent } from './data/husumEvent.js';
 import { loadPartial } from './utils/loadPartial.js';
+import { createIcons, Search, MapPin, Calendar, Clock, Map } from 'lucide';
 
 const BASE = '/veranstaltungen-deutschland';
 const PAGE_SIZE = 6;
@@ -51,6 +52,7 @@ const normalizeAndFilter = async (rawEvents, startIndex) => {
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadPartials();
+  createIcons({ icons: { Search, MapPin, Calendar, Clock, Map } });
 
   try {
     let currentPage = 0;

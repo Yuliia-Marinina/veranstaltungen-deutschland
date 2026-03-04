@@ -18,7 +18,10 @@
     <header class="header">
       <div class="container">
         <div class="header-inner">
-          <a href="index.html" class="header-logo"> 📍 <span>Events in Germany</span> </a>
+          <a href="index.html" class="header-logo">
+            <i data-lucide="map-pin" class="header-logo-icon" aria-hidden="true"></i>
+            Events in Germany
+          </a>
           <nav class="header-nav">
             <a href="index.html#events" class="header-link">Events</a>
             <a href="index.html#map" class="header-link">Germany Map</a>
@@ -41,9 +44,17 @@
           <h1 class="detail-title" id="detail-title">Veranstaltung wird geladen...</h1>
           <div class="detail-meta">
             <div id="detail-event-weather"></div>
-            <span class="detail-meta-item"> 📅 <span id="detail-date">--</span> </span>
-            <span class="detail-meta-item"> 📍 <span id="detail-region">--</span> </span>
-            <span class="detail-meta-item"> 🕐 <span id="detail-time">--</span> </span>
+            <span class="detail-meta-item"
+              ><i data-lucide="calendar" aria-hidden="true"></i>
+              <span id="detail-date">--</span></span
+            >
+            <span class="detail-meta-item"
+              ><i data-lucide="map-pin" aria-hidden="true"></i>
+              <span id="detail-region">--</span></span
+            >
+            <span class="detail-meta-item"
+              ><i data-lucide="clock" aria-hidden="true"></i> <span id="detail-time">--</span></span
+            >
           </div>
         </div>
       </div>
@@ -79,19 +90,19 @@
             <div class="detail-card">
               <h3 class="detail-card-title">Veranstaltungsinfo</h3>
               <div class="detail-card-row">
-                <span class="detail-card-label">📅 Datum</span>
+                <i data-lucide="calendar" aria-hidden="true"></i>
                 <span class="detail-card-value" id="detail-card-date">--</span>
               </div>
               <div class="detail-card-row">
-                <span class="detail-card-label">🕐 Uhrzeit</span>
+                <i data-lucide="clock" aria-hidden="true"></i>
                 <span class="detail-card-value" id="detail-card-time">--</span>
               </div>
               <div class="detail-card-row">
-                <span class="detail-card-label">📍 Ort</span>
+                <i data-lucide="map-pin" aria-hidden="true"></i>
                 <span class="detail-card-value" id="detail-card-region">--</span>
               </div>
               <div class="detail-card-row">
-                <span class="detail-card-label">🗺️ Adresse</span>
+                <i data-lucide="map" aria-hidden="true"></i>
                 <span class="detail-card-value" id="detail-card-address">--</span>
               </div>
               <a href="#" class="btn btn-primary detail-card-btn">Tickets kaufen</a>
@@ -99,7 +110,7 @@
 
             <div class="detail-card">
               <h3 class="detail-card-title">Veranstaltungsort</h3>
-              <p class="detail-address">📍 <span id="detail-address">--</span></p>
+              <p class="detail-address"><i data-lucide="map-pin" aria-hidden="true"></i>--</span></p>
               <div class="detail-map" id="detail-map"></div>
             </div>
           </div>
