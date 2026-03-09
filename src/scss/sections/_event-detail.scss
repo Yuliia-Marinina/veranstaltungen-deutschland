@@ -1,463 +1,297 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-.detail {
-  // Hero
-  &-hero {
-    position: relative;
-    height: 400px;
-    overflow: hidden;
+// ─── Hero ─────────────────────────────────────────────────────────────────────
 
-    &-image {
-      position: absolute;
-      inset: 0;
+.detail-hero {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
 
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
+  &-image {
+    position: absolute;
+    inset: 0;
 
-    &-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
-    }
-
-    .container {
-      position: relative;
-      z-index: 1;
+    img {
+      width: 100%;
       height: 100%;
-      display: flex;
-      align-items: flex-end;
-      padding-bottom: $spacing-xl;
-    }
-
-    &-content {
-      color: $color-white;
+      object-fit: cover;
     }
   }
 
-  // Tags
-  &-tags {
-    display: flex;
-    gap: $spacing-sm;
-    flex-wrap: wrap;
-    margin-bottom: $spacing-md;
+  &-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba($color-primary, 0.25) 0%,
+      rgba($color-primary, 0.82) 100%
+    );
   }
 
-  &-tag {
-    padding: 4px $spacing-sm;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 20px;
-    font-size: $font-size-sm;
-    color: $color-white;
-    backdrop-filter: blur(4px);
-  }
-
-  // Title
-  &-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: $color-white;
-    margin-bottom: $spacing-md;
-    line-height: 1.2;
-
-    @include tablet {
-      font-size: $font-size-xxl;
-    }
-  }
-
-  // Meta
-  &-meta {
-    display: flex;
-    gap: $spacing-lg;
-    flex-wrap: wrap;
-
-    &-item {
-      font-size: $font-size-base;
-      color: rgba(255, 255, 255, 0.9);
-      display: flex;
-      align-items: center;
-      gap: $spacing-xs;
-    }
-  }
-
-  // Weather on event date (inside hero)
-  &-event-weather {
-    margin-top: $spacing-md;
-    padding: $spacing-sm $spacing-md;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: $radius-md;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(4px);
-    display: inline-block;
-
-    &-title {
-      font-size: $font-size-sm;
-      font-weight: 600;
-      color: $color-white;
-      margin-bottom: $spacing-xs;
-    }
-
-    &-info {
-      display: flex;
-      align-items: center;
-      gap: $spacing-sm;
-    }
-
-    &-icon {
-      font-size: 1.5rem;
-    }
-
-    &-temp {
-      font-size: $font-size-lg;
-      font-weight: 700;
-      color: $color-white;
-    }
-
-    &-desc {
-      font-size: $font-size-sm;
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    &-na {
-      font-size: $font-size-sm;
-      color: rgba(255, 255, 255, 0.7);
-      font-style: italic;
-    }
-  }
-
-  // Main content
   &-content {
-    padding: $spacing-xl 0;
-    background: $color-bg;
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: $spacing-xl;
   }
+}
 
-  // Layout
-  &-info {
-    display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: $spacing-xl;
-    align-items: start;
+// ─── Tags ─────────────────────────────────────────────────────────────────────
 
-    @include tablet {
-      grid-template-columns: 1fr;
-    }
+.detail-tags {
+  display: flex;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+  margin-bottom: $spacing-md;
+}
+
+.detail-tag {
+  padding: $spacing-xs $spacing-md;
+  border-radius: $radius-xl;
+  background: rgba($color-secondary, 0.2);
+  border: 1px solid rgba($color-secondary, 0.35);
+  color: $color-accent;
+  font-size: $font-size-sm;
+  font-weight: 500;
+}
+
+// ─── Title & Meta ─────────────────────────────────────────────────────────────
+
+.detail-title {
+  font-size: $font-size-hero;
+  font-weight: 800;
+  color: $color-white;
+  line-height: 1.15;
+  margin-bottom: $spacing-lg;
+  letter-spacing: -0.5px;
+  max-width: 680px;
+
+  @include tablet {
+    font-size: $font-size-xxl;
   }
+}
 
-  &-info-left,
-  &-info-right {
-    min-width: 0;
+.detail-meta-row {
+  display: flex;
+  gap: $spacing-lg;
+  flex-wrap: wrap;
+}
+
+.detail-meta-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  color: rgba($color-white, 0.8);
+  font-size: $font-size-sm;
+
+  svg {
+    width: 13px;
+    height: 13px;
+    stroke: $color-secondary;
+    flex-shrink: 0;
   }
+}
 
-  &-info-right {
-    overflow: hidden;
+// ─── Body layout ──────────────────────────────────────────────────────────────
+
+.detail-body {
+  background: $color-bg;
+  padding: 0 0 $spacing-xxl;
+}
+
+.detail-body-inner {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: $spacing-xl;
+  align-items: start;
+
+  @include tablet {
+    grid-template-columns: 1fr;
   }
+}
 
-  // Block
-  &-block {
-    margin-bottom: $spacing-xl;
-    overflow: hidden;
+// ─── Left column sections ─────────────────────────────────────────────────────
 
-    &-title {
-      font-size: $font-size-xxl;
-      font-weight: 700;
-      color: $color-text;
-      margin-bottom: $spacing-md;
-      padding-bottom: $spacing-sm;
-      border-bottom: 2px solid $color-border;
-    }
-  }
+.detail-section {
+  margin-bottom: $spacing-xl;
 
-  // Description
-  &-description {
+  &-title {
     font-size: $font-size-base;
-    color: $color-text-light;
-    line-height: 1.8;
-    white-space: pre-line;
-  }
-
-  // Address
-  &-address {
-    font-size: $font-size-base;
-    color: $color-text-light;
+    font-weight: 700;
+    color: $color-text;
     margin-bottom: $spacing-md;
+    padding-bottom: $spacing-sm;
+    border-bottom: 2px solid $color-border;
     display: flex;
     align-items: center;
     gap: $spacing-xs;
-  }
 
-  // Map
-  &-map {
-    height: 300px;
-    border-radius: $radius-lg;
-    overflow: hidden !important;
-    border: 1px solid $color-border;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  // Info card
-  &-card {
-    background: $color-white;
-    border-radius: $radius-lg;
-    padding: $spacing-lg;
-    box-shadow: $shadow-card;
-    margin-bottom: $spacing-lg;
-
-    &-title {
-      font-size: $font-size-lg;
-      font-weight: 700;
-      color: $color-text;
-      margin-bottom: $spacing-lg;
-      padding-bottom: $spacing-sm;
-      border-bottom: 2px solid $color-border;
-    }
-
-    &-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: $spacing-md;
-      padding: $spacing-sm 0;
-      border-bottom: 1px solid $color-border;
-
-      &:last-of-type {
-        border-bottom: none;
-      }
-    }
-
-    &-label {
-      font-size: $font-size-sm;
-      color: $color-text-light;
-      white-space: nowrap;
-    }
-
-    &-value {
-      font-size: $font-size-sm;
-      font-weight: 500;
-      color: $color-text;
-      text-align: right;
-    }
-
-    &-btn {
-      width: 100%;
-      margin-top: $spacing-lg;
-      justify-content: center;
+    svg {
+      width: 16px;
+      height: 16px;
+      stroke: $color-primary-dark;
+      flex-shrink: 0;
     }
   }
+}
 
-  // Weather block - full width
-  &-weather-block {
-    grid-column: 1 / -1;
-    min-width: 0;
+.detail-desc {
+  font-size: $font-size-sm;
+  color: $color-text-light;
+  line-height: 1.8;
+  white-space: pre-line;
+}
 
-    .detail-card-weather {
-      padding: $spacing-xl;
-    }
+.detail-link {
+  color: $color-primary-dark;
+  text-decoration: underline;
+  word-break: break-all;
+
+  &:hover {
+    color: $color-primary;
   }
+}
 
-  // Weather & Tide grid
-  &-tide-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $spacing-lg;
+// ─── Right column — Tickets ───────────────────────────────────────────────────
+
+.detail-tickets {
+  background: $color-white;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  border: 1px solid $color-border;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+
+  &-label {
+    font-size: $font-size-sm;
+    color: $color-text-light;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: $spacing-md;
+  }
+}
+
+.detail-price {
+  font-size: $font-size-xxl;
+  font-weight: 800;
+  color: $color-text;
+  margin-bottom: $spacing-xs;
+
+  &-sub {
+    font-size: $font-size-sm;
+    color: $color-text-light;
     margin-bottom: $spacing-lg;
   }
+}
 
-  &-tide-col {
-    &-header {
-      margin-bottom: $spacing-md;
-      padding-bottom: $spacing-sm;
-      border-bottom: 2px solid $color-border;
-    }
+.ticket-info {
+  margin-top: $spacing-md;
+  padding: $spacing-sm $spacing-md;
+  background: rgba($color-secondary, 0.06);
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  color: $color-text-light;
+  line-height: 1.6;
+  display: flex;
+  gap: $spacing-xs;
 
-    &-day {
-      font-size: $font-size-lg;
-      font-weight: 700;
-      color: $color-text;
-    }
-
-    &-date {
-      font-size: $font-size-sm;
-      color: $color-text-light;
-      margin-top: 2px;
-    }
+  svg {
+    width: 13px;
+    height: 13px;
+    stroke: $color-secondary;
+    flex-shrink: 0;
+    margin-top: 1px;
   }
+}
 
-  &-tide-weather {
+// ─── Right column — Map card ──────────────────────────────────────────────────
+
+.detail-map-card {
+  background: $color-primary;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  border: 1px solid rgba($color-white, 0.08);
+  margin-bottom: $spacing-md;
+
+  &-header {
+    padding: $spacing-md $spacing-lg;
     display: flex;
     align-items: center;
-    gap: $spacing-md;
-    margin-bottom: $spacing-lg;
-    padding-bottom: $spacing-md;
-    border-bottom: 1px solid $color-border;
+    gap: $spacing-xs;
+    border-bottom: 1px solid rgba($color-white, 0.08);
 
-    &-icon {
-      font-size: 2.5rem;
-      flex-shrink: 0;
+    svg {
+      width: 15px;
+      height: 15px;
+      stroke: $color-secondary;
     }
 
-    &-info {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    &-label {
-      font-size: $font-size-sm;
-      color: $color-text-light;
-    }
-
-    &-temp {
-      font-size: $font-size-xl;
-      font-weight: 700;
-      color: $color-text;
-    }
-  }
-
-  &-tide-row {
-    display: flex;
-    align-items: flex-start;
-    gap: $spacing-md;
-    margin-bottom: $spacing-md;
-
-    &-icon {
-      width: 28px;
-      flex-shrink: 0;
-      margin-top: 2px;
-      font-size: 1.7rem;
-    }
-
-    &-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    &-label {
-      font-size: $font-size-sm;
-      color: $color-text-light;
-    }
-
-    &-time {
-      font-size: $font-size-sm;
-      font-weight: 700;
-      color: $color-text;
-    }
-  }
-
-  // Water info
-  &-water {
-    margin-top: $spacing-lg;
-    padding-top: $spacing-md;
-    border-top: 1px solid $color-border;
-
-    &-info {
-      display: flex;
-      align-items: center;
-      gap: $spacing-sm;
-      margin-bottom: $spacing-xs;
-    }
-
-    &-icon {
-      font-size: 1.5rem;
-    }
-
-    &-level {
-      font-size: $font-size-lg;
-      font-weight: 700;
-      color: $color-text;
-    }
-
-    &-badge {
-      padding: 2px $spacing-sm;
-      background: $color-bg;
-      border-radius: 20px;
+    &-title {
       font-size: $font-size-sm;
       font-weight: 600;
-      border: 1px solid $color-border;
-    }
-
-    &-station {
-      font-size: $font-size-sm;
-      color: $color-text-light;
+      color: $color-white;
     }
   }
 
-  // Link
-  &-link {
-    color: $color-primary;
-    text-decoration: underline;
-    word-break: break-all;
+  &-footer {
+    padding: $spacing-sm $spacing-lg;
     font-size: $font-size-sm;
+    color: rgba($color-white, 0.5);
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    border-top: 1px solid rgba($color-white, 0.06);
 
-    &:hover {
-      color: $color-primary-dark;
-    }
-  }
-
-  // ─── Lucide Icon Colors ───────────────────────────────────────────────────────
-  &-meta-item {
     svg {
-      stroke: $color-secondary;
-      width: 13px;
-      height: 13px;
-      flex-shrink: 0;
+      width: 12px;
+      height: 12px;
+      stroke: rgba($color-white, 0.4);
     }
   }
+}
 
-  &-card-label {
-    svg {
-      stroke: $color-secondary;
-      width: 13px;
-      height: 13px;
-      flex-shrink: 0;
-    }
+.detail-map {
+  height: 220px;
+  width: 100%;
+}
+
+// ─── Bookmark button ──────────────────────────────────────────────────────────
+
+.detail-bookmark-btn {
+  width: 100%;
+  padding: $spacing-sm;
+  border-radius: $radius-md;
+  border: 1.5px solid $color-border;
+  background: transparent;
+  color: $color-primary-dark;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  transition: all 0.2s;
+  margin-top: $spacing-sm;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
   }
 
-  &-address-icon {
-    stroke: $color-secondary;
+  &:hover {
+    border-color: $color-accent;
+    background: rgba($color-accent, 0.08);
   }
 
-  &-weather {
-    &-title-icon {
-      stroke: $color-secondary;
-    }
-
-    &-na-icon {
-      stroke: $color-icon-cloud;
-    }
-  }
-
-  &-event-weather-icon {
-    stroke: $color-icon-sun;
-  }
-
-  &-tide {
-    &-row-icon {
-      flex-shrink: 0;
-
-      &.tide-icon {
-        &-hw {
-          stroke: $color-hochwasser;
-        }
-        &-nw {
-          stroke: $color-niedrigwasser;
-        }
-      }
-    }
-
-    &-weather-icon {
-      stroke: $color-white;
-      opacity: 0.9;
-    }
-  }
-
-  &-water-icon {
-    stroke: $color-niedrigwasser;
+  &.saved {
+    background: rgba($color-accent, 0.15);
+    border-color: $color-accent;
+    color: color-mix(in srgb, $color-accent 70%, black);
   }
 }

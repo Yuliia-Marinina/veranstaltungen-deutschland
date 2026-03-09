@@ -1,0 +1,228 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+// ─── Card ─────────────────────────────────────────────────────────────────────
+
+.detail-wcard {
+  background: $color-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  border: 1px solid rgba($color-white, 0.06);
+}
+
+// ─── Card internals ───────────────────────────────────────────────────────────
+
+.dwc {
+  &-day {
+    font-size: 10px;
+    color: rgba($color-white, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+  }
+
+  &-date {
+    font-size: $font-size-sm;
+    color: rgba($color-white, 0.6);
+    margin-bottom: $spacing-md;
+  }
+
+  &-main {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+  }
+
+  &-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba($color-white, 0.1);
+
+    svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    &.icon-clear {
+      background: rgba($color-icon-sun, 0.15);
+      svg {
+        stroke: $color-icon-sun;
+      }
+    }
+    &.icon-partly {
+      background: rgba($color-accent, 0.15);
+      svg {
+        stroke: $color-accent;
+      }
+    }
+    &.icon-cloud {
+      background: rgba($color-icon-cloud, 0.2);
+      svg {
+        stroke: $color-icon-cloud;
+      }
+    }
+    &.icon-rain {
+      background: rgba($color-icon-rain, 0.15);
+      svg {
+        stroke: $color-icon-rain;
+      }
+    }
+    &.icon-snow {
+      background: rgba($color-primary-light, 0.15);
+      svg {
+        stroke: $color-primary-light;
+      }
+    }
+    &.icon-thunder {
+      background: rgba($color-accent, 0.15);
+      svg {
+        stroke: $color-accent;
+      }
+    }
+  }
+
+  &-temp {
+    font-size: $font-size-xxl;
+    font-weight: 700;
+    color: $color-white;
+    line-height: 1;
+  }
+
+  &-desc {
+    font-size: $font-size-sm;
+    color: rgba($color-white, 0.45);
+    margin-top: 3px;
+  }
+
+  &-details {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    margin-bottom: $spacing-md;
+  }
+
+  &-detail {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-size: $font-size-sm;
+    color: rgba($color-white, 0.55);
+
+    svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+  }
+
+  &-divider {
+    border: none;
+    border-top: 1px solid rgba($color-white, 0.08);
+    margin: $spacing-sm 0;
+  }
+
+  &-tide-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-size: $font-size-sm;
+    margin-bottom: $spacing-xs;
+
+    svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+  }
+
+  &-tide-time {
+    margin-left: auto;
+    font-size: $font-size-sm;
+    opacity: 0.5;
+  }
+}
+
+// ─── Tide colors ──────────────────────────────────────────────────────────────
+
+.tide-hw {
+  color: $color-hochwasser;
+}
+.tide-nw {
+  color: $color-niedrigwasser;
+}
+
+.tide-icon {
+  &-hw {
+    stroke: $color-hochwasser;
+  }
+  &-nw {
+    stroke: $color-niedrigwasser;
+  }
+}
+
+// ─── Detail row icons ─────────────────────────────────────────────────────────
+
+.detail-wind-icon {
+  stroke: $color-icon-wind;
+}
+.detail-rain-icon {
+  stroke: $color-icon-rain;
+}
+
+// ─── Water level ──────────────────────────────────────────────────────────────
+
+.detail-water {
+  &-info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-xs;
+  }
+
+  &-icon {
+    width: 16px;
+    height: 16px;
+    stroke: $color-niedrigwasser;
+    flex-shrink: 0;
+  }
+
+  &-level {
+    font-size: $font-size-lg;
+    font-weight: 700;
+    color: $color-white;
+  }
+
+  &-badge {
+    padding: 2px $spacing-sm;
+    background: rgba($color-white, 0.1);
+    border-radius: $radius-xl;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: rgba($color-white, 0.7);
+    border: 1px solid rgba($color-white, 0.15);
+  }
+
+  &-station {
+    font-size: $font-size-sm;
+    color: rgba($color-white, 0.4);
+  }
+}
+
+.weather-widget {
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-md;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+    }
+  }
+}

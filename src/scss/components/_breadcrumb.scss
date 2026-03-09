@@ -1,0 +1,44 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+.breadcrumb {
+  &-bar {
+    background: $color-bg;
+    border-bottom: 1px solid $color-border;
+    padding: $spacing-sm 0;
+    margin-bottom: $spacing-xxl;
+  }
+
+  &-inner {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-size: $font-size-sm;
+    color: $color-text-light;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    a {
+      color: $color-primary-dark;
+      text-decoration: none;
+      transition: color 0.15s;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    svg {
+      width: 11px;
+      height: 11px;
+      stroke: $color-text-light;
+      flex-shrink: 0;
+    }
+  }
+
+  &-current {
+    color: $color-text;
+    font-weight: 500;
+  }
+}

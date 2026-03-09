@@ -1,28 +1,9 @@
 import L from 'leaflet';
-import {
-  fetchEventById,
-  fetchWeather,
-  fetchWaterStations,
-  fetchWaterLevels,
-} from '../utils/api.js';
+import { fetchEventById } from '../utils/api.js';
 import { normalizeEvent } from '../utils/ticketmaster.js';
-import {
-  escapeHTML,
-  formatDate,
-  formatWeekday,
-  getWeatherDescription,
-  getWaterStatus,
-} from '../utils/utils.js';
-
-import {
-  createIcon,
-  getWeatherIconFn,
-  MapPin,
-  Waves,
-  CalendarDays,
-  TrendingUp,
-  TrendingDown,
-} from '../utils/icons.js';
+import { escapeHTML } from '../utils/utils.js';
+import { createIcon, MapPin } from '../utils/icons.js';
+import { renderWeatherWidget } from './weatherWidget.js';
 
 const TEST_EVENT_ID = 'husum-test';
 
@@ -55,7 +36,7 @@ export const initEventDetail = async () => {
       const { husumEvent } = await import('../data/husumEvent.js');
       renderEventInfo(husumEvent);
       initDetailMap(husumEvent);
-      await loadEventWeather(husumEvent, null);
+      await loadEventWeather(husumEvent);
       return;
     }
 
@@ -74,7 +55,7 @@ export const initEventDetail = async () => {
     const event = await normalizeEvent(rawEvent, id);
     renderEventInfo(event);
     initDetailMap(event);
-    await loadEventWeather(event, rawEvent);
+    await loadEventWeather(event);
   } catch (error) {
     console.error('initEventDetail:', error.message);
     setErrorState('Ein Fehler ist aufgetreten. Bitte versuche es später erneut.');
@@ -94,17 +75,19 @@ const renderEventInfo = (event) => {
   setTextById('detail-date', event.date);
   setTextById('detail-region', event.region);
   setTextById('detail-time', event.time);
-  setTextById('detail-address', event.address);
   setTextById('detail-card-date', event.date);
   setTextById('detail-card-time', event.time);
   setTextById('detail-card-region', event.region);
+  setTextById('detail-breadcrumb', event.title);
+  setTextById('detail-map-title', event.region ?? 'Veranstaltungsort');
 
-  document.title = `${event.title?.replace(/[<>]/g, '') ?? ''} — Events in Germany`;
+  document.title = `${escapeHTML(event.title ?? '')} — Events in Germany`;
 
   renderDescription(event.description);
   renderAddress(event.address);
   renderTags(event.tags);
   renderTicketButton(event.url);
+  initBookmarkButton(event.id);
 };
 
 // ─── Description ──────────────────────────────────────────────────────────────
@@ -113,8 +96,7 @@ const renderDescription = (description = '') => {
   const el = document.getElementById('detail-description');
   if (!el) return;
 
-  // Split by URLs, wrap in <a>, rest as TextNode — prevents javascript: XSS
-  const parts = escapeHTML(description).split(/(https?:\/\/[^\s]+)/g);
+  const parts = description.split(/(https?:\/\/[^\s]+)/g);
   el.replaceChildren(
     ...parts.map((part) => {
       if (/^https?:\/\//.test(part)) {
@@ -126,7 +108,7 @@ const renderDescription = (description = '') => {
         a.className = 'detail-link';
         return a;
       }
-      return document.createTextNode(part);
+      return document.createTextNode(escapeHTML(part));
     }),
   );
 };
@@ -134,10 +116,13 @@ const renderDescription = (description = '') => {
 // ─── Address ──────────────────────────────────────────────────────────────────
 
 const renderAddress = (address) => {
-  const el = document.getElementById('detail-card-address');
-  if (!el || !address) return;
+  const elCard = document.getElementById('detail-card-address');
+  if (elCard && address) elCard.textContent = address;
 
-  const icon = createIcon(MapPin, { size: 14, className: 'detail-address-icon' });
+  const elFooter = document.getElementById('detail-card-address-link');
+  if (!elFooter || !address) return;
+
+  const icon = createIcon(MapPin, { size: 12, className: 'detail-map-footer-icon' });
 
   const a = document.createElement('a');
   a.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
@@ -146,7 +131,7 @@ const renderAddress = (address) => {
   a.className = 'detail-link';
   a.append(icon, address);
 
-  el.replaceChildren(a);
+  elFooter.replaceChildren(a);
 };
 
 // ─── Tags ─────────────────────────────────────────────────────────────────────
@@ -168,17 +153,41 @@ const renderTags = (tags = []) => {
 // ─── Ticket Button ────────────────────────────────────────────────────────────
 
 const renderTicketButton = (url) => {
-  const btn = document.querySelector('.detail-card-btn');
-  if (btn && url) {
+  const btn = document.getElementById('detail-ticket-btn');
+  if (!btn) return;
+  if (url) {
     btn.href = url;
-    btn.target = '_blank';
-    btn.rel = 'noopener noreferrer';
+    btn.removeAttribute('aria-disabled');
   }
+};
+
+// ─── Bookmark Button ──────────────────────────────────────────────────────────
+
+const initBookmarkButton = (eventId) => {
+  if (!eventId) return;
+
+  const btn = document.getElementById('detail-bookmark-btn');
+  if (!btn) return;
+
+  const key = `bookmark-${eventId}`;
+  const saved = localStorage.getItem(key) === 'true';
+
+  btn.setAttribute('aria-pressed', String(saved));
+  if (saved) btn.classList.add('saved');
+
+  btn.addEventListener('click', () => {
+    const isNowSaved = btn.getAttribute('aria-pressed') !== 'true';
+    btn.setAttribute('aria-pressed', String(isNowSaved));
+    btn.classList.toggle('saved', isNowSaved);
+    localStorage.setItem(key, String(isNowSaved));
+  });
 };
 
 // ─── Detail Map ───────────────────────────────────────────────────────────────
 
 const initDetailMap = (event) => {
+  if (!event.lat || !event.lng) return;
+
   const map = L.map('detail-map', { scrollWheelZoom: false, maxZoom: 18 }).setView(
     [event.lat, event.lng],
     13,
@@ -209,198 +218,14 @@ const initDetailMap = (event) => {
 
 // ─── Weather ──────────────────────────────────────────────────────────────────
 
-const loadEventWeather = async (event, rawEvent) => {
+const loadEventWeather = async (event) => {
+  if (!event.lat || !event.lng) return;
+
   try {
-    const [weatherData, stations] = await Promise.all([
-      fetchWeather(event.lat, event.lng),
-      fetchWaterStations(),
-    ]);
-
-    if (!weatherData?.daily) return;
-
-    renderForecast(weatherData);
-    renderEventDayWeather(weatherData, rawEvent);
-    await renderWaterLevel(event, stations);
+    await renderWeatherWidget('detail-weather-forecast', event, {
+      waterContainerId: 'detail-water',
+    });
   } catch (error) {
     console.error('loadEventWeather:', error.message);
   }
-};
-
-// ─── Forecast ─────────────────────────────────────────────────────────────────
-
-const renderForecast = (weatherData) => {
-  const el = document.getElementById('detail-weather-forecast');
-  if (!el) return;
-
-  const fragment = document.createDocumentFragment();
-
-  weatherData.daily.time.slice(0, 3).forEach((date, index) => {
-    const code = parseInt(weatherData.daily.weathercode[index], 10);
-    const tempMax = Math.round(weatherData.daily.temperature_2m_max[index]);
-    const tempMin = Math.round(weatherData.daily.temperature_2m_min[index]);
-    const isToday = index === 0;
-
-    const dayLabel = document.createElement('p');
-    dayLabel.className = 'detail-tide-col-day';
-    dayLabel.textContent = isToday ? 'Heute' : formatWeekday(date);
-
-    const dateLabel = document.createElement('p');
-    dateLabel.className = 'detail-tide-col-date';
-    dateLabel.textContent = formatDate(date);
-
-    const colHeader = document.createElement('div');
-    colHeader.className = 'detail-tide-col-header';
-    colHeader.append(dayLabel, dateLabel);
-
-    const { icon, cls } = getWeatherIconFn(code);
-    const weatherIcon = createIcon(getWeatherIconFn(code), {
-      size: 22,
-      className: `detail-tide-weather-icon ${cls}`,
-    });
-
-    const weatherLabel = document.createElement('span');
-    weatherLabel.className = 'detail-tide-weather-label';
-    weatherLabel.textContent = 'Wetter';
-
-    const weatherTemp = document.createElement('span');
-    weatherTemp.className = 'detail-tide-weather-temp';
-    weatherTemp.textContent = `${tempMax}° / ${tempMin}°`;
-
-    const weatherInfo = document.createElement('div');
-    weatherInfo.className = 'detail-tide-weather-info';
-    weatherInfo.append(weatherLabel, weatherTemp);
-
-    const weatherRow = document.createElement('div');
-    weatherRow.className = 'detail-tide-weather';
-    weatherRow.append(weatherIcon, weatherInfo);
-
-    const col = document.createElement('div');
-    col.className = 'detail-tide-col';
-    col.append(
-      colHeader,
-      weatherRow,
-      createTideRow('hw', 'Hochwasser'),
-      createTideRow('nw', 'Niedrigwasser'),
-    );
-
-    fragment.appendChild(col);
-  });
-
-  el.replaceChildren(fragment);
-};
-
-const createTideRow = (type, label) => {
-  const icon = createIcon(type === 'hw' ? TrendingUp : TrendingDown, {
-    size: 14,
-    className: `detail-tide-row-icon tide-icon-${type}`,
-  });
-
-  const rowLabel = document.createElement('span');
-  rowLabel.className = 'detail-tide-row-label';
-  rowLabel.textContent = label;
-
-  const rowTime = document.createElement('span');
-  rowTime.className = 'detail-tide-row-time';
-  rowTime.textContent = '— noch nicht verfügbar';
-
-  const info = document.createElement('div');
-  info.className = 'detail-tide-row-info';
-  info.append(rowLabel, rowTime);
-
-  const row = document.createElement('div');
-  row.className = 'detail-tide-row';
-  row.append(icon, info);
-
-  return row;
-};
-
-// ─── Event Day Weather ────────────────────────────────────────────────────────
-
-const renderEventDayWeather = (weatherData, rawEvent) => {
-  const el = document.getElementById('detail-event-weather');
-  if (!el) return;
-
-  const eventDate = rawEvent?.dates?.start?.localDate;
-  const dayIndex = weatherData.daily.time.findIndex((d) => d === eventDate);
-
-  if (dayIndex === -1) {
-    const { icon: naIcon, cls: naCls } = getWeatherIconFn(3);
-    const icon = createIcon(naIcon, { size: 16, className: `detail-weather-na-icon ${naCls}` });
-
-    const na = document.createElement('p');
-    na.className = 'detail-event-weather-na';
-    na.append(icon, 'Wettervorhersage für den Veranstaltungstag noch nicht verfügbar');
-    el.replaceChildren(na);
-    return;
-  }
-
-  const code = parseInt(weatherData.daily.weathercode[dayIndex], 10);
-  const tempMax = Math.round(weatherData.daily.temperature_2m_max[dayIndex]);
-  const tempMin = Math.round(weatherData.daily.temperature_2m_min[dayIndex]);
-
-  const titleIcon = createIcon(CalendarDays, { size: 14, className: 'detail-weather-title-icon' });
-
-  const title = document.createElement('p');
-  title.className = 'detail-event-weather-title';
-  title.append(titleIcon, 'Wetter am Veranstaltungstag');
-
-  const { icon: wIcon, cls: wCls } = getWeatherIconFn(code);
-  const weatherIcon = createIcon(wIcon, {
-    size: 24,
-    className: `detail-event-weather-icon ${wCls}`,
-  });
-
-  const temp = document.createElement('span');
-  temp.className = 'detail-event-weather-temp';
-  temp.textContent = `${tempMax}° / ${tempMin}°`;
-
-  const desc = document.createElement('span');
-  desc.className = 'detail-event-weather-desc';
-  desc.textContent = getWeatherDescription(code);
-
-  const info = document.createElement('div');
-  info.className = 'detail-event-weather-info';
-  info.append(weatherIcon, temp, desc);
-
-  const wrapper = document.createElement('div');
-  wrapper.className = 'detail-event-weather';
-  wrapper.append(title, info);
-
-  el.replaceChildren(wrapper);
-};
-
-// ─── Water Level ──────────────────────────────────────────────────────────────
-
-const renderWaterLevel = async (event, stations) => {
-  const station = stations?.find((s) => s.longname?.includes(event.region)) ?? stations?.[0];
-  if (!station) return;
-
-  const measurements = await fetchWaterLevels(station.uuid);
-  if (!measurements?.length) return;
-
-  const lastLevel = Math.round(measurements[measurements.length - 1].value);
-  const status = getWaterStatus(lastLevel);
-
-  const waterEl = document.getElementById('detail-water');
-  if (!waterEl) return;
-
-  const icon = createIcon(Waves, { size: 16, className: 'detail-water-icon' });
-
-  const level = document.createElement('span');
-  level.className = 'detail-water-level';
-  level.textContent = `${lastLevel} cm`;
-
-  const badge = document.createElement('span');
-  badge.className = `detail-water-badge ${status.className}`;
-  badge.textContent = status.text;
-
-  const infoRow = document.createElement('div');
-  infoRow.className = 'detail-water-info';
-  infoRow.append(icon, level, badge);
-
-  const stationName = document.createElement('p');
-  stationName.className = 'detail-water-station';
-  stationName.textContent = station.longname;
-
-  waterEl.replaceChildren(infoRow, stationName);
 };
