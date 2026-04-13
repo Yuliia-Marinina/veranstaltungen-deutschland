@@ -8,6 +8,10 @@
   height: 420px;
   overflow: hidden;
 
+  .container {
+    height: 100%;
+  }
+
   &-image {
     position: absolute;
     inset: 0;

@@ -1,3 +1,4 @@
+import '../scss/main.scss';
 import { initEventDetail } from './modules/eventDetail.js';
 import { loadPartial } from './utils/loadPartial.js';
 import { createIcons, MapPin, Calendar, Clock, Map } from 'lucide';

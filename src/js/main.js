@@ -1,3 +1,4 @@
+import '../scss/main.scss';
 import { initMap } from './modules/map.js';
 import { initWeather } from './modules/weather.js';
 import { initChart } from './modules/chart.js';
